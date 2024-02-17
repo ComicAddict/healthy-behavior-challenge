@@ -222,6 +222,20 @@ class TodoListController < ApplicationController
       streak_counters
     end
 
+    def calc_month_status(trainee_id, challenge_id, start_date, end_date)
+      todolist_tasks = TodolistTask.where(date: start_date..end_date, trainee_id: trainee_id, challenge_id: challenge_id).order(date: :asc)
+      
+      #dates = [*1..31]
+      challengeStatus = Array.new(31,0)
+      todolist_tasks.each do |task|
+        taskdateindex = task.date[-2..-1].to_i - 1  
+        if task.status == 'completed'
+          challengeStatus[taskdateindex] = 1
+        end
+      end
+    
+      challengeStatus
+    end
 
     private
     
