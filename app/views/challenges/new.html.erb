@@ -88,12 +88,8 @@
           <label for="challenge_tasks_attributes_${taskListIndex}_taskName">Additional Task Details</label>
           <br>
           <label for="challenge_tasks_attributes_${taskListIndex}_task_id">Select Task</label>
-          <input type="text" name="challenge[tasks_attributes][0][taskName]" id="challenge_tasks_attributes_${taskListIndex}_taskName" class="form-control">
-          <input type="hidden" name="challenge[task_id]" id="challenge_task_id">
-          <button type="button" class="manual-entry-button btn btn-primary" data-task-index="${taskListIndex}">Predefined Tasks</button>
-          <div id="manual-entry-${taskListIndex}" style="display: none;">
-            
-          </div>
+          <input type="text" name="challenge[tasks_attributes]${taskListIndex}[taskName]" id="challenge_tasks_attributes_${taskListIndex}_taskName" class="form-control">
+          
           <a href="#" class="remove-task" data-index="${taskListIndex}">Remove Task</a>
         </div>
       </div>`;
@@ -136,20 +132,20 @@
     form.addEventListener("submit", function(event) {
     
     // Iterate over each task dropdown
-    for (let i = 0; i < taskListIndex; i++) {
-      const taskNameField = document.getElementById(`challenge_tasks_attributes_${i}_taskName`);
-      const taskDropdown = document.getElementById(`task-dropdown-${i}`);
-      const selectedOption = taskDropdown.options[taskDropdown.selectedIndex];
+      for (let i = 0; i < taskListIndex; i++) {
+        const taskNameField = document.getElementById(`challenge_tasks_attributes_${i}_taskName`);
+        const taskDropdown = document.getElementById(`task-dropdown-${i}`);
+        const selectedOption = taskDropdown.options[taskDropdown.selectedIndex];
 
-      if (selectedOption.value !== "") {
-        // If a task is selected from the dropdown menu, set the task name to the selected option value
-        taskNameField.value = selectedOption.value;
-      } else {
-        // If a task is manually entered, set the task name to the entered value
-        taskNameField.value = document.getElementById(`challenge_tasks_attributes_${i}_taskName`).value;
+        if (selectedOption.value !== "") {
+          // If a task is selected from the dropdown menu, set the task name to the selected option value
+          taskNameField.value = selectedOption.value;
+        } else {
+          // If a task is manually entered, set the task name to the entered value
+          taskNameField.value = document.getElementById(`#challenge_tasks_attributes_${i}_taskName`).value;
+        }
       }
-    }
-  });
+    });
   
 
     // Initially set the "taskFields" to be visible
