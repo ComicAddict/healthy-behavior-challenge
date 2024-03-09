@@ -42,11 +42,11 @@
               <div class="form-field">
                 <label for="challenge_tasks_attributes_0_taskName">Additional Task Details</label>
                 <br>
-                <label for="challenge_tasks_attributes_${taskListIndex}_task_id">Select Task</label>
-                <%= form.select :task_name, Task.where(saved_status: 1).pluck(:taskName, :taskName), { prompt: 'Select a task' }, { class: 'form-control', id: 'task-dropdown' } %>
+                <label for="challenge_tasks_attributes_0_task_id">Select Task</label>
+                <%= form.select :task_name, Task.where(saved_status: 1).pluck(:taskName, :taskName), { prompt: 'Select a task' }, { class: 'form-control', id: 'task-dropdown-0' } %>
                 <input type="hidden" name="challenge[task_id]" id="challenge_task_id">
-                <button type="button" id="manual-entry-button" class="btn btn-primary">Manual Entry</button>
-                <div id="manual-entry" style="display: none;">
+                <button type="button" class="manual-entry-button btn btn-primary" data-task-index="0">Manual Entry</button>
+                <div id="manual-entry-0" style="display: none;">
                   <input type="text" name="challenge[tasks_attributes][0][taskName]" id="challenge_tasks_attributes_0_taskName" class="form-control">
                 </div>
                 <a href="#" class="remove-task" data-index="${taskListIndex}">Remove Task</a>
@@ -70,11 +70,11 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    const addTaskListButton = document.getElementById("add-task-list-button"); // Corrected to "add-task-list-button"
+    const addTaskListButton = document.getElementById("add-task-list-button"); 
     const taskFields = document.getElementById("task-fields");
     const additionalTaskLists = document.getElementById("additional-task-lists");
-    const manualEntryButton = document.getElementById("manual-entry-button");
-    const taskDropdown = document.getElementById("task-dropdown");
+    const manualEntryButtons = document.querySelectorAll(".manual-entry-button");
+    // const taskDropdown = document.getElementById(`task-dropdown-${taskListIndex}`);
     const manualEntryDiv = document.getElementById("manual-entry");
     const taskInputDiv = document.getElementById("task-input");
 
@@ -82,15 +82,21 @@
 
     // Handle adding a new task list
     addTaskListButton.addEventListener("click", function() {
+      const form = document.querySelector("form");
       const taskListForm = `<div class="task-field">
         <div class="form-field">
           <label for="challenge_tasks_attributes_${taskListIndex}_taskName">Additional Task Details</label>
-          <input type="text" name="challenge[tasks_attributes][${taskListIndex}][taskName]" id="challenge_tasks_attributes_${taskListIndex}_taskName" class="form-control" required>
-
+          <br>
+          <label for="challenge_tasks_attributes_${taskListIndex}_task_id">Select Task</label>
+          <input type="text" name="challenge[tasks_attributes][0][taskName]" id="challenge_tasks_attributes_${taskListIndex}_taskName" class="form-control">
+          <input type="hidden" name="challenge[task_id]" id="challenge_task_id">
+          <button type="button" class="manual-entry-button btn btn-primary" data-task-index="${taskListIndex}">Predefined Tasks</button>
+          <div id="manual-entry-${taskListIndex}" style="display: none;">
+            
+          </div>
           <a href="#" class="remove-task" data-index="${taskListIndex}">Remove Task</a>
         </div>
       </div>`;
-
       additionalTaskLists.insertAdjacentHTML("beforeend", taskListForm);
       taskListIndex++;
     });
@@ -105,34 +111,45 @@
     });
     
     // Handle switching to manual entry
-    manualEntryButton.addEventListener("click", function() {
-      if (manualEntryDiv.style.display === "none") {
-        manualEntryDiv.style.display = "block";
-        taskDropdown.style.display = "none";
-        manualEntryButton.textContent = "Predefined Tasks";
-      } else {
-        manualEntryDiv.style.display = "none";
-        taskDropdown.style.display = "block";
-        manualEntryButton.textContent = "Manual Entry"
-      }
+    manualEntryButtons.forEach(function(button) {
+      button.addEventListener("click", function() {
+        const taskIndex = this.getAttribute("data-task-index");
+        const dropdownId = `#task-dropdown-${taskIndex}`;
+        const manualEntryDiv = document.querySelector(`#manual-entry-${taskIndex}`);
+        const dropdown = document.querySelector(dropdownId);
+        
+        if (manualEntryDiv.style.display === "none") {
+          manualEntryDiv.style.display = "block";
+          dropdown.style.display = "none";
+          this.textContent = "Predefined Tasks";
+        } else {
+          manualEntryDiv.style.display = "none";
+          dropdown.style.display = "block";
+          this.textContent = "Manual Entry";
+        }
+      });
     });
 
     // Handle drop down selection
     const form = document.querySelector("form");
 
     form.addEventListener("submit", function(event) {
-      const taskNameField = document.getElementById("challenge_tasks_attributes_0_taskName");
+    
+    // Iterate over each task dropdown
+    for (let i = 0; i < taskListIndex; i++) {
+      const taskNameField = document.getElementById(`challenge_tasks_attributes_${i}_taskName`);
+      const taskDropdown = document.getElementById(`task-dropdown-${i}`);
       const selectedOption = taskDropdown.options[taskDropdown.selectedIndex];
 
       if (selectedOption.value !== "") {
-        // If a task is selected from the dropdown menu, set the task ID to the selected option value
+        // If a task is selected from the dropdown menu, set the task name to the selected option value
         taskNameField.value = selectedOption.value;
       } else {
         // If a task is manually entered, set the task name to the entered value
-        document.getElementById("challenge_task_id").value = "";
-        taskNameField.value = document.getElementById("challenge_tasks_attributes_0_taskName").value;
+        taskNameField.value = document.getElementById(`challenge_tasks_attributes_${i}_taskName`).value;
       }
-    });
+    }
+  });
   
 
     // Initially set the "taskFields" to be visible
