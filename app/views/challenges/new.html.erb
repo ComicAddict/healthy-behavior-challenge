@@ -1,6 +1,20 @@
 <%= render 'main/navbar' %>
 
 <div class="container">
+  <dialog style="min-width: 50%">
+    <%= form_with model: @challenge, local: true do |form| %>   
+      <div class="form-field">
+
+        <div id="template-fields">
+        </div>
+        </br>
+        <%= form.submit 'Create Challenge', class: "btn btn-primary" %>
+        </div>
+    <% end %>
+    </br>
+    <button autofocus>Close</button>
+  </dialog>
+
   <div class="form-box">
     <div class="row">
       <div class="col-md-6 col-md-offset-3" style="margin-top: 10%;">
@@ -12,7 +26,7 @@
           <div class="alert alert-danger text-center">
             <%= flash[:alert] %>
           </div>
-        <% end %>
+        <% end %>        
 
         <h2 style="font-weight: 500; padding: 0 0 3% 0">Create New Challenge</h2>
         <%= form_with model: @challenge, local: true do |form| %>
@@ -37,6 +51,11 @@
           <div id="task-fields">
             <%= form.label :everyDay, 'Todo List Tasks' %> <button name="add-list" type="button" id="add-task-list-button" class="btn btn-success btn-circle"><span class="glyphicon glyphicon-plus" style="display: inline-block;"></span></button>
             <br>
+
+            <%= label @challenge, 'challenge_templates', 'Select a predefined challenge template' %>
+            <br>
+            <%= form.select 'challenge_templates', options_for_select(@challenge_templates.collect{|c|[c.name, c.id]}), {include_blank: true}, {:class => 'form-control'}  %>
+  
                
             <div class="task-field">
               <div class="form-field">
@@ -65,7 +84,12 @@
     const addTaskListButton = document.getElementById("add-task-list-button"); // Corrected to "add-task-list-button"
     const taskFields = document.getElementById("task-fields");
     const additionalTaskLists = document.getElementById("additional-task-lists");
-
+    const dialog = document.querySelector("dialog");
+    const showButton = document.querySelector("dialog + button");
+    const closeButton = document.querySelector("dialog button");
+    const templateDropdown = document.getElementById("challenge_challenge_templates")
+    const predefinedChallengeTasks = document.getElementById("template-fields")
+    
     let taskListIndex = 1; // Counter for additional task lists
 
     // Handle adding a new task list
@@ -94,5 +118,22 @@
 
     // Initially set the "taskFields" to be visible
     taskFields.style.display = "block";
+
+    // Selecting a template opens the dialog modal
+    templateDropdown.addEventListener("change", () => {
+    const challengeId = templateDropdown.value
+
+    // show tasks of the selected challenge, 
+    // instead of (1), we need to provide the challengeId
+    predefinedChallengeTasks.innerHTML = '<ol><% Challenge.find(1).tasks.each do |task| %><li style="font-size: 18px; text-align: center"><%= task.taskName %></li><% end %></ol>'
+
+    dialog.showModal(challengeId);
+    });
+
+    // "Close" button closes the dialog
+    closeButton.addEventListener("click", () => {
+      dialog.close();
+    });
   });
+  
 </script>

@@ -8,6 +8,7 @@ class ChallengesController < ApplicationController
   def new
     @challenge = Challenge.new
     @instructor = Instructor.find_by(user_id: session[:user_id])
+    @challenge_templates = Challenge.where(instructor_id: session[:user_id])
     Rails.logger.debug(@instructor)
     unless @instructor
       flash[:alert] = 'You are not an instructor.'

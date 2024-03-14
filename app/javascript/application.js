@@ -5,6 +5,6 @@ import "controllers"
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
-
+//= require_tree.
 import "popper"
 import "bootstrap"
