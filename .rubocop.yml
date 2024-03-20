@@ -1058,7 +1058,7 @@ Layout/LineEndStringConcatenationIndentation:
 Layout/LineLength:
   Description: 'Checks that line length does not exceed the configured limit.'
   StyleGuide: '#max-line-length'
-  Enabled: true
+  Enabled: false
   VersionAdded: '0.25'
   VersionChanged: '1.4'
   Max: 120
@@ -2634,7 +2634,7 @@ Metrics/CyclomaticComplexity:
 Metrics/MethodLength:
   Description: 'Avoid methods longer than 10 lines of code.'
   StyleGuide: '#short-methods'
-  Enabled: true
+  Enabled: false
   VersionAdded: '0.25'
   VersionChanged: '1.5'
   CountComments: false  # count full line comments?
@@ -3658,7 +3658,7 @@ Style/DocumentDynamicEvalDefinition:
 
 Style/Documentation:
   Description: 'Document classes and non-namespace modules.'
-  Enabled: true
+  Enabled: false
   VersionAdded: '0.9'
   AllowedConstants: []
   Exclude:
