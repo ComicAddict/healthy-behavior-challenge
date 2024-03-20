@@ -14,7 +14,7 @@ RSpec.describe TraineeSignupController, type: :controller do
     context 'with valid parameters' do
       let(:user_params) do
         { email: 'test@gmail.com', password: 'password123', password_confirmation: 'password123', full_name: 'John Doe',
-          height: 175, weight: 70 }
+          height_feet: 6, height_inches: 9, weight: 70 }
       end
 
       it 'creates a new user and trainee' do

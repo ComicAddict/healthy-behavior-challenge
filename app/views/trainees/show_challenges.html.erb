@@ -31,9 +31,9 @@
                 <p style="display: inline">End Date: <%= challenge.endDate %></p>
               </div>
               <% unless Instructor.find_by(user_id: session[:user_id]) %>
-                <div class="text-center row" style="margin: 0.5%">
-                  <%= link_to 'View Task Table', view_challenge_tasks_detail_path(challenge.id), class: 'btn btn-primary' %>
-              </div>
+                <div class="text-center row" style="margin: 0.5%" >
+                  <%= link_to 'View Task Table', view_challenge_tasks_detail_path(challenge.id), class: 'btn btn-primary', id: "#{challenge.name}View Task Table" %>
+              	</div>
               <% end%>
               
               <div class="text-center row" style="margin: 0.5%">

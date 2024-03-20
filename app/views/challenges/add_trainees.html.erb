@@ -27,11 +27,11 @@
           <br/>
             
           <div class="button-container">
-            <% if @challenge.startDate >= Date.today %>
+            <%# if @challenge.startDate >= Date.today %>
+              <%#= form.submit 'Add Trainees', class: 'btn btn-primary btn-block' %>
+            <%# else %>
               <%= form.submit 'Add Trainees', class: 'btn btn-primary btn-block' %>
-            <% else %>
-              <%= form.submit 'Add Trainees', class: 'btn btn-primary btn-block', disabled: true %>
-            <% end %>
+            <%# end %>
           </div>
         <% end %>
       </div>

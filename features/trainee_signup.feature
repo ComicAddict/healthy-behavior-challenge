@@ -9,7 +9,8 @@ Feature: Trainee Signup
         And I fill in "email" with "user@example.com"
         And I fill in "password" with "password123"
         And I fill in "password_confirmation" with "password123"
-        And I fill in "height" with "175"
+        And I fill in "height_feet" with "6"
+        And I fill in "height_inches" with "9"
         And I fill in "weight" with "70"
         And I click the "Sign Up" button
         Then I should be on login page
@@ -20,7 +21,8 @@ Feature: Trainee Signup
         And I fill in "email" with "user@example.com"
         And I fill in "password" with "password123"
         And I fill in "password_confirmation" with "password123"
-        And I fill in "height" with "175"
+        And I fill in "height_feet" with "6"
+        And I fill in "height_inches" with "9"
         And I fill in "weight" with "70"
         And I click the "Sign Up" button
         Then I should stay on the signup page
@@ -31,7 +33,8 @@ Feature: Trainee Signup
         And I fill in "email" with "user@example.com"
         And I fill in "password" with "password123"
         And I fill in "password_confirmation" with "different_password"
-        And I fill in "height" with "175"
+        And I fill in "height_feet" with "6"
+        And I fill in "height_inches" with "9"
         And I fill in "weight" with "70"
         And I click the "Sign Up" button
         Then I should stay on the signup page

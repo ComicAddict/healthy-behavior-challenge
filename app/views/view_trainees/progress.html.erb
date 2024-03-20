@@ -1,0 +1,57 @@
+<style>
+  .back-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
+</style>
+
+<div>
+  <%= render 'main/navbar' %>
+
+  <div class="container">
+    <div class="row" style="margin-top: 2%;">
+      <% if flash[:notice] %>
+        <div class="alert alert-success text-center">
+          <%= flash[:notice] %>
+        </div>
+      <% elsif flash[:alert] %>
+        <div class="alert alert-danger text-center">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+
+      <h2 style="margin: 1rem 0; font-weight: 500; text-align: center"><%= @trainee.full_name %>'s Progress</h2>
+      <h3 style="margin: 1rem 0; font-weight: 500; text-align: center">in <%= @challenge.name %></h3>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Task Name</th>
+            <% @dates.each do |date| %>
+              <th><%= date.strftime("%B %d, %Y") %></th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tasks.uniq(&:task_id).each do |todolist_task| %>
+            <tr>
+              <% task = Task.find(todolist_task.task_id) %>
+              <td><%= task.taskName %></td>
+              <% @dates.each do |date| %>
+                <td>
+                  <% task_for_date = @tasks.select { |t| t.task_id == task.id && t.date == date }.first %>
+                  <%= task_for_date&.status == "completed" ? "✅" : "❌" %>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <div>
+        <%= link_to "Back", :back, class: "btn btn-primary back-btn", style: "width: 16rem; padding: 0.5% 0.3%" %>
+      </div>
+    </div>
+  </div>
+</div>

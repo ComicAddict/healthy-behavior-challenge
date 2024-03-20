@@ -5,7 +5,7 @@ Given('there is a challenge {string} with a trainee {string} and following detai
   trainee_user = User.create!(email: 'tempTrainee1@gmail.com', password: 'abcdef', user_type: 'Trainee')
 
   instructor = Instructor.create!(user:, first_name: 'John', last_name: 'Doe')
-  trainee = Trainee.create!(user: trainee_user, full_name: trainee_name, height: 150, weight: 55)
+  trainee = Trainee.create!(user: trainee_user, full_name: trainee_name, height_feet: 6, height_inches: 9, weight: 55)
 
   table.hashes.each do |challenge|
     challenge_create = Challenge.create!(name: challenge['name'], startDate: challenge['startDate'], endDate: challenge['endDate'], instructor:, tasks_attributes: {

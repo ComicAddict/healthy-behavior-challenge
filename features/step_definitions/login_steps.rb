@@ -7,7 +7,7 @@ end
 
 Given(/^A trainee is registered with the email "trainee@gmail.com" and password "trainee@123"$/) do
   user = User.create(email: 'trainee@gmail.com', password: 'trainee@123', user_type: 'Trainee')
-  Trainee.create(full_name: 'trainee', height: 165, weight: 85, user_id: user.id)
+  Trainee.create(full_name: 'trainee', height_feet: 6, height_inches: 9, weight: 85, user_id: user.id)
 end
 
 Given(/^I am not currently Logged in$/) do

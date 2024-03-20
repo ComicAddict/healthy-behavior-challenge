@@ -19,7 +19,7 @@ end
 
 Given('I am not an instructor') do
   user = User.create!(email: 'trainee1@example.com', password: '123456', user_type: 'Trainee1')
-  Trainee.create(full_name: 'trainee1', height: 165, weight: 85, user_id: user.id)
+  Trainee.create(full_name: 'trainee1', height_feet: 5, height_inches: 9, weight: 85, user_id: user.id)
 
   # Use Capybara to log in as the user
   visit root_path
@@ -87,9 +87,9 @@ And('there are trainees in the challenge {string}') do |challenge|
   user1 = User.create!(email: 'trainee22@example.com', password: 'abcdef', user_type: 'Trainee')
   user2 = User.create!(email: 'trainee2@example.com', password: 'abcdef', user_type: 'Trainee')
   user3 = User.create!(email: 'trainee3@example.com', password: 'abcdef', user_type: 'Trainee')
-  @trainee1 = Trainee.create!(full_name: 'blah 1', user: user1, height: 120, weight: 120)
-  @trainee2 = Trainee.create!(full_name: 'blah 2', user: user2, height: 120, weight: 120)
-  @trainee3 = Trainee.create!(full_name: 'blah 3', user: user3, height: 120, weight: 120)
+  @trainee1 = Trainee.create!(full_name: 'blah 1', user: user1, height_feet: 5, height_inches: 9, weight: 120)
+  @trainee2 = Trainee.create!(full_name: 'blah 2', user: user2, height_feet: 5, height_inches: 9, weight: 120)
+  @trainee3 = Trainee.create!(full_name: 'blah 3', user: user3, height_feet: 5, height_inches: 9, weight: 120)
   Challenge.find_by(name: challenge).trainees << [@trainee1, @trainee2, @trainee3]
 end
 
@@ -97,10 +97,10 @@ And('there is trainee {string} in the challenge {string}') do |trainee, challeng
   user1 = User.create!(email: 'trainee22@example.com', password: 'abcdef', user_type: 'Trainee')
   user2 = User.create!(email: 'trainee2@example.com', password: 'abcdef', user_type: 'Trainee')
   user3 = User.create!(email: 'trainee3@example.com', password: 'abcdef', user_type: 'Trainee')
-  @trainee1 = Trainee.create!(full_name: trainee, user: user1, height: 120, weight: 120)
+  @trainee1 = Trainee.create!(full_name: trainee, user: user1, height_feet: 5, height_inches: 9, weight: 120)
   puts @trainee1.id
-  @trainee2 = Trainee.create!(full_name: 'blah 2', user: user2, height: 120, weight: 120)
-  @trainee3 = Trainee.create!(full_name: 'blah 3', user: user3, height: 120, weight: 120)
+  @trainee2 = Trainee.create!(full_name: 'blah 2', user: user2, height_feet: 5, height_inches: 9, weight: 120)
+  @trainee3 = Trainee.create!(full_name: 'blah 3', user: user3, height_feet: 5, height_inches: 9, weight: 120)
   Challenge.find_by(name: challenge).trainees << [@trainee1, @trainee2, @trainee3]
 end
 
@@ -126,7 +126,7 @@ end
 
 And('a trainee is present in a challenge {string}') do |challenge|
   user1 = User.create!(email: 'trainee2132@example.com', password: 'abcdef', user_type: 'Trainee')
-  @trainee1 = Trainee.create!(full_name: 'blah 1', user: user1, height: 120, weight: 120)
+  @trainee1 = Trainee.create!(full_name: 'blah 1', user: user1, height_feet: 5, height_inches: 9, weight: 120)
   @challenge1 = Challenge.find_by(name: challenge)
   @challenge1.trainees << @trainee1
   @task = Task.create!(taskName: 'drink water')

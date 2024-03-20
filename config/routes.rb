@@ -41,8 +41,14 @@ Rails.application.routes.draw do
   get 'challenges/:id/challenge_details', to: 'view_challenge_tasks#challenge_details',
                                           as: 'view_challenge_tasks_detail'
 
+  patch 'challenges/:id/todo_list_update', to: 'todo_list#todo_list_update', as: 'todo_list_patch' # update (as needed)
+  get 'challenges/:id/todo_list_update', to: 'todo_list#todo_list_update', as: 'todo_list_update' # update (as needed)
+
   get '/view_trainees', to: 'view_trainees#index', as: 'view_trainees'
   get 'view_trainees/:id/profile_details', to: 'view_trainees#profile_details', as: 'trainee_profile_details'
+  get 'view_trainees/:id/challenges', to: 'view_trainees#challenges', as: 'trainee_challenges'
+  get 'view_trainees/:trainee_id/challenges/:challenge_id/progress', to: 'view_trainees#progress',
+                                                                     as: 'trainee_challenge_progress'
 
   resources :challenges do
     member do

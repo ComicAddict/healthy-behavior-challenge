@@ -2,7 +2,7 @@
 
 Given('I am logged in as trainee') do
   @user = User.create!(email: 'traineetest@example.com', password: 'asdf', user_type: 'trainee')
-  @trainee = Trainee.create!(full_name: 'traineetest', height: 165, weight: 85, user_id: @user.id)
+  @trainee = Trainee.create!(full_name: 'traineetest', height_feet: 5, height_inches: 9, weight: 85, user_id: @user.id)
 
   visit login_path
   expect(page).to have_content('User Sign in')

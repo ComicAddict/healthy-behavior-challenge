@@ -31,6 +31,6 @@ class TraineeProfileController < ApplicationController
   end
 
   def trainee_params
-    params.require(:trainee).permit(:full_name, :height, :weight)
+    params.require(:trainee).permit(:full_name, :height_feet, :height_inches, :weight)
   end
 end

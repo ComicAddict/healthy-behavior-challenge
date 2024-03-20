@@ -70,13 +70,14 @@ RSpec.describe TraineeProfileController, type: :controller do
       before { session[:user_id] = user.id }
 
       context 'with valid params' do
-        let(:valid_params) { { trainee: { full_name: 'Updated Name', height: 180, weight: 75 } } }
+        let(:valid_params) { { trainee: { full_name: 'Updated Name', height_feet: 6, height_inches: 9, weight: 75 } } }
 
         it 'updates the trainee profile' do
           patch :update, params: valid_params
           trainee.reload
           expect(trainee.full_name).to eq('Updated Name')
-          expect(trainee.height).to eq(180)
+          expect(trainee.height_feet).to eq(6)
+          expect(trainee.height_inches).to eq(9)
           expect(trainee.weight).to eq(75)
         end
 
@@ -92,7 +93,7 @@ RSpec.describe TraineeProfileController, type: :controller do
       end
 
       context 'with invalid params' do
-        let(:invalid_params) { { trainee: { height: -5 } } }
+        let(:invalid_params) { { trainee: { height_feet: -5 } } }
 
         it 'does not update the trainee profile' do
           previous_name = trainee.full_name
@@ -110,7 +111,7 @@ RSpec.describe TraineeProfileController, type: :controller do
 
     context 'when user is not logged in' do
       it 'redirects to root path' do
-        patch :update, params: { trainee: { full_name: 'Updated Name', height: 180, weight: 75 } }
+        patch :update, params: { trainee: { full_name: 'Updated Name', height_feet: 6, height_inches: 9, weight: 75 } }
         expect(response).to redirect_to(root_path)
       end
     end

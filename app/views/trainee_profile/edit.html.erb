@@ -28,8 +28,13 @@
           </div>
 
           <div class="form-group">
-            <%= f.label :height, "Height (in cms)" %>
-            <%= f.number_field :height, class: "form-control", required: true, step: 'any'%>
+            <%= f.label :height_feet, "Height Feet" %>
+            <%= f.number_field :height_feet, value: @trainee.height_feet, class: "form-control", required: true, step: '1', min: '0' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :height_inches, "Height Inches" %>
+            <%= f.number_field :height_inches, value: @trainee.height_inches, class: "form-control", required: true, step: '1', min: '0', max: '11' %>
           </div>
               
           <div class="form-group">

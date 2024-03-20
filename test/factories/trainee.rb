@@ -3,7 +3,8 @@
 FactoryBot.define do
   factory :trainee do
     full_name { 'Trainee' }
-    height { 11 }
+    height_feet { 5 }
+    height_inches { 8 }
     weight { 11 }
   end
 end

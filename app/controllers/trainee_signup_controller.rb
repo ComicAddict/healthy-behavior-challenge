@@ -34,6 +34,6 @@ class TraineeSignupController < ApplicationController
 
   def trainee_params
     # params.require(:trainee).permit(:full_name, :height, :weight)
-    params.require(:user).permit(:full_name, :height, :weight)
+    params.require(:user).permit(:full_name, :height_feet, :height_inches, :weight)
   end
 end

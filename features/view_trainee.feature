@@ -32,4 +32,30 @@ Feature: View Trainees Navigation
     And no trainees exist
     Then I should see a message indicating there are no trainees to display
 
+  Scenario: Instructor views a trainee's challenges
+    Given I have instructor access
+    And I am on the "View Trainees" page with at least one trainee
+    When I click on the "Challenges" button for the first trainee
+    Then I should be on that trainee's challenges page
+
+  Scenario: Instructor views a trainee's challenge progress
+    Given I have instructor access
+    And I am on the "View Trainees" page with at least one trainee
+    When I click on the "Challenges" button for the first trainee
+    And I click on the "Progress" button for the first challenge
+    Then I should be on that challenge's progress page for the trainee
+  
+  Scenario: Instructor views a trainee's challenges with no challenges available
+    Given I have instructor access
+    And I am on the "View Trainees" page with at least one trainee but no challenges
+    When I click on the "Challenges" button for the first trainee
+    Then I should see messages indicating there are no current or past challenges
+
+  Scenario: Instructor navigates back from a trainee's progress view to the challenge page
+    Given I have instructor access
+    And I am on the "View Trainees" page with at least one trainee
+    When I click on the "Challenges" button for the first trainee
+    And I click on the "Progress" button for the first challenge
+    And I click on the "Back" button
+    Then I should be back on that trainee's challenges page
 

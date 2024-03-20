@@ -32,8 +32,13 @@
           </div>
 
           <div class="form-group">
-            <%= f.label :height, "Height (in cms)" %>
-            <%= f.number_field :height, class: "form-control", placeholder: "165"  %>
+            <%= f.label :height_feet, "Height Feet (integer)" %>
+            <%= f.number_field :height_feet, class: "form-control", placeholder: "5" %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :height_inches, "Height Inches (integer, 0-11)" %>
+            <%= f.number_field :height_inches, class: "form-control", placeholder: "4" %>
           </div>
 
           <div class="form-group">

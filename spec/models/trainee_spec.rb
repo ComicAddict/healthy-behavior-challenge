@@ -9,13 +9,18 @@ describe Trainee, type: :model do
       expect(trainee).to be_invalid
     end
 
-    it 'is invalid with a negative height' do
-      trainee = Trainee.new(height: -10)
+    it 'is invalid with a negative height in feet' do
+      trainee = Trainee.new(height_feet: -1)
       expect(trainee).to be_invalid
     end
 
-    it 'is invalid with a height of zero' do
-      trainee = Trainee.new(height: 0)
+    it 'is invalid with a negative height in inches' do
+      trainee = Trainee.new(height_inches: -1)
+      expect(trainee).to be_invalid
+    end
+
+    it 'is invalid with a height in inches over 11' do
+      trainee = Trainee.new(height_inches: 12)
       expect(trainee).to be_invalid
     end
 

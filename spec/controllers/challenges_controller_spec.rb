@@ -19,7 +19,7 @@ RSpec.describe ChallengesController, type: :controller do
     # Create an instructor instance
     @instructor = Instructor.create(user: @user, first_name: 'John', last_name: 'Doe')
 
-    @trainee = Trainee.create(user: @user, full_name: 'John Doe', height: 160, weight: 65)
+    @trainee = Trainee.create(user: @user, full_name: 'John Doe', height_feet: 4, height_inches: 10, weight: 65)
     session[:user_id] = @user.id
   end
 
@@ -112,7 +112,7 @@ RSpec.describe ChallengesController, type: :controller do
                                      })
       @challenge.instructor = @instructor
       @challenge.save
-      @trainee1 = Trainee.create!(full_name: 'Trainee 1', height: 1.5, weight: 1.5, user: @user2)
+      @trainee1 = Trainee.create!(full_name: 'Trainee 1', height_feet: 5, height_inches: 9, weight: 1.5, user: @user2)
       @trainee1.save
 
       get :add_trainees, params: { id: @challenge.id }
@@ -144,7 +144,7 @@ RSpec.describe ChallengesController, type: :controller do
                                      })
       @challenge.instructor = @instructor
       @challenge.save
-      @trainee1 = Trainee.create!(full_name: 'Trainee 1', height: 1.5, weight: 1.5, user: @user2)
+      @trainee1 = Trainee.create!(full_name: 'Trainee 1', height_feet: 5, height_inches: 3, weight: 1.5, user: @user2)
       post :update_trainees, params: { id: @challenge.id, trainee_ids: [@trainee1.id] }
 
       expect(@challenge.trainees).to include(@trainee1)
@@ -158,7 +158,7 @@ RSpec.describe ChallengesController, type: :controller do
                                      })
       @challenge.instructor = @instructor
       @challenge.save
-      @trainee1 = Trainee.create!(full_name: 'Trainee 1', height: 1.5, weight: 1.5, user: @user2)
+      @trainee1 = Trainee.create!(full_name: 'Trainee 1', height_feet: 5, height_inches: 5, weight: 1.5, user: @user2)
       post :update_trainees, params: { id: @challenge.id, trainee_ids: [@trainee1.id] }
 
       todolist_task = TodolistTask.find_by(trainee: @trainee1, challenge: @challenge)
@@ -324,9 +324,9 @@ RSpec.describe ChallengesController, type: :controller do
       user1 = User.create!(email: 'trainee22@example.com', password: 'abcdef', user_type: 'Trainee')
       user2 = User.create!(email: 'trainee233@example.com', password: 'abcdef', user_type: 'Trainee')
       user3 = User.create!(email: 'trainee322@example.com', password: 'abcdef', user_type: 'Trainee')
-      @trainee1 = Trainee.create!(full_name: 'blah 1', user: user1, height: 120, weight: 120)
-      @trainee2 = Trainee.create!(full_name: 'blah 2', user: user2, height: 120, weight: 120)
-      @trainee3 = Trainee.create!(full_name: 'blah 3', user: user3, height: 120, weight: 120)
+      @trainee1 = Trainee.create!(full_name: 'blah 1', user: user1, height_feet: 5, height_inches: 11, weight: 120)
+      @trainee2 = Trainee.create!(full_name: 'blah 2', user: user2, height_feet: 4, height_inches: 10, weight: 120)
+      @trainee3 = Trainee.create!(full_name: 'blah 3', user: user3, height_feet: 3, height_inches: 9, weight: 120)
       @challenge.trainees << [@trainee1, @trainee2, @trainee3]
       get :trainees_list, params: {
         challenge_id: @challenge.id
@@ -344,7 +344,7 @@ RSpec.describe ChallengesController, type: :controller do
                                      })
 
       user1 = User.create!(email: 'trainee22dfas@example.com', password: 'abcdef', user_type: 'Trainee')
-      @trainee1 = Trainee.create!(full_name: 'blah 1dsad', user: user1, height: 120, weight: 120)
+      @trainee1 = Trainee.create!(full_name: 'blah 1dsad', user: user1, height_feet: 5, height_inches: 10, weight: 120)
       @task = Task.create!(taskName: 'drink water')
       @challenge.trainees << @trainee1
       TodolistTask.create!(trainee_id: @trainee1.id, task_id: @task.id, challenge_id: @challenge.id,
@@ -372,7 +372,7 @@ RSpec.describe ChallengesController, type: :controller do
                                        '1' => { taskName: 'Task 1' }
                                      })
       user1 = User.create!(email: 'trainee22dfas@example.com', password: 'abcdef', user_type: 'Trainee')
-      @trainee1 = Trainee.create!(full_name: 'blah 1dsad', user: user1, height: 120, weight: 120)
+      @trainee1 = Trainee.create!(full_name: 'blah 1dsad', user: user1, height_feet: 6, height_inches: 2, weight: 120)
       @task = Task.create!(taskName: 'drink water')
       @challenge.trainees << @trainee1
       TodolistTask.create!(trainee_id: @trainee1.id, task_id: @task.id, challenge_id: @challenge.id,
@@ -410,7 +410,7 @@ RSpec.describe ChallengesController, type: :controller do
                                      })
 
       user1 = User.create!(email: 'trainee22dfas@example.com', password: 'abcdef', user_type: 'Trainee')
-      @trainee1 = Trainee.create!(full_name: 'blah 1dsad', user: user1, height: 120, weight: 120)
+      @trainee1 = Trainee.create!(full_name: 'blah 1dsad', user: user1, height_feet: 6, height_inches: 4, weight: 120)
       @task = Task.create!(taskName: 'drink water')
       @challenge.trainees << @trainee1
       TodolistTask.create!(trainee_id: @trainee1.id, task_id: @task.id, challenge_id: @challenge.id, date: Date.today + 1,
@@ -428,7 +428,7 @@ RSpec.describe ChallengesController, type: :controller do
                                      })
 
       user1 = User.create!(email: 'trainee22dfas@example.com', password: 'abcdef', user_type: 'Trainee')
-      @trainee1 = Trainee.create!(full_name: 'blah 1dsad', user: user1, height: 120, weight: 120)
+      @trainee1 = Trainee.create!(full_name: 'blah 1dsad', user: user1, height_feet: 9, height_inches: 1, weight: 120)
       @task = Task.create!(taskName: 'drink water')
       @challenge.trainees << @trainee1
       @todolist = TodolistTask.create!(trainee_id: @trainee1.id, task_id: @task.id, challenge_id: @challenge.id,
@@ -446,7 +446,7 @@ RSpec.describe ChallengesController, type: :controller do
                                      })
 
       user1 = User.create!(email: 'trainee22dfas@example.com', password: 'abcdef', user_type: 'Trainee')
-      @trainee1 = Trainee.create!(full_name: 'blah 1dsad', user: user1, height: 120, weight: 120)
+      @trainee1 = Trainee.create!(full_name: 'blah 1dsad', user: user1, height_feet: 4, height_inches: 10, weight: 120)
       @task = Task.create!(taskName: 'drink water')
       @challenge.trainees << @trainee1
       @todolist = TodolistTask.create!(trainee_id: @trainee1.id, task_id: @task.id, challenge_id: @challenge.id,
@@ -461,7 +461,7 @@ RSpec.describe ChallengesController, type: :controller do
 
     it 'assigns @filtered_data' do
       user = User.create!(email: 'trainee12344@example.com', password: 'abcdef', user_type: 'Trainee')
-      trainee = Trainee.create!(full_name: 'blah 1dsad', user:, height: 120, weight: 120)
+      trainee = Trainee.create!(full_name: 'blah 1dsad', user:, height_feet: 6, height_inches: 0, weight: 120)
       session[:user_id] = @instructor.user_id
       challenge = Challenge.create!(name: 'ex chall', startDate: '2023-10-15', endDate: '2024-10-30', instructor: @instructor, tasks_attributes: {
                                       '0' => { taskName: 'Task 1' },
@@ -477,7 +477,7 @@ RSpec.describe ChallengesController, type: :controller do
 
     it 'returns JSON response' do
       user = User.create!(email: 'trainee12344@example.com', password: 'abcdef', user_type: 'Trainee')
-      trainee = Trainee.create!(full_name: 'blah 1dsad', user:, height: 120, weight: 120)
+      trainee = Trainee.create!(full_name: 'blah 1dsad', user:, height_feet: 5, height_inches: 0, weight: 120)
       session[:user_id] = @instructor.user_id
       challenge = Challenge.create!(name: 'ex chall', startDate: '2023-10-15', endDate: '2024-10-30', instructor: @instructor, tasks_attributes: {
                                       '0' => { taskName: 'Task 1' },
@@ -498,7 +498,7 @@ RSpec.describe ChallengesController, type: :controller do
                                        '1' => { taskName: 'Task 1' }
                                      })
       user1 = User.create!(email: 'trainee22@example.com', password: 'abcdef', user_type: 'Trainee')
-      @trainee1 = Trainee.create!(full_name: 'blah 1', user: user1, height: 120, weight: 120)
+      @trainee1 = Trainee.create!(full_name: 'blah 1', user: user1, height_feet: 5, height_inches: 6, weight: 120)
       @challenge.trainees << @trainee1
       delete :delete_trainee, params: {
         challenge_id: @challenge.id,

@@ -1,0 +1,68 @@
+<style>
+  .indiChallenge {
+    border: solid 2px;
+    overflow: hidden;
+    margin: 1% 0;
+  }
+  .challenge-content {
+    padding: 2px 12px 15px 18px; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .challenge-detail { 
+    margin-left: 20px; 
+  }
+</style>
+
+
+<div>
+  <%= render 'main/navbar' %>
+
+  <div class="container">
+    <div class="row" style="margin-top: 20px;">
+      <h2 style="font-weight: 500">Current Challenges</h2>
+    </div>
+    <% if @curr_challenges.empty? %>
+      <p><i>No Current Challenges</i></p>
+    <% else %>
+      <% @curr_challenges.each do |challenge| %>
+        <div class="card indiChallenge">
+          <div class="card-body challenge-content">
+            <div class="row">
+              <h4 class="card-title"><%= challenge.name %></h4>
+              <p>Start Date: <%= challenge.startDate %></p>
+              <p>End Date: <%= challenge.endDate %></p>
+            </div>
+            <%= link_to 'Progress', trainee_challenge_progress_path(trainee_id: @trainee.id, challenge_id: challenge.id), class: 'btn btn-info' %>
+
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+    <div class="row" style="margin-top: 20px;">
+      <h2 style="font-weight: 500">Past Challenges</h2>
+    </div>
+    <% if @past_challenges.empty? %>
+      <p><i>No Past Challenges</i></p>
+    <% else %>
+      <% @past_challenges.each do |challenge| %>
+        <div class="card indiChallenge">
+          <div class="card-body challenge-content">
+            <div class="row">
+              <h4 class="card-title"><%= challenge.name %></h4>
+              <p>Start Date: <%= challenge.startDate %></p>
+              <p>End Date: <%= challenge.endDate %></p>
+            </div>
+
+            <!-- More buttons can be placed here -->
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+    <div class="row" style="margin-top: 20px;">
+      <%= link_to 'Back to All Trainees', view_trainees_path, class: 'btn btn-secondary' %>
+    </div>
+</div>

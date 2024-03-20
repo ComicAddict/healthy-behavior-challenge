@@ -20,8 +20,12 @@ When('I fill in "password_confirmation" with "password123"') do
   fill_in 'user[password_confirmation]', with: 'password123'
 end
 
-When('I fill in "height" with "175"') do
-  fill_in 'user[height]', with: '175'
+When('I fill in "height_feet" with "6"') do
+  fill_in 'user[height_feet]', with: '6'
+end
+
+When('I fill in "height_inches" with "9"') do
+  fill_in 'user[height_inches]', with: '9'
 end
 
 When('I fill in "weight" with "70"') do

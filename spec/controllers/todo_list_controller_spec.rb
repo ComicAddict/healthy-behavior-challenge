@@ -8,7 +8,7 @@ RSpec.describe TodoListController, type: :controller do
     @instructor = Instructor.create(user_id: @user2.id, first_name: 'instructor2', last_name: 'instructor2_last_name')
 
     @user = User.create!(email: 'traineetest2@example.com', password: 'asdf', user_type: 'trainee')
-    @trainee = Trainee.create(full_name: 'trainee2', height: 165, weight: 85, user_id: @user.id)
+    @trainee = Trainee.create(full_name: 'trainee2', height_feet: 6, height_inches: 9, weight: 85, user_id: @user.id)
 
     start_date = Date.today
     end_date = start_date + 4.days

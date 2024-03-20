@@ -8,9 +8,10 @@ Given('I am an instructor trying to add trainees to a challenge') do
   user_3 = User.create!(email: 'trainee01@example.com', password: 'abcdefgh', user_type: 'Trainee')
   user_4 = User.create!(email: 'trainee02@example.com', password: 'abcdefgi', user_type: 'Trainee')
 
-  trainee_1 = Trainee.create(full_name: 'Trainee1 Name', height: 1, weight: 1, user_id: user_2.id)
-  Trainee.create(full_name: 'Trainee2 Name', height: 2, weight: 2, user_id: user_3.id)
-  Trainee.create(full_name: 'Trainee3 Name', height: 2, weight: 2, user_id: user_4.id)
+  trainee_1 = Trainee.create(full_name: 'Trainee1 Name', height_feet: 5, height_inches: 9, weight: 1,
+                             user_id: user_2.id)
+  Trainee.create(full_name: 'Trainee2 Name', height_feet: 5, height_inches: 9, weight: 2, user_id: user_3.id)
+  Trainee.create(full_name: 'Trainee3 Name', height_feet: 5, height_inches: 9, weight: 2, user_id: user_4.id)
 
   # Use Capybara to log in as the user
   visit root_path

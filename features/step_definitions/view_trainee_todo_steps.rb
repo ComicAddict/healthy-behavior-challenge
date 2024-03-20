@@ -4,7 +4,7 @@ Given('I am an instructor with a trainee {string} and following challenges:') do
   user = User.create!(email: 'testInstructor@gmail.com', password: 'abcdef', user_type: 'Instructor')
   trainee_user = User.create!(email: 'testTrainee3@gmail.com', password: 'abcdef', user_type: 'Trainee')
   instructor = Instructor.create!(user:, first_name: 'John', last_name: 'Doe')
-  trainee = Trainee.create!(user: trainee_user, full_name: string, height: 11, weight: 11)
+  trainee = Trainee.create!(user: trainee_user, full_name: string, height_feet: 5, height_inches: 6, weight: 11)
   table.hashes.each do |challenge|
     challenge_create = Challenge.create!(name: challenge['name'], startDate: challenge['startDate'], endDate: challenge['endDate'], instructor:, tasks_attributes: {
                                            '0' => { taskName: 'Task 1' },
@@ -30,7 +30,7 @@ Given('I am an instructor with a trainee {string} and an Ongoing Challenge {stri
   user = User.create!(email: 'testInstructor@gmail.com', password: 'abcdef', user_type: 'Instructor')
   trainee_user = User.create!(email: 'testTrainee2@gmail.com', password: 'abcdef', user_type: 'Trainee')
   instructor = Instructor.create!(user:, first_name: 'John', last_name: 'Doe')
-  trainee = Trainee.create!(user: trainee_user, full_name: string, height: 11, weight: 11)
+  trainee = Trainee.create!(user: trainee_user, full_name: string, height_feet: 4, height_inches: 10, weight: 11)
   puts trainee.id
   challenge_create = Challenge.create!(name: string2, startDate: Date.today - 2, endDate: Date.today + 2, instructor:, tasks_attributes: {
                                          '0' => { taskName: 'Task 1' },
@@ -55,7 +55,7 @@ Given('I am an instructor with a trainee {string} and a Future Challenge {string
   user = User.create!(email: 'testInstructor@gmail.com', password: 'abcdef', user_type: 'Instructor')
   trainee_user = User.create!(email: 'testTrainee1@gmail.com', password: 'abcdef', user_type: 'Trainee')
   instructor = Instructor.create!(user:, first_name: 'John', last_name: 'Doe')
-  trainee = Trainee.create!(user: trainee_user, full_name: string, height: 11, weight: 11)
+  trainee = Trainee.create!(user: trainee_user, full_name: string, height_feet: 6, height_inches: 0, weight: 11)
   puts trainee.id
   challenge_create = Challenge.create!(name: string2, startDate: Date.today + 2, endDate: Date.today + 4, instructor:, tasks_attributes: {
                                          '0' => { taskName: 'Task 1' },
