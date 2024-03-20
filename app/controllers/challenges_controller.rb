@@ -374,7 +374,7 @@ class ChallengesController < ApplicationController
   private
 
   def challenge_params
-    params.require(:challenge).permit(:name, :id, :startDate, :endDate, tasks_attributes: %i[id taskName _destroy])
+    params.require(:challenge).permit(:name, :id, :startDate, :endDate, tasks_attributes: %i[id taskName task_id _destroy])
   end
 
   def require_user
