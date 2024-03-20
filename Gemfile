@@ -72,6 +72,8 @@ gem 'bootstrap-sass', '~> 3.4.1'
 # gem "therubyracer"
 gem 'will_paginate'
 
+gem 'rails-erd', group: :development
+
 # gem 'kaminari'
 
 group :development, :test do
