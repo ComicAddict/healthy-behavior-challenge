@@ -11,6 +11,12 @@
 user = User.create!(email: 'healthybehaviorchallenge@gmail.com', password: 'asdf', user_type: 'Instructor')
 Instructor.create!(user_id: user.id, first_name: 'HBCMainInstructor', last_name: 'HBCMainInstructor_lastName')
 
+nikiInstructor = User.create!(email: 'niki_instructor@gmail.com', password: '1234', user_type: 'Instructor')
+Instructor.create!(user_id: nikiInstructor.id, first_name: 'Niki', last_name: 'Ritchey')
+
+sheenaInstructor = User.create!(email: 'Sheena4youngs@yahoo.com', password: '1234', user_type: 'Instructor')
+Instructor.create!(user_id: sheenaInstructor.id, first_name: 'Sheena', last_name: 'Youngs')
+
 tasks_data = [
   { taskName: 'Drink 8 Cups of Water', saved_status: 1 },
   { taskName: 'Exercise for at least 30 min', saved_status: 1 },
