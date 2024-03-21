@@ -1,6 +1,6 @@
 # README
 
-1. [deployed app](https://hbcapp-0b562e08f85e.herokuapp.com/)
+1. [deployed app](https://hbc-f855dfc7b6d2.herokuapp.com/)
       - Instructor Credentials:
            ```
            Email :  healthybehaviorchallenge@gmail.com
@@ -100,7 +100,7 @@
       heroku open
       ```
     - You can find our deployed app here:
-      https://hbcapp-0b562e08f85e.herokuapp.com/
+      https://hbc-f855dfc7b6d2.herokuapp.com/
       
 8. Know How to Use the Web application
     - We have Two Modules :
