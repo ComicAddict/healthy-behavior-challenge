@@ -26,6 +26,9 @@ class ViewTraineesController < ApplicationController
   def deactivate
     active_trainee = Trainee.find(params[:id])
 
+    ChallengeTrainee.where(trainee: active_trainee).destroy_all
+    TodolistTask.where(trainee: active_trainee).destroy_all
+
     DeactivatedTrainee.transaction do
       DeactivatedTrainee.create!(active_trainee.attributes.except("id", "created_at", "updated_at"))
       active_trainee.destroy!

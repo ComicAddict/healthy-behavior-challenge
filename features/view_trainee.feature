@@ -26,11 +26,17 @@ Feature: View Trainees Navigation
     When I attempt to view a profile for a non-existent trainee
     Then I should see an error message indicating the trainee does not exist
 
-  Scenario: No trainees are available to view
+  Scenario: No active trainees are available to view
     Given I have instructor access
     And I am on the "View Trainees" page
-    And no trainees exist
-    Then I should see a message indicating there are no trainees to display
+    And no active trainees exist
+    Then I should see a message indicating there are no active trainees to display
+
+  Scenario: No deactive trainees are available to view
+    Given I have instructor access
+    And I am on the "View Trainees" page
+    And no deactive trainees exist
+    Then I should see a message indicating there are no deactive trainees to display
 
   Scenario: Instructor views a trainee's challenges
     Given I have instructor access
@@ -58,4 +64,3 @@ Feature: View Trainees Navigation
     And I click on the "Progress" button for the first challenge
     And I click on the "Back" button
     Then I should be back on that trainee's challenges page
-

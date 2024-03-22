@@ -91,12 +91,20 @@ Then('I should see an error message indicating the trainee does not exist') do
   expect(page).to have_content('Trainee not found.')
 end
 
-Given('no trainees exist') do
+Given('no active trainees exist') do
   Trainee.delete_all
 end
 
-Then('I should see a message indicating there are no trainees to display') do
-  expect(page).to have_content('No Trainees.')
+Given('no deactive trainees exist') do
+  DeactivatedTrainee.delete_all
+end
+
+Then('I should see a message indicating there are no active trainees to display') do
+  expect(page).to have_content('No Active Trainees.')
+end
+
+Then('I should see a message indicating there are no deactive trainees to display') do
+  expect(page).to have_content('No Deactive Trainees.')
 end
 
 When('I click on the "Challenges" button for the first trainee') do
