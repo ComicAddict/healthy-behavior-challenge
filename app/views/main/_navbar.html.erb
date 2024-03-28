@@ -7,19 +7,23 @@
         <% if @is_instructor || current_user.present? %>
           <%= link_to 'HBC', user_path(current_user), class: 'navbar-brand', style: 'color: white; font-size: 40px;' %>
         <% end %>
+        
+        <% if @is_instructor || current_user.present? %>
+           <%= link_to 'Home', user_path(current_user), class: 'navbar-brand', style: 'color: white', :method => :get %>
+        <% end %>
+
+
+
        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
          <span class="glyphicon glyphicon-menu-hamburger" style="color: white;"></span>
        </button>
       </div>
 
+ 
+
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
             <% if @is_instructor %>
-              <li>            
-                <% if @is_instructor || current_user.present? %>
-                  <%= link_to 'Home', user_path(current_user), class: 'navbar-brand', style: 'color: white', :method => :get %>
-                <% end %>
-              </li>
               <li><%= link_to 'My Profile', profile_path, style: 'color: white' %></li>
               <li><%= link_to 'Refer Instructor', instructor_referral_path, style: 'color: white' %></li>
               <li><%= link_to 'View Trainees', view_trainees_path, style: 'color: white' %></li>
