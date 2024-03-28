@@ -1,36 +1,32 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<nav class="navbar navbar-fixed-top navbar-light bg-primary">
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
   <div class="container-fluid">
-    <div class="navbar-header">
-      <div class="container-fluid">
-        <% if @is_instructor || current_user.present? %>
-          <%= link_to 'HBC', user_path(current_user), class: 'navbar-brand', style: 'color: white; font-size: 40px;' %>
-        <% end %>
-      </div>
-    </div>
-    <div class="collapse navbar-collapse" id="navbarContent", style="float-right">
-      <ul class="nav navbar-nav navbar-right">
-        <% if @is_instructor || current_user.present? %>
-          <%= link_to 'Home', user_path(current_user), class: 'navbar-brand', style: 'color: white', :method => :get %>
-        <% end %>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            <span class="glyphicon glyphicon-menu-hamburger" style="color: white;"></span>
-          </a>
-          <ul class="dropdown-menu">
+    <% if @is_instructor || current_user.present? %>
+      <a class="navbar-brand" href="<%= user_path(current_user) %>" style="color: white; font-size: 40px;">
+        HBC
+      </a>
+    <% end %>
+    <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon">Menu</span>
+    </button>
+    <button  class="btn btn-info">
+        <%= link_to 'Home', user_path(current_user), class: 'nav-link', style: 'color: white;', method: :get %>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav ml-auto">
             <% if @is_instructor %>
-              <li><%= link_to 'My Profile', profile_path %></li>
-              <li><%= link_to 'Refer Instructor', instructor_referral_path %></li>
-              <li><%= link_to 'View Trainees', view_trainees_path %></li>
+              <a><%= link_to 'My Profile', profile_path, class: 'dropdown-item', style: 'color: white;'%></a>
+              <a><%= link_to 'Refer Instructor', instructor_referral_path, class: 'dropdown-item' , style: 'color: white;'%></a>
+              <a><%= link_to 'View Trainees', view_trainees_path, class: 'dropdown-item' , style: 'color: white;'%></a>
             <% elsif current_user.present? %>
-              <li><%= link_to 'My Profile', trainee_profile_path %></li>
+              <a><%= link_to 'My Profile', trainee_profile_path, class: 'dropdown-item', style: 'color: white;' %></a>
             <% end %>
-            <li><%= link_to "Sign Out", signout_path, method: :get %></li>
-          </ul>
-        </li>
+            <a><%= link_to "Sign Out", signout_path, method: :get, class: 'dropdown-item', style: 'color: white;' %></a>
       </ul>
     </div>
   </div>
 </nav>
+
+
