@@ -1,0 +1,78 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<div class="splash-container">
+  <div class="splash-content">
+    <div class="splash-image">
+      <div class="img-fluid">
+      <%= image_tag asset_path("login.jpeg"), alt: "Splash Image"%>
+      </div>
+    </div>
+    <div class="splash-text">
+      <h2 class="splash-title">Unlock Your Potential, Embrace Your Health</h2>
+      <p class="splash-description">Achieve your fitness goals and lead a healthier life with our App – your ultimate companion for tracking challenges, nutrition, and progress.</p>
+      <button class="btn btn-primary btn-lg align-center" onclick="hideSplash()">Begin Here!</button>
+    </div>
+  </div>
+  <span class="close-icon" onclick="hideSplash()">&times;</span>
+</div>
+
+<style>
+  .splash-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 9999;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .splash-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .splash-image {
+    flex: 1;
+    max-width: 100%;
+    max-height: 100vh;
+    margin-right: 100px;
+    padding-left: 50px;
+  }
+  .splash-text {
+    flex: 1;
+    text-align: center;
+    max-width: 50%;
+    padding-right: 25px;
+  }
+  .close-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #000;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  .splash-title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  .splash-description {
+    font-size: 18px;
+    margin-bottom: 30px;
+    text-align: left;
+  }
+</style>
+
+<script>
+  function hideSplash() {
+    document.querySelector('.splash-container').style.display = 'none';
+  }
+</script>
+
