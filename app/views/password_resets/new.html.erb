@@ -1,28 +1,32 @@
 <div>
-<%= render 'main/before_log_in' %>
-<div class="container">
-<div class="row">
-<div class="col-md-6 col-md-offset-3" style="margin-top: 20%;">
-<% if flash[:notice] %>
-  <%= content_tag :h3, flash[:notice], class:'text-center' %>
-<% elsif flash[:alert] %>
-  <%= content_tag :h3, flash[:alert], class:'text-center' %>
-<% end %>
-  <%= content_tag :h3, "Forgot Password", class:'text-center' %>
-
-<%= form_with url: password_reset_path do |form| %>
-
-  <div class="form-group">
-  <%= label_tag :email, 'Email' %><br>
-  <%= form.email_field :email , class: 'form-control', placeholder: 'Enter your email'%><br>
-  </div>
-  <br> </br>
-  <div class="button-container">
-  <%= form.submit "Reset Password" , class: 'btn btn-primary btn-block' %>
-  </div>
-<% end %>
-
-  </div>
-  </div>
+  <%= render 'main/before_log_in' %>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3" style="margin-top: 20%;">
+        <% if flash[:notice] %>
+          <%= content_tag :h3, flash[:notice], class:'text-center' %>
+        <% elsif flash[:alert] %>
+          <%= content_tag :h3, flash[:alert], class:'text-center' %>
+        <% end %>
+        <div class="login-container">
+          <div class="login-box">
+            <%= content_tag :h2, "Forgot Your Password?", class: 'text-center', style: 'font-weight: 500; margin-bottom: 30px;' %>
+            <%= form_with url: password_reset_path do |form| %>
+              <div class="form-group">
+                <%= label_tag :email, 'Email' %>
+                <%= form.email_field :email, class: 'form-control', placeholder: 'Enter your email' %>
+              </div>
+              <br>
+              <div class="col-md-14">
+                <%= form.submit "Reset Password", class: 'btn btn-primary btn-block btn-lg' %>
+              </div>
+              <div class="col-md-14 text-center mt-3">
+                <%= link_to "Back to Sign In", login_path %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

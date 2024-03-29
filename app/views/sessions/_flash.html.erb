@@ -4,14 +4,12 @@
 <div class="splash-container">
   <div class="splash-content">
     <div class="splash-image">
-      <div class="img-fluid">
-      <%= image_tag asset_path("login.jpeg"), alt: "Splash Image"%>
-      </div>
+      <%= image_tag asset_path("login.jpeg"), alt: "Splash Image", class: "img-fluid" %>
     </div>
     <div class="splash-text">
       <h2 class="splash-title">Unlock Your Potential, Embrace Your Health</h2>
       <p class="splash-description">Achieve your fitness goals and lead a healthier life with our App – your ultimate companion for tracking challenges, nutrition, and progress.</p>
-      <button class="btn btn-primary btn-lg align-center" onclick="hideSplash()">Begin Here!</button>
+      <button class="btn btn-primary btn-lg" onclick="hideSplash()">Begin Here!</button>
     </div>
   </div>
   <span class="close-icon" onclick="hideSplash()">&times;</span>
@@ -27,28 +25,29 @@
     background-color: #fff;
     z-index: 9999;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
   }
+
   .splash-content {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
-  }
-  .splash-image {
-    flex: 1;
-    max-width: 100%;
-    max-height: 100vh;
-    margin-right: 100px;
-    padding-left: 50px;
-  }
-  .splash-text {
-    flex: 1;
     text-align: center;
-    max-width: 50%;
-    padding-right: 25px;
+    padding: 20px;
   }
+
+  .splash-image {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .splash-text {
+    max-width: 100%;
+    text-align: center;
+    align-items: center;
+  }
+
   .close-icon {
     position: absolute;
     top: 10px;
@@ -57,22 +56,60 @@
     font-size: 24px;
     cursor: pointer;
   }
+
   .splash-title {
-    font-size: 32px;
+    font-size: 24px;
     font-weight: bold;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+
+  .splash-description {
+    font-size: 16px;
     margin-bottom: 20px;
     text-align: left;
   }
-  .splash-description {
-    font-size: 18px;
-    margin-bottom: 30px;
-    text-align: left;
+
+  @media (min-width: 768px) {
+    .splash-content {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 50px;
+    }
+
+    .splash-image {
+      flex: 1;
+      max-width: 50%;
+      margin-right: 50px;
+      margin-bottom: 0;
+    }
+
+    .splash-text {
+      flex: 1;
+      max-width: 50%;
+      text-align: center;
+    }
+
+    .splash-title {
+      font-size: 32px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .splash-description {
+      font-size: 18px;
+      margin-bottom: 30px;
+      text-align: left;
+    }
   }
 </style>
+
+<!-- Style for form -->
+
 
 <script>
   function hideSplash() {
     document.querySelector('.splash-container').style.display = 'none';
   }
 </script>
-
