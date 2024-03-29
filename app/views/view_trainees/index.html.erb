@@ -23,9 +23,7 @@
               <%= link_to 'View Challenges', trainee_challenges_path(trainee), class: 'btn btn-primary' %>
             </td>
             <td>
-             <!-- <%= button_to 'Deactivate', deactivate_trainee_path(trainee), method: :post, form: { data: { confirm: "Are you sure?" } }, class: 'btn btn-warning' %>-->
               <%= button_to 'Deactivate', deactivate_trainee_path(trainee), method: :post, onclick: "return confirm('Are you sure?')", class: 'btn btn-warning' %>
-
             <td>
           </tr>
         <% end %>
@@ -53,14 +51,10 @@
               <%= link_to 'View Profile', deactivated_trainee_profile_details_path(trainee), class: 'btn btn-primary' %>
             </td>
             <td>
-              <!--<%= button_to 'Activate', activate_deactivated_trainee_path(trainee), method: :post, form: { data: { confirm: "Are you sure you want to activate this trainee?" } }, class: 'btn btn-success' %>-->
               <%= button_to 'Activate', activate_deactivated_trainee_path(trainee), method: :post, onclick: "return confirm('Are you sure you want to activate this trainee?')" , class: 'btn btn-success' %>
-
             </td>
             <td>
               <%= button_to 'Delete', destroy_deactivated_trainee_path(trainee), method: :delete, onclick: "return confirm('Are you sure?')", class: "btn btn-danger" %>
-
-              <!--<%= button_to 'Delete', destroy_deactivated_trainee_path(trainee), method: :delete, form: { data: { confirm: "Are you sure you want to permanently delete this trainee?" } }, class: 'btn btn-danger' %>-->
             </td>
           </tr>
         <% end %>

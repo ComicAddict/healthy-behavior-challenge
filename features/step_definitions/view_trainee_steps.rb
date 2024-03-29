@@ -148,3 +148,59 @@ Then('I should be back on that trainee\'s challenges page') do
   expect(page).to have_content('Current Challenges')
   expect(page).to have_content('Past Challenges')
 end
+
+Given('I am on the "View Trainees" page with at least one deactivated trainee') do
+  user = User.create!(email: 'deactivated@example.com', password: 'password', user_type: 'Trainee')
+  DeactivatedTrainee.create!(full_name: 'Deactivated Trainee', height_feet: 5, height_inches: 8, weight: 150, user: user)
+
+  visit view_trainees_path
+end
+
+When('I click on the "View Profile" button for the first deactivated trainee') do
+  first(:link, 'View Profile').click
+end
+
+Then("I should be on that deactivated trainee's profile details page") do
+  expect(page).to have_current_path(deactivated_trainee_profile_details_path(DeactivatedTrainee.first))
+end
+
+When('I click on the "Delete" button for the first deactivated trainee') do
+  first(:button, 'Delete').click
+end
+
+Then('I should see a notice saying "Trainee has been permanently deleted."') do
+  expect(page).to have_text('Trainee has been permanently deleted.')
+end
+
+And('the deactivated trainee should no longer appear on the list') do
+  expect(page).not_to have_text('Deactivated Trainee Name')
+end
+
+When('I click on the "Activate" button for the first deactivated trainee') do
+  first(:button, 'Activate').click
+end
+
+Then('I should see a notice saying "Trainee has been activated."') do
+  expect(page).to have_text('Trainee has been activated.')
+end
+
+And('the trainee should appear in the active trainees list') do
+  expect(page).to have_text('Trainee Name')
+  expect(page).to have_button('Deactivate')
+end
+
+And('the trainee should no longer appear in the deactivated trainees list') do
+  expect(page).not_to have_text('Deactivated Trainee Name')
+end
+
+When('I click on the "Deactivate" button for the first active trainee') do
+  first(:button, 'Deactivate').click
+end
+
+Then('the trainee should no longer appear in the active trainees list') do
+  expect(page).not_to have_button('Deactivate')
+end
+
+And('the trainee should appear in the deactivated trainees list') do
+  expect(page).to have_button('Activate')
+end
