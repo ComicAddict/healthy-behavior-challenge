@@ -50,6 +50,12 @@ Rails.application.routes.draw do
   get 'view_trainees/:trainee_id/challenges/:challenge_id/progress', to: 'view_trainees#progress',
                                                                      as: 'trainee_challenge_progress'
 
+  post 'view_trainees/:id/deactivate', to: 'view_trainees#deactivate', as: 'deactivate_trainee'
+  post 'view_trainees/deactivated/:id/activate', to: 'view_trainees#activate', as: 'activate_deactivated_trainee'
+
+  get 'view_trainees/deactivated/:id/profile_details', to: 'view_trainees#deactivated_profile_details', as: 'deactivated_trainee_profile_details'
+  delete 'view_trainees/deactivated/:id', to: 'view_trainees#destroy_deactivated', as: 'destroy_deactivated_trainee'
+
   resources :challenges do
     member do
       get 'edit', to: 'challenges#edit'

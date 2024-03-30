@@ -26,11 +26,17 @@ Feature: View Trainees Navigation
     When I attempt to view a profile for a non-existent trainee
     Then I should see an error message indicating the trainee does not exist
 
-  Scenario: No trainees are available to view
+  Scenario: No active trainees are available to view
     Given I have instructor access
     And I am on the "View Trainees" page
-    And no trainees exist
-    Then I should see a message indicating there are no trainees to display
+    And no active trainees exist
+    Then I should see a message indicating there are no active trainees to display
+
+  Scenario: No deactive trainees are available to view
+    Given I have instructor access
+    And I am on the "View Trainees" page
+    And no deactive trainees exist
+    Then I should see a message indicating there are no deactive trainees to display
 
   Scenario: Instructor views a trainee's challenges
     Given I have instructor access
@@ -59,3 +65,30 @@ Feature: View Trainees Navigation
     And I click on the "Back" button
     Then I should be back on that trainee's challenges page
 
+  Scenario: Instructor views a deactivated trainee's profile details
+    Given I have instructor access
+    And I am on the "View Trainees" page with at least one deactivated trainee
+    When I click on the "View Profile" button for the first deactivated trainee
+    Then I should be on that deactivated trainee's profile details page
+
+  Scenario: Instructor deletes a deactivated trainee
+    Given I have instructor access
+    And I am on the "View Trainees" page with at least one deactivated trainee
+    When I click on the "Delete" button for the first deactivated trainee
+    Then I should see a notice saying "Trainee has been permanently deleted."
+    And the deactivated trainee should no longer appear on the list
+
+  Scenario: Instructor activates a deactivated trainee
+      Given I have instructor access
+      And I am on the "View Trainees" page with at least one deactivated trainee
+      When I click on the "Activate" button for the first deactivated trainee
+      Then I should see a notice saying "Trainee has been activated."
+      And the trainee should appear in the active trainees list
+      And the trainee should no longer appear in the deactivated trainees list
+
+  Scenario: Instructor deactivates an active trainee
+    Given I have instructor access
+    And I am on the "View Trainees" page with at least one trainee
+    When I click on the "Deactivate" button for the first active trainee
+    Then the trainee should no longer appear in the active trainees list
+    And the trainee should appear in the deactivated trainees list

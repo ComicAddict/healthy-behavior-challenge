@@ -7,8 +7,9 @@
       <thead>
         <tr>
           <th>Trainee Name</th>
-          <th>View Profile Button</th>
-          <th>View Challenges Button</th>
+          <th>View Profile</th>
+          <th>View Challenges</th>
+          <th>Deactivate Trainee</th>
         </tr>
       </thead>
       <tbody>
@@ -21,11 +22,49 @@
             <td>
               <%= link_to 'View Challenges', trainee_challenges_path(trainee), class: 'btn btn-primary' %>
             </td>
+            <td>
+              <%= button_to 'Deactivate', deactivate_trainee_path(trainee), method: :post, onclick: "return confirm('Are you sure?')", class: 'btn btn-warning' %>
+            <td>
           </tr>
         <% end %>
       </tbody>
     </table>
   <% else %>
-    <p>No Trainees.</p>
+    <p>No Active Trainees.</p>
   <% end %>
+
+
+
+  <% if @deactivated_trainees_present %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Trainee Name</th>
+          <th>View Profile</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @deactivated_trainees.each do |trainee| %>
+          <tr>
+            <td><%= trainee.full_name %></td>
+            <td>
+              <%= link_to 'View Profile', deactivated_trainee_profile_details_path(trainee), class: 'btn btn-primary' %>
+            </td>
+            <td>
+              <%= button_to 'Activate', activate_deactivated_trainee_path(trainee), method: :post, onclick: "return confirm('Are you sure you want to activate this trainee?')" , class: 'btn btn-success' %>
+            </td>
+            <td>
+              <%= button_to 'Delete', destroy_deactivated_trainee_path(trainee), method: :delete, onclick: "return confirm('Are you sure?')", class: "btn btn-danger" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>No Deactive Trainees.</p>
+  <% end %>
+
+
+
+
 </div>

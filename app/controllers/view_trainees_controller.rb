@@ -6,11 +6,63 @@ class ViewTraineesController < ApplicationController
 
   def index
     @trainees = Trainee.all
+    @deactivated_trainees = DeactivatedTrainee.all
+
     @trainees_present = @trainees.exists?
+    @deactivated_trainees_present = @deactivated_trainees.exists?
   end
 
   def profile_details
     @trainee = Trainee.find(params[:id])
+  end
+
+  def deactivated_profile_details
+    @trainee = DeactivatedTrainee.find(params[:id])
+    render 'profile_details'
+  end
+
+
+
+  def deactivate
+    active_trainee = Trainee.find(params[:id])
+
+    ChallengeTrainee.where(trainee: active_trainee).destroy_all
+    TodolistTask.where(trainee: active_trainee).destroy_all
+
+    DeactivatedTrainee.transaction do
+      DeactivatedTrainee.create!(active_trainee.attributes.except("id", "created_at", "updated_at"))
+      active_trainee.destroy!
+    end
+
+  rescue => e
+    flash[:alert] = "Failed to deactivate trainee: #{e.message}"
+  ensure
+    redirect_to view_trainees_path
+  end
+
+  def activate
+    deactivated_trainee = DeactivatedTrainee.find(params[:id])
+
+    Trainee.transaction do
+      Trainee.create!(deactivated_trainee.attributes.except("id", "created_at", "updated_at", "original_trainee_id"))
+      deactivated_trainee.destroy!
+    end
+
+    flash[:notice] = 'Trainee has been activated.'
+  rescue => e
+    flash[:alert] = "Failed to activate trainee: #{e.message}"
+  ensure
+    redirect_to view_trainees_path
+  end
+
+  def destroy_deactivated
+    deactivated_trainee = DeactivatedTrainee.find(params[:id])
+    deactivated_trainee.destroy!
+    flash[:notice] = 'Trainee has been permanently deleted.'
+  rescue ActiveRecord::RecordNotDestroyed
+    flash[:alert] = 'Failed to delete the trainee.'
+  ensure
+    redirect_to view_trainees_path
   end
 
   def progress

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_11_163327) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_21_221105) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_163327) do
     t.datetime "updated_at", null: false
     t.bigint "instructor_id"
     t.index ["instructor_id"], name: "index_challenges_on_instructor_id"
+  end
+
+  create_table "deactivated_trainees", force: :cascade do |t|
+    t.string "full_name"
+    t.integer "height_feet"
+    t.integer "height_inches"
+    t.float "weight"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_deactivated_trainees_on_user_id"
   end
 
   create_table "instructor_referrals", force: :cascade do |t|
@@ -110,6 +121,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_163327) do
   add_foreign_key "challenge_trainees", "challenges"
   add_foreign_key "challenge_trainees", "trainees"
   add_foreign_key "challenges", "instructors"
+  add_foreign_key "deactivated_trainees", "users"
   add_foreign_key "instructor_referrals", "users"
   add_foreign_key "instructors", "users"
   add_foreign_key "todolist_tasks", "challenges"
