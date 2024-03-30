@@ -1,82 +1,75 @@
 <div>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3" style="margin-top: 8%;">
-        <% if flash[:notice] %>
-          <%= content_tag :h3, flash[:notice], class:'text-center' %>
-        <% elsif flash[:alert] %>
-          <%= content_tag :h3, flash[:alert], class:'text-center' %>
-        <% else %>
-          <%= content_tag :h2, "Trainee Signup", class:'text-center', style: 'font-weight: 500' %>
-        <% end %>
+  <%= render 'main/before_log_in' %>
 
-        <%= form_with model: @user, url: trainee_signup_path, data: {turbo: false} do |f| %>
-          <div class="form-group">
-            <%= f.label :full_name, "Full Name" %>
-            <%= f.text_field :full_name, class: "form-control", placeholder: "John Smilga" %>
-          </div>
-
-          <div class="form-group">
-            <%= f.label :email %>
-            <%= f.email_field :email, class: "form-control", placeholder: "user@example.com", autocomplete: true  %>
-          </div>
-
-          <div class="form-group">
-            <%= f.label :password %>
-            <%= f.password_field :password, class: "form-control", placeholder: "password"  %>
-          </div>
-
-          <div class="form-group">
-            <%= f.label :password_confirmation, "Password Confirmation" %>
-            <%= f.password_field :password_confirmation, class: "form-control", placeholder: "password"  %>
-          </div>
-
-          <div class="form-group">
-            <%= f.label :height_feet, "Height Feet (integer)" %>
-            <%= f.number_field :height_feet, class: "form-control", placeholder: "5" %>
-          </div>
-
-          <div class="form-group">
-            <%= f.label :height_inches, "Height Inches (integer, 0-11)" %>
-            <%= f.number_field :height_inches, class: "form-control", placeholder: "4" %>
-          </div>
-
-          <div class="form-group">
-            <%= f.label :weight, "Weight (in lbs)" %>
-            <%= f.number_field :weight, class: "form-control", placeholder: "85"  %>
-          </div>
-
-          <div class="form-group">
-            <%= f.submit 'Sign Up', class: "btn btn-primary btn-block" %>
-            <div class="text-center" style="margin-top: 5px">
-              <%= link_to "Already a user? Sign In", login_path %>
-            </div>
-          </div>
-        <% end %>
-
-        <% if @user.errors.any? %>
-          <div id="error_explanation">
-            <h4><%= pluralize(@user.errors.count, "error") %> prohibited this user from signing up:</h4>
-            <ul>
-              <% @user.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-
-        <% if @trainee.errors.any? %>
-          <div id="error_explanation">
-            <h4><%= pluralize(@trainee.errors.count, "error") %> prohibited this user from signing up:</h4>
-            <ul>
-              <% @trainee.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-
+  <div class="login-container">
+  <div class="login-box">
+    <% if flash[:notice] %>
+      <%= content_tag :h3, flash[:notice], class:'text-center' %>
+    <% elsif flash[:alert] %>
+      <%= content_tag :h3, flash[:alert], class:'text-center' %>
+    <% else %>
+      <%= content_tag :h2, "Trainee Signup", class:'text-center', style: 'font-weight: 500; margin-bottom: 30px;' %>
+    <% end %>
+    
+    <%= form_with model: @user, url: trainee_signup_path, data: {turbo: false} do |f| %>
+      <div class="form-group">
+        <%= f.label :full_name, "Full Name" %>
+        <%= f.text_field :full_name, class: "form-control", placeholder: "John Smilga" %>
       </div>
-    </div>
+      <div class="form-group">
+        <%= f.label :email %>
+        <%= f.email_field :email, class: "form-control", placeholder: "user@example.com", autocomplete: true %>
+      </div>
+      <div class="form-group">
+        <%= f.label :password %>
+        <%= f.password_field :password, class: "form-control", placeholder: "password" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :password_confirmation, "Password Confirmation" %>
+        <%= f.password_field :password_confirmation, class: "form-control", placeholder: "password" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :height_feet, "Height Feet (integer)" %>
+        <%= f.number_field :height_feet, class: "form-control", placeholder: "5" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :height_inches, "Height Inches (integer, 0-11)" %>
+        <%= f.number_field :height_inches, class: "form-control", placeholder: "4" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :weight, "Weight (in lbs)" %>
+        <%= f.number_field :weight, class: "form-control", placeholder: "85" %>
+      </div>
+      <br>
+      <div class="col-md-14">
+        <%= f.submit 'Sign Up', class: "btn btn-primary btn-block btn-lg" %>
+      </div>
+      <div class="col-md-14 text-center mt-3">
+        <%= link_to "Already a user? Sign In", login_path %>
+      </div>
+    <% end %>
+    
+    <% if @user.errors.any? %>
+      <div id="error_explanation">
+        <h4><%= pluralize(@user.errors.count, "error") %> prohibited this user from signing up:</h4>
+        <ul>
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    
+    <% if @trainee.errors.any? %>
+      <div id="error_explanation">
+        <h4><%= pluralize(@trainee.errors.count, "error") %> prohibited this user from signing up:</h4>
+        <ul>
+          <% @trainee.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
   </div>
+</div>
 </div>

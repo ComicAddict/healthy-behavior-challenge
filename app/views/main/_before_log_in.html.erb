@@ -1,6 +1,5 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
 <!-- Font Style -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,9 +9,7 @@
   <div class="container-fluid">
     <div class="navbar-header">
       <div class="container-fluid">
-        <% if @is_instructor || current_user.present? %>
-          <%= link_to 'HBC', user_path(current_user), class: 'navbar-brand', style: 'color: white; font-size: 40px;' %>
-        <% end %>
+      <%= link_to 'HBC', new_session_path, class: 'navbar-brand', style: 'color: white; font-size: 40px;' %>
       </div>
     </div>
     <div class="collapse navbar-collapse" id="navbarContent", style="float-right">
@@ -22,17 +19,13 @@
             <span class="glyphicon glyphicon-menu-hamburger" style="color: white;"></span>
           </a>
           <ul class="dropdown-menu">
-            <% if @is_instructor %>
-              <li><%= link_to 'My Profile', profile_path %></li>
-              <li><%= link_to 'Refer Instructor', instructor_referral_path %></li>
-              <li><%= link_to 'View Trainees', view_trainees_path %></li>
-            <% elsif current_user.present? %>
-              <li><%= link_to 'My Profile', trainee_profile_path %></li>
-            <% end %>
-            <li><%= link_to "Sign Out", signout_path, method: :get %></li>
+              <!-- Need to create a new page introducing the app -->
+              <li><a>About</a></li>
           </ul>
         </li>
       </ul>
     </div>
   </div>
 </nav>
+
+

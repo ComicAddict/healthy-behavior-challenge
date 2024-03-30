@@ -1,70 +1,63 @@
 <%= render 'main/navbar' %>
 
-<div class="container">
-  <div class="form-box">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3" style="margin-top: 10%;">
-        <% if flash[:notice] %>
-          <div class="alert alert-success text-center">
-            <%= flash[:notice] %>
-          </div>
-        <% elsif flash[:alert] %>
-          <div class="alert alert-danger text-center">
-            <%= flash[:alert] %>
-          </div>
-        <% end %>
-
-        <h2 style="font-weight: 500; padding: 0 0 3% 0">Create New Challenge</h2>
-        <%= form_with model: @challenge, local: true do |form| %>
-          <div class="form-field">
-            <%= form.label :name, 'Challenge Name' %>
-            <%= form.text_field :name, required: true, class: "form-control" %>
-          </div>
-          <br>
-
-          <div class="form-field">
-            <%= form.label :startDate, 'Start Date' %>
-            <%= form.date_field :startDate, required: true, class: "form-control" %>
-          </div>
-          <br>
-
-          <div class="form-field">
-            <%= form.label :endDate, 'End Date' %>
-            <%= form.date_field :endDate, required: true, class: "form-control" %>
-          </div>
-          <br>
-
-          <div id="task-fields">
-            <%= form.label :everyDay, 'Todo List Tasks' %> <button name="add-list" type="button" id="add-task-list-button" class="btn btn-success btn-circle"><span class="glyphicon glyphicon-plus" style="display: inline-block;"></span></button>
-            <br>
-               
-            <div class="task-field">
-              <div class="form-field">
-                <label for="challenge_tasks_attributes_0_taskName">Additional Task Details</label>
-                <br>
-                <label for="challenge_tasks_attributes_0_task_id">Select Task</label>
-                <%= form.select :task_name, Task.where(saved_status: 1).pluck(:taskName, :taskName), { prompt: 'Select a task' }, { class: 'form-control', id: 'task-dropdown-0' } %>
-                <input type="hidden" name="challenge[task_id]" id="challenge_task_id">
-                <button type="button" class="manual-entry-button btn btn-primary" data-task-index="0">Manual Entry</button>
-                <div id="manual-entry-0" style="display: none;">
-                  <input type="text" name="challenge[tasks_attributes][0][taskName]" id="challenge_tasks_attributes_0_taskName" class="form-control">
-                </div>
-                <a href="#" class="remove-task" data-index="${taskListIndex}">Remove Task</a>
-              </div>
-              
-            </div>  
-            <br>
-            
-            <div id="additional-task-lists"></div>
-          </div>
-          <br>
-          
-          <div class="form-field">
-            <%= form.submit 'Create Challenge', class: "btn btn-primary" %>
-          </div>
-        <% end %>
+<div class="login-container">
+  <div class="login-box">
+    <% if flash[:notice] %>
+      <div class="alert alert-success text-center">
+        <%= flash[:notice] %>
       </div>
-    </div>
+    <% elsif flash[:alert] %>
+      <div class="alert alert-danger text-center">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+
+    <h2 class="text-center" style="font-weight: 500; margin-bottom: 30px;">Create New Challenge</h2>
+
+    <%= form_with model: @challenge, local: true do |form| %>
+      <div class="form-group">
+        <%= form.label :name, 'Challenge Name' %>
+        <%= form.text_field :name, required: true, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :startDate, 'Start Date' %>
+        <%= form.date_field :startDate, required: true, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :endDate, 'End Date' %>
+        <%= form.date_field :endDate, required: true, class: "form-control" %>
+      </div>
+
+      <div id="task-fields">
+        <%= form.label :everyDay, 'Todo List Tasks' %>
+        <button name="add-list" type="button" id="add-task-list-button" class="btn btn-success btn-circle btn-sm">
+          <span class="glyphicon glyphicon-plus" style="display: inline-block;"></span>
+        </button>
+        <br>
+        <div class="task-field">
+          <div class="form-group">
+            <label for="challenge_tasks_attributes_0_taskName">Additional Task Details</label>
+            <br>
+            <label for="challenge_tasks_attributes_0_task_id">Select Task</label>
+            <%= form.select :task_name, Task.where(saved_status: 1).pluck(:taskName, :taskName), { prompt: 'Select a task' }, { class: 'form-control', id: 'task-dropdown-0' } %>
+            <input type="hidden" name="challenge[task_id]" id="challenge_task_id">
+            <button type="button" class="manual-entry-button btn btn-primary" style="margin-top: 10px;" data-task-index="0">Manual Entry</button>
+            <div id="manual-entry-0" style="display: none;">
+              <input type="text" name="challenge[tasks_attributes][0][taskName]" id="challenge_tasks_attributes_0_taskName" class="form-control">
+            </div>
+            <a href="#" class="remove-task" data-index="${taskListIndex}">Remove Task</a>
+          </div>
+        </div>
+        <br>
+        <div id="additional-task-lists"></div>
+      </div>
+
+      <div class="form-group">
+        <%= form.submit 'Create Challenge', class: "btn btn-primary btn-block btn-lg", style: "margin-top: 10px;" %>
+      </div>
+    <% end %>
   </div>
 </div>
 
