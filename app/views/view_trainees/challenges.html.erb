@@ -13,6 +13,19 @@
   .challenge-detail { 
     margin-left: 20px; 
   }
+  .indiChallenge:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: background-color 0.3s ease;
+  }
+  body {
+    background-image: url('<%= asset_path('past.jpeg') %>');
+    background-size: cover;
+    background-position: center 30px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
 </style>
 
 
@@ -40,6 +53,7 @@
         </div>
       <% end %>
     <% end %>
+
 
     <div class="row" style="margin-top: 20px;">
       <h2 style="font-weight: 500">Past Challenges</h2>
