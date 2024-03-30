@@ -1,65 +1,56 @@
 <%= render 'main/navbar' %>
 
-<div class="container" style="margin-top: 8%;">
+<div class="login-container">
+  <div class="login-box">
+    <% if flash[:notice] %>
+      <div class="alert alert-success text-center">
+        <%= flash[:notice] %>
+      </div>
+    <% elsif flash[:alert] %>
+      <div class="alert alert-danger text-center">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
 
-  <div class="row" style="text-align: center; margin-bottom: 2%">
-  <!-- Display the success message if present -->
-        <% if flash[:notice] %>
-          <div class="alert alert-success text-center">
-              <%= flash[:notice] %>
-          </div>
-        <% elsif flash[:alert] %>
-          <div class="alert alert-danger text-center">
-              <%= flash[:alert] %>
-          </div>
+    <h2 class="text-center" style="font-size: 30px; margin-bottom: 30px;">Edit Challenge: <%= @challenge.name %></h2>
+
+    <%= form_with model: @todo_list, url: update_challenge_path(@challenge), method: :post, id: "update-todo-list-form" do |f| %>
+      <div class="form-group">
+        <label for="start_date">Start Date</label>
+        <% if @challenge.startDate <= Date.today %>
+          <%= f.date_field :start_date, class: 'form-control', value: @challenge.startDate, id: 'start_date', :readonly => true %>
+        <% else %>
+          <%= f.date_field :start_date, class: 'form-control', value: @challenge.startDate, id: 'start_date' %>
         <% end %>
-    <h3 style="font-size: 30px;">Edit Challenge: <%= @challenge.name %></h3>
-  </div>
+      </div>
 
-  <div class="row" style="margin-bottom: 2%">
-    <div class="col-md-6 col-md-offset-3">
-      <%= form_with model: @todo_list, url: update_challenge_path(@challenge), method: :post, id: "update-todo-list-form" do |f| %>
-        <div class="form-group">
-          <label for="start_date">Start Date</label>
+      <div class="form-group">
+        <label for="end_date">End Date</label>
+        <% if @challenge.endDate < Date.today %>
+          <%= f.date_field :end_date, class: 'form-control', value: @challenge.endDate, id: 'end_date', :readonly => true %>
+        <% else %>
+          <%= f.date_field :end_date, class: 'form-control', value: @challenge.endDate, id: 'end_date' %>
+        <% end %>
+      </div>
 
-          <% if @challenge.startDate <= Date.today %>
-            <%= f.date_field :start_date, class: 'form-control', value: @challenge.startDate, id: 'start_date', :readonly => true
-            %>
-          <% else %>
-            <%= f.date_field :start_date, class: 'form-control', value: @challenge.startDate, id: 'start_date' %>
+      <div class="form-group">
+        <label for="tasks">Current Tasks List:</label>
+        <ol id="task-list">
+          <% @todo_list.each_with_index do |task, i| %>
+            <li>
+              <%= f.text_field "tasks[#{task.id}][taskName]", value: task.taskName, class: 'form-control' %>
+              <button class="btn btn-danger delete-task-button">Delete</button>
+            </li>
           <% end %>
-        </div>
+        </ol>
+      </div>
 
-        <div class="form-group">
-          <label for="end_date">End Date</label>
+      <button type="button" id="add-task-button" class="btn btn-success" style="margin-bottom: 20px;">Add Task</button>
 
-          <% if @challenge.endDate < Date.today %>
-            <%= f.date_field :end_date, class: 'form-control', value: @challenge.endDate, id: 'end_date', :readonly => true
-            %>
-          <% else %>
-            <%= f.date_field :end_date, class: 'form-control', value: @challenge.endDate, id: 'end_date' %>
-          <% end %>
-        </div>
-    
-        <div class="form-group">
-          <label for "tasks">Current Tasks List:</label>
-          <ol id="task-list">
-            <% @todo_list.each_with_index do |task, i| %>
-              <li>
-                <%= f.text_field "tasks[#{task.id}][taskName]", value: task.taskName, class: 'form-control' %>
-                <button class="btn btn-danger btn-circle delete-task-button">Delete</button> 
-              </li>
-            <% end %>
-          </ol>
-        </div>
-
-        <button type="button" id="add-task-button" class="btn btn-success" style="margin-bottom: 1%">Add Task</button>
-<br>
-        <div class="actions">
-          <%= f.submit 'Update Challenge', class: 'btn btn-primary btn-block' %>
-        </div>
-      <% end %>
-    </div>
+      <div class="form-group">
+        <%= f.submit 'Update Challenge', class: 'btn btn-primary btn-block btn-lg' %>
+      </div>
+    <% end %>
   </div>
 </div>
 

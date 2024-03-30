@@ -1,6 +1,7 @@
 <div>
   <%= render 'main/before_log_in' %>
-  <div class="login-container" style="padding-top: 100px; padding-bottom: 50px;" >
+
+  <div class="login-container">
   <div class="login-box">
     <% if flash[:notice] %>
       <%= content_tag :h3, flash[:notice], class:'text-center' %>
