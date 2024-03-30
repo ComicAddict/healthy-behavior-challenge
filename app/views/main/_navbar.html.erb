@@ -1,38 +1,38 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<!-- Font Style -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
-
-<nav class="navbar navbar-fixed-top navbar-light bg-primary">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <div class="container-fluid">
+<nav class="navbar navbar-expand-lg navbar-fixed-top navbar-light bg-primary ">
+    <div class="container-fluid">
+      <div class="navbar-header">
         <% if @is_instructor || current_user.present? %>
           <%= link_to 'HBC', user_path(current_user), class: 'navbar-brand', style: 'color: white; font-size: 40px;' %>
         <% end %>
+        
+        <% if @is_instructor || current_user.present? %>
+           <%= link_to 'Home', user_path(current_user), class: 'navbar-brand', style: 'color: white', :method => :get %>
+        <% end %>
+
+
+
+       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+         <span class="glyphicon glyphicon-menu-hamburger" style="color: white;"></span>
+       </button>
       </div>
-    </div>
-    <div class="collapse navbar-collapse" id="navbarContent", style="float-right">
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="font-size: 24px; padding: 13px 16px;">
-            <span class="glyphicon glyphicon-menu-hamburger" style="color: white;"></span>
-          </a>
-          <ul class="dropdown-menu">
+
+ 
+
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
             <% if @is_instructor %>
-              <li><%= link_to 'My Profile', profile_path %></li>
-              <li><%= link_to 'Refer Instructor', instructor_referral_path %></li>
-              <li><%= link_to 'View Trainees', view_trainees_path %></li>
+              <li><%= link_to 'My Profile', profile_path, style: 'color: white' %></li>
+              <li><%= link_to 'Refer Instructor', instructor_referral_path, style: 'color: white' %></li>
+              <li><%= link_to 'View Trainees', view_trainees_path, style: 'color: white' %></li>
             <% elsif current_user.present? %>
-              <li><%= link_to 'My Profile', trainee_profile_path %></li>
+              <li><%= link_to 'My Profile', trainee_profile_path, style: 'color: white' %></li>
             <% end %>
-            <li><%= link_to "Sign Out", signout_path, method: :get %></li>
-          </ul>
-        </li>
-      </ul>
+            <li><%= link_to "Sign Out", signout_path,style: 'color: white', method: :get %></li>
+        </ul>
+      </div>
+
     </div>
-  </div>
 </nav>
