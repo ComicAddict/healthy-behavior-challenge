@@ -8,9 +8,11 @@
     right: 20px;
   }
   .indiChallenge {
-    border: solid 2px;
     overflow: hidden;
     margin: 1% 0;
+    background: #fcfdfe;
+    border-radius: 5px;
+    opacity: 0.8;
   }
   .challenge-content {
     padding: 0 1% 1% 1%
@@ -33,7 +35,7 @@
 <%= render 'main/navbar' %>
 <div class="container d-flex justify-content-center align-items-center vh-100 vw-100" style="margin-top:10vh">
   <div class="container d-flex justify-content-center welcome-message mt-4" style="width: fit-content">
-    <h3>Welcome, <%= @user_name_from_session %></h3>
+    <h3>Welcome, <%= @user_name_from_session %>!</h3>
   </div>
 
   <% if flash[:notice] %>
@@ -65,8 +67,8 @@
       <% @challenges.each do |challenge| %>
         <div class="row indiChallenge">
           <div class="challenge-content">
-            <a href="<%= challenge_path(challenge) %>" class="challenge-tile" style="text-decoration: none;">
-              <h2 style="font-size: 24px; font-weight: 500"><%= challenge.name %></h2>
+            <a href="<%= challenge_path(challenge) %>" style="text-decoration: none;">
+              <h2 style="font-size: 24px; font-weight: 500; color: black;"><%= challenge.name %></h2>
             </a>
             <p style="display: inline; margin-right: 3em">Start Date: <%= challenge.startDate %></p>
             <p style="display: inline">End Date: <%= challenge.endDate %></p>
