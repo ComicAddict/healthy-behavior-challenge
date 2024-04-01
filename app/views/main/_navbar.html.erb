@@ -4,15 +4,12 @@
 <nav class="navbar navbar-expand-lg navbar-fixed-top navbar-light bg-primary ">
     <div class="container-fluid">
       <div class="navbar-header">
-        <% if @is_instructor || current_user.present? %>
-          <%= link_to 'HBC', user_path(current_user), class: 'navbar-brand', style: 'color: white; font-size: 40px;' %>
-        <% end %>
-        
-        <% if @is_instructor || current_user.present? %>
-           <%= link_to 'Home', user_path(current_user), class: 'navbar-brand', style: 'color: white', :method => :get %>
-        <% end %>
 
-
+        <% if @is_instructor || current_user.present? %>
+          <%= link_to user_path(current_user) do %>
+            <%= image_tag "HBC.png", style: 'width: 75px'%>
+          <% end %>
+        <% end %>
 
        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
          <span class="glyphicon glyphicon-menu-hamburger" style="color: white;"></span>
