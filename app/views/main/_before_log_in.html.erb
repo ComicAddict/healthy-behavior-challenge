@@ -9,7 +9,9 @@
   <div class="container-fluid">
     <div class="navbar-header">
       <div class="container-fluid">
-      <%= link_to 'HBC', new_session_path, class: 'navbar-brand', style: 'color: white; font-size: 40px;' %>
+      <%= link_to new_session_path do %>
+        <%= image_tag "HBC.png", style: 'width: 75px'%>
+        <% end %>
       </div>
     </div>
     <div class="collapse navbar-collapse" id="navbarContent", style="float-right">

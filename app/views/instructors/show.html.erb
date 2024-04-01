@@ -38,8 +38,8 @@
 <%= render 'main/navbar' %>
 
 <div class="container d-flex justify-content-center align-items-center vh-100 vw-100 background" style="margin-top:10vh">
-  <div class="container d-flex justify-content-center welcome-message" style="width: fit-content">
-    <h3 >Welcome, <%= @user_name_from_session %>!</h3>
+  <div class="container d-flex justify-content-center welcome-message" style="width: 80%">
+    <h3 class="text-center">Welcome, <%= @user_name_from_session %>!</h3>
   </div>
 
   <% if flash[:notice] %>
