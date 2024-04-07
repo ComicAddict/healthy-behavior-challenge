@@ -52,8 +52,8 @@ When('I fill {string} with {string}') do |field, value|
   fill_in field, with: value
 end
 
-When('I press Create Challenge') do
-  click_button 'Create Challenge'
+When('I press {string}') do |string|
+  click_button string
 end
 
 When('I visit the new challenge page') do
@@ -62,7 +62,8 @@ end
 
 # Implement additional step definitions as needed
 And('I fill in the task name field with {string}') do |task_name|
-  task_field = find('input[type="text"][name^="challenge[tasks_attributes]"]')
+  #task_field = find('input[type="text"][name^="challenge[tasks_attributes][0][taskName]"]')
+  task_field = find_by_id("manual-entry")
   task_field.set(task_name)
 end
 
