@@ -18,6 +18,11 @@
   </div>
 </div>
 
+<div style="position: fixed; bottom: 30px; right: 20px;">
+  <a href="<%= url_for(:back) %>" class="btn btn-primary back-btn" style="width: 8rem; height: 4rem; padding: 0.8% 0.3%; margin-right: 2rem; line-height: 3.5rem;">Back</a>
+  <a href="<%= show_challenges_path %>" class="btn btn-primary show-challenges-btn" style="width: 16rem; height: 4rem; padding: 0.8% 0.3%; line-height: 3.5rem;">My Challenges</a>
+<div>
+
 
 <script>
   var dates = <%= @dates_completed.to_json.html_safe %>;
