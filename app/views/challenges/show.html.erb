@@ -46,13 +46,15 @@
         </div>
     </div>
 
-    <div style="position: fixed; bottom: 2rem; right: 2rem;">
-        <% if @challenge.endDate < Date.today %>
-            <button type="button" id="edit-challenge" class="btn btn-primary btn-block" style="width: 16rem; padding: 5% 2%" disabled>Edit Challenge</button>
-        <% else %>
-            <button type="button" id="edit-challenge" class="btn btn-primary btn-block" style="width: 16rem; padding: 5% 2%">Edit Challenge</button>
-        <% end %>
-    </div>
+</div>
+
+<div style="position: fixed; bottom: 30px; right: 20px;">
+  <a href="<%= root_path %>" class="btn btn-primary back-btn" style="width: 8rem; height: 4rem; padding: 0.8% 0.3%; margin-right: 2rem; line-height: 3.5rem;">Back</a>
+  <% if @challenge.endDate < Date.today %>
+    <button type="button" id="edit-challenge" class="btn btn-primary show-challenges-btn" style="width: 12rem; height: 4rem; padding: 0.8% 0.3%; line-height: 3.5rem; disabled>Edit Challenge</button>
+  <% else %>
+    <button type="button" id="edit-challenge" class="btn btn-primary show-challenges-btn" style="width: 12rem; height: 4rem; padding: 0.8% 0.3%; line-height: 3.5rem;">Edit Challenge</button>
+  <% end %>
 </div>
 
 <script type="text/javascript">
