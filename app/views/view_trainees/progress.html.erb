@@ -7,10 +7,12 @@
 </style>
 
 <div>
-  <%= render 'main/navbar' %>
+  <div class="row" style="height: 80px">
+    <%= render 'main/navbar' %>
+  </div>
 
   <div class="container">
-    <div class="row" style="margin-top: 2%;">
+    <div class="row" style="height: 80px">
       <% if flash[:notice] %>
         <div class="alert alert-success text-center">
           <%= flash[:notice] %>

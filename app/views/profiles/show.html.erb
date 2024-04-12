@@ -36,3 +36,11 @@
     </div>
   </div>
 </div>
+
+<div style="position: fixed; bottom: 30px; right: 20px;">
+  <% if current_page?(controller: 'profiles', action: 'show') %>
+    <a href="<%= root_path %>" class="btn btn-primary back-btn" style="width: 8rem; height: 4rem; padding: 0.8% 0.3%; margin-right: 2rem; line-height: 3.5rem;">Back</a>
+  <% else %>
+    <a href="<%= url_for(:back) %>" class="btn btn-primary back-btn" style="width: 8rem; height: 4rem; padding: 0.8% 0.3%; margin-right: 2rem; line-height: 3.5rem;">Back</a>
+  <% end %>
+</div>
