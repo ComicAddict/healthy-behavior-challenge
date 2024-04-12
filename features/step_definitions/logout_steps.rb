@@ -38,7 +38,7 @@ And('I should see a message {string}') do |message|
 end
 
 Then('I should be redirected to the home page') do
-  expect("http://www.example.com#{current_path}").to eq(new_session_url)
+  expect("https://example.com#{current_path}").to eq(new_session_url)
 end
 
 And('I should not see a {string} button') do |button_text|
