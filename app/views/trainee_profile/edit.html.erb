@@ -1,58 +1,58 @@
 <%= render 'main/navbar' %>
 
-<div class="container">
-  <div class="form-box">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3" style="margin-top: 15%;">
-        <% if flash[:notice] %>
-          <div class="alert alert-success text-center">
-            <%= flash[:notice] %>
-          </div>
-        <% elsif flash[:alert] %>
-          <div class="alert alert-danger text-center">
-            <%= flash[:alert] %>
-          </div>
-        <% end %>
-
-        <%= content_tag :h2, "Edit Trainee Profile", class: 'text-center', style: 'font-weight: 500' %>
-        
-        <%= form_for @trainee, url: trainee_profile_path, method: :patch do |f| %>
-          <div class="form-group">
-            <%= f.label :email %>
-            <%= f.email_field :email, value: @trainee.user.email, class: 'form-control', readonly: true %>
-          </div>
-
-          <div class="form-group">
-            <%= f.label :full_name, "Full Name" %>
-            <%= f.text_field :full_name, class: "form-control", required: true%>
-          </div>
-
-          <div class="form-group">
-            <%= f.label :height_feet, "Height Feet" %>
-            <%= f.number_field :height_feet, value: @trainee.height_feet, class: "form-control", required: true, step: '1', min: '0' %>
-          </div>
-
-          <div class="form-group">
-            <%= f.label :height_inches, "Height Inches" %>
-            <%= f.number_field :height_inches, value: @trainee.height_inches, class: "form-control", required: true, step: '1', min: '0', max: '11' %>
-          </div>
-              
-          <div class="form-group">
-            <%= f.label :weight, "Weight (in lbs)" %>
-            <%= f.number_field :weight, class: "form-control", required: true, step: 'any'%>
-          </div>
-
-          <div class="text-center row" style="margin-bottom: 1%">
-            <div class="col-md-6">
-              <%= f.submit "Update Profile", class: "btn btn-primary btn-block" %>
-            </div>
-            <div class="col-md-6">
-              <%= link_to "Cancel", trainee_profile_path, class: "btn btn-default btn-block" %>
-            </div>
-          </div>
-        <% end %>
+<div class="login-container">
+  <div class="login-box">
+    <% if flash[:notice] %>
+      <div class="alert alert-success text-center">
+        <%= flash[:notice] %>
       </div>
-    </div>
+    <% elsif flash[:alert] %>
+      <div class="alert alert-danger text-center">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+
+    <%= content_tag :h2, "Edit Trainee Profile", class: 'text-center', style: 'font-weight: 500' %>
+    
+    <%= form_for @trainee, url: trainee_profile_path, method: :patch do |f| %>
+      <div class="form-group">
+        <%= f.label :email %>
+        <%= f.email_field :email, value: @trainee.user.email, class: 'form-control', readonly: true %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :full_name, "Full Name" %>
+        <%= f.text_field :full_name, class: "form-control", required: true%>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :height_feet, "Height Feet" %>
+        <%= f.number_field :height_feet, value: @trainee.height_feet, class: "form-control", required: true, step: '1', min: '0' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :height_inches, "Height Inches" %>
+        <%= f.number_field :height_inches, value: @trainee.height_inches, class: "form-control", required: true, step: '1', min: '0', max: '11' %>
+      </div>
+          
+      <div class="form-group">
+        <%= f.label :weight, "Weight (in lbs)" %>
+        <%= f.number_field :weight, class: "form-control", required: true, step: 'any'%>
+      </div>
+
+      <div class="text-center row" style="margin-bottom: 1%">
+        <div class="col-md-6">
+          <%= f.submit "Update Profile", class: "btn btn-primary btn-block" %>
+        </div>
+        <div class="col-md-6">
+          <%= link_to "Cancel", trainee_profile_path, class: "btn btn-default btn-block" %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
+
+<div style="position: fixed; bottom: 30px; right: 20px;">
+  <a href="<%= url_for(:back) %>" class="btn btn-primary back-btn" style="width: 8rem; height: 4rem; padding: 0.8% 0.3%; margin-right: 2rem; line-height: 3.5rem;">Back</a>
+<div>
 

@@ -1,14 +1,13 @@
 <style>
   .indiChallenge {
-    border: solid 2px;
     overflow: hidden;
     margin: 1% 0;
+    background: #fcfdfe;
+    border-radius: 5px;
+    opacity: 0.8;
   }
   .challenge-content {
-    padding: 2px 12px 15px 18px; 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 0 1% 1% 0
   }
   .challenge-detail { 
     margin-left: 20px; 
@@ -30,10 +29,12 @@
 
 
 <div>
-  <%= render 'main/navbar' %>
+  <div class="row" style="height: 80px">
+   <%= render 'main/navbar' %>
+  </div>
 
   <div class="container">
-    <div class="row" style="margin-top: 20px;">
+    <div class="row" style="height: 80px">
       <h2 style="font-weight: 500">Current Challenges</h2>
     </div>
     <% if @curr_challenges.empty? %>
@@ -41,13 +42,14 @@
     <% else %>
       <% @curr_challenges.each do |challenge| %>
         <div class="card indiChallenge">
-          <div class="card-body challenge-content">
+          <div class="card-body challenge-content" style="padding: 2px 12px 15px 18px; display: flex; justify-content: space-between; align-items: center;">
             <div class="row">
-              <h4 class="card-title"><%= challenge.name %></h4>
-              <p>Start Date: <%= challenge.startDate %></p>
-              <p>End Date: <%= challenge.endDate %></p>
+              <h4 class="card-title" style="font-size: 24px; font-weight: 500"><%= challenge.name %></h4>
+              <p style="display: inline; margin-right: 3em">Start Date: <%= challenge.startDate %></p>
+              <p style="display: inline">End Date: <%= challenge.endDate %></p>
             </div>
-            <%= link_to 'Progress', trainee_challenge_progress_path(trainee_id: @trainee.id, challenge_id: challenge.id), class: 'btn btn-info' %>
+
+            <%= link_to 'Progress', trainee_challenge_progress_path(trainee_id: @trainee.id, challenge_id: challenge.id), class: 'btn btn-primary' %>
 
           </div>
         </div>
@@ -63,11 +65,11 @@
     <% else %>
       <% @past_challenges.each do |challenge| %>
         <div class="card indiChallenge">
-          <div class="card-body challenge-content">
+          <div class="card-body challenge-content" style="padding: 2px 12px 15px 18px; display: flex; justify-content: space-between; align-items: center;">
             <div class="row">
-              <h4 class="card-title"><%= challenge.name %></h4>
-              <p>Start Date: <%= challenge.startDate %></p>
-              <p>End Date: <%= challenge.endDate %></p>
+              <h4 class="card-title"  style="font-size: 24px; font-weight: 500"><%= challenge.name %></h4>
+              <p style="display: inline; margin-right: 3em">Start Date: <%= challenge.startDate %></p>
+              <p style="display: inline">End Date: <%= challenge.endDate %></p>
             </div>
 
             <!-- More buttons can be placed here -->
@@ -76,7 +78,8 @@
       <% end %>
     <% end %>
   </div>
-    <div class="row" style="margin-top: 20px;">
-      <%= link_to 'Back to All Trainees', view_trainees_path, class: 'btn btn-secondary' %>
+    <div style="position: fixed; bottom: 30px; right: 20px;">
+      <a href="<%= view_trainees_path %>" class="btn btn-primary show-challenges-btn" style="width: 16rem; height: 4rem; padding: 1.2% 0.3%; line-height: 3.5rem;">Back to All Trainees</a>
     </div>
 </div>
+

@@ -1,6 +1,6 @@
 <%= render 'main/navbar' %>
 
-<div class="login-container" style="padding-top: 100px; padding-bottom: 50px">
+<div class="login-container">
   <div class="login-box">
     <% if flash[:notice] %>
       <div class="alert alert-success text-center">
@@ -40,5 +40,8 @@
         </div>
       </div>
     <% end %>
+    <div style="position: fixed; bottom: 30px; right: 20px;">
+      <a href="<%= url_for(:back) %>" class="btn btn-primary back-btn" style="width: 8rem; height: 4rem; padding: 0.8% 0.3%; margin-right: 2rem; line-height: 3.5rem;">Back</a>
+    </div>
   </div>
 </div>

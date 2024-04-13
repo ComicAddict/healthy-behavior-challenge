@@ -1,5 +1,7 @@
 <div>
-  <%= render 'main/navbar' %>
+  <div class="row" style="height: 80px">
+   <%= render 'main/navbar' %>
+  </div>
   <div class="container d-flex justify-content-center align-items-center vh-100 vw-100" style="margin-top:10vh">
     <h3>Please enter valid email to refer an instructor.</h3>
     <%= form_with url: instructor_referral_path do |form| %>
@@ -17,6 +19,9 @@
       <%= content_tag :p, flash[:error] %>
     <% end %>
   </div>
+  <div style="position: fixed; bottom: 30px; right: 20px;">
+  <a href="<%= url_for(:back) %>" class="btn btn-primary back-btn" style="width: 8rem; height: 4rem; padding: 0.8% 0.3%; margin-right: 2rem; line-height: 3.5rem;">Back</a>
+  <div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
