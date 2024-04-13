@@ -52,8 +52,14 @@ When('I fill {string} with {string}') do |field, value|
   fill_in field, with: value
 end
 
-When('I press Create Challenge') do
-  click_button 'Create Challenge'
+When('I press {string}') do |string|
+  #button = find_button("Manual Entry")
+  #click_button(string)
+
+  click_button string
+
+  #btn = page.find("manual-entry-button")
+  #click_button btn
 end
 
 When('I visit the new challenge page') do
@@ -61,8 +67,19 @@ When('I visit the new challenge page') do
 end
 
 # Implement additional step definitions as needed
+
+# select an option from the dropdown menu ---> part of additional tests
+And('I select {string} from the dropdown menu') do |string|
+
+end  
+  
+# filling in manual entry --> part of fixing old tests that are not passing
 And('I fill in the task name field with {string}') do |task_name|
-  task_field = find('input[type="text"][name^="challenge[tasks_attributes]"]')
+  #task_field = find('input[type="text"][name^="challenge[tasks_attributes]"]') ORIGINALLY THIS
+
+  #task_field = find('input[type="text"][name^="challenge[tasks_attributes][0][taskName]"]')
+  #task_field = find_by_id('challenge_tasks_attributes_0_taskName')
+  task_field = page.find('#challenge_tasks_attributes_0_taskName') # works if :visible => false
   task_field.set(task_name)
 end
 
