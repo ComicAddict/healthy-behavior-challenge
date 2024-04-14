@@ -80,7 +80,7 @@ Then('I should see the {string}') do |string|
 end
 
 Then('I should see the {string} button') do |label|
-  button = find_button(label)
+  button = find_link(label)
   expect(button).to be_present
 end
 And('there are trainees in the challenge {string}') do |challenge|

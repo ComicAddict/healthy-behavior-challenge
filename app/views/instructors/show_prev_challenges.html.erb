@@ -49,17 +49,19 @@
       <div class="col-md-6">
         <h1 style="font-weight: 500">Past Challenges</h1>
       </div>
-      <div class="col-md-3" style="display: flex; align-items: center; height: 80px">
-        <button type="button" id="ongoing-challenge-btn" class="btn btn-primary btn-block" style="padding: 0;">
-          Show Ongoing Challenges
-          <span style="font-size: 20px">&#8674;</span>
-        </button>
+      <div class="col-md-3 d-flex align-items-center" style="height: 80px">
+        <div class="w-100" style="margin-top: 25px;">
+          <a href="<%= instructor_path(@instructor) %>" class="btn btn-primary back-btn btn-block" style="padding: 0;">
+            Show Ongoing Challenges <span style="font-size: 20px;">&#8674;</span>
+          </a>
+        </div>
       </div>
-      <div class="col-md-3"style="display: flex; align-items: center;height: 80px">
-        <button type="button" id="upcoming-challenge-btn" class="btn btn-primary btn-block" style="padding: 0;">
-          Show Upcoming Challenges
-          <span style="font-size: 20px">&#8608;</span>
-        </button>
+      <div class="col-md-3 d-flex align-items-center" style="height: 80px">
+        <div class="w-100" style="margin-top: 25px;">
+          <a href="<%= upcoming_challenges_instructor_path(@instructor) %>" class="btn btn-primary back-btn btn-block" style="padding: 0;">
+            Show Upcoming Challenges <span style="font-size: 20px;">&#8608;</span> 
+          </a>
+        </div>
       </div>
     </div>
 
