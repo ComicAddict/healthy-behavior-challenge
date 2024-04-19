@@ -80,4 +80,5 @@ Rails.application.routes.draw do
   get 'trainee_profile', to: 'trainee_profile#show'
   get 'edit_trainee_profile', to: 'trainee_profile#edit'
   patch 'trainee_profile', to: 'trainee_profile#update'
+  mount SimpleDiscussion::Engine => "/forum"
 end
