@@ -68,9 +68,11 @@ end
 
 # Implement additional step definitions as needed
 
+#And('I select {string} from the dropdown menu') do |string|
 # select an option from the dropdown menu ---> part of additional tests
-And('I select {string} from the dropdown menu') do |string|
-
+And('I select Drink 8 Cups of Water from the dropdown menu') do |string|
+  #select string, :from => "task-dropdown-0"
+  select(value = 'Drink 8 Cups of Water', from: 'task-dropdown-0')
 end  
   
 # filling in manual entry --> part of fixing old tests that are not passing
