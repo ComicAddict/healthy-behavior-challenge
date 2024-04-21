@@ -72,16 +72,24 @@ end
 # select an option from the dropdown menu ---> part of additional tests
 And('I select Drink 8 Cups of Water from the dropdown menu') do |string|
   #select string, :from => "task-dropdown-0"
-  select(value = 'Drink 8 Cups of Water', from: 'task-dropdown-0')
+  #select(value = 'Select a task', from: 'task-dropdown-0')
+  #select(value = 'Drink 8 Cups of Water', from: 'task-dropdown-0')
+  all('#task-dropdown-0').last.find(:option, 'Drink 8 Cups of Water').select_option
 end  
-  
+
+When('I select option {string} from element {string}') do |option, 
+  selector|
+    all(selector).last.find(:option, option).select_option
+end
+
+
 # filling in manual entry --> part of fixing old tests that are not passing
 And('I fill in the task name field with {string}') do |task_name|
   #task_field = find('input[type="text"][name^="challenge[tasks_attributes]"]') ORIGINALLY THIS
 
   #task_field = find('input[type="text"][name^="challenge[tasks_attributes][0][taskName]"]')
   #task_field = find_by_id('challenge_tasks_attributes_0_taskName')
-  task_field = page.find('#challenge_tasks_attributes_0_taskName') # works if :visible => false
+  task_field = page.find('#challenge_tasks_attributes_0_taskName', :visible => false) # works if :visible => false
   task_field.set(task_name)
 end
 

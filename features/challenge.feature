@@ -7,7 +7,7 @@ Feature: Challenges Controller
     When I fill "Name" with "Sample Challenge with Predefined tasks"
     And I fill "Start Date" with "2023-10-10"
     And I fill "End Date" with "2023-10-20"
-    And I select Drink 8 Cups of Water from the dropdown menu
+    When I select option "Drink 8 Cups of Water" from element "task-dropdown"
     And I press "Create Challenge"
     Then I should see "Challenge successfully created."
 
@@ -18,7 +18,6 @@ Feature: Challenges Controller
     When I fill "Name" with "Sample Challenge"
     And I fill "Start Date" with "2023-10-10"
     And I fill "End Date" with "2023-10-20"
-    And I press "Manual Entry"
     And I fill in the task name field with "Task 1"
     And I press "Create Challenge"
     Then I should see "Challenge successfully created."
