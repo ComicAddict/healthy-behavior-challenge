@@ -68,19 +68,8 @@ end
 
 # Implement additional step definitions as needed
 
-#And('I select {string} from the dropdown menu') do |string|
-# select an option from the dropdown menu ---> part of additional tests
-And('I select Drink 8 Cups of Water from the dropdown menu') do |string|
-  #select string, :from => "task-dropdown-0"
-  #select(value = 'Select a task', from: 'task-dropdown-0')
-  #select(value = 'Drink 8 Cups of Water', from: 'task-dropdown-0')
-  all('#task-dropdown-0').last.find(:option, 'Drink 8 Cups of Water').select_option
-end
-
 When('I select option {string} from element {string}') do |option, selector|
     find('#task-dropdown-0', visible: true).find(:option, 'Drink 8 Cups of Water').select_option
-
-    #all(selector).last.find(:option, option).select_option
 end
 
 
