@@ -1,13 +1,14 @@
 Feature: Challenges Controller
 
   Scenario: Create a new challenge with predefined tasks
+    Given the predefined task is available
     Given I am an instructor
     And I am on the new challenge page
     Then I should see the "Select a task"
     When I fill "Name" with "Sample Challenge with Predefined tasks"
     And I fill "Start Date" with "2023-10-10"
     And I fill "End Date" with "2023-10-20"
-    When I select option "Drink 8 Cups of Water" from element "task-dropdown"
+    When I select option "Drink 8 Cups of Water" from element "task-dropdown-0"
     And I press "Create Challenge"
     Then I should see "Challenge successfully created."
 

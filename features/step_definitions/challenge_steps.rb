@@ -75,12 +75,27 @@ And('I select Drink 8 Cups of Water from the dropdown menu') do |string|
   #select(value = 'Select a task', from: 'task-dropdown-0')
   #select(value = 'Drink 8 Cups of Water', from: 'task-dropdown-0')
   all('#task-dropdown-0').last.find(:option, 'Drink 8 Cups of Water').select_option
-end  
-
-When('I select option {string} from element {string}') do |option, 
-  selector|
-    all(selector).last.find(:option, option).select_option
 end
+
+When('I select option {string} from element {string}') do |option, selector|
+    find('#task-dropdown-0', visible: true).find(:option, 'Drink 8 Cups of Water').select_option
+
+    #all(selector).last.find(:option, option).select_option
+end
+
+
+Given("the predefined task is available") do
+  tasks_data = [
+    { taskName: 'Drink 8 Cups of Water', saved_status: 1 }
+  ]
+
+  tasks_data.each do |task_data|
+    task = Task.find_or_initialize_by(taskName: task_data[:taskName])
+    task.saved_status = task_data[:saved_status]
+    task.save!
+  end
+end
+
 
 
 # filling in manual entry --> part of fixing old tests that are not passing
