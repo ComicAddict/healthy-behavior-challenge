@@ -13,3 +13,9 @@ Feature: View Total Best Days count
         And I select today's date
         And I click "Show Tasks" button
         Then I should see the Best Days for the ongoing challenge
+
+    Scenario: Viewing tasks for current day
+        Given I am logged in as trainee
+        When I visit the Daily Todo List page
+        And I select today's date
+        Then I should see Current Date

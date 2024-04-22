@@ -1,5 +1,18 @@
 Feature: Challenges Controller
 
+  Scenario: Create a new challenge with predefined tasks
+    Given the predefined task is available
+    Given I am an instructor
+    And I am on the new challenge page
+    Then I should see the "Select a task"
+    When I fill "Name" with "Sample Challenge with Predefined tasks"
+    And I fill "Start Date" with "2023-10-10"
+    And I fill "End Date" with "2023-10-20"
+    When I select option "Drink 8 Cups of Water" from element "task-dropdown-0"
+    And I press "Create Challenge"
+    Then I should see "Challenge successfully created."
+
+
   Scenario: Create a new challenge with same tasks
     Given I am an instructor
     And I am on the new challenge page
@@ -7,7 +20,7 @@ Feature: Challenges Controller
     And I fill "Start Date" with "2023-10-10"
     And I fill "End Date" with "2023-10-20"
     And I fill in the task name field with "Task 1"
-    And I press Create Challenge
+    And I press "Create Challenge"
     Then I should see "Challenge successfully created."
 
   Scenario: Create a new challenge
@@ -17,7 +30,7 @@ Feature: Challenges Controller
     And I fill "Start Date" with "2023-10-10"
     And I fill "End Date" with "2023-10-20"
     And I fill in the task name field with "Task 2"
-    And I press Create Challenge
+    And I press "Create Challenge"
     Then I should see "Challenge successfully created."
 
   Scenario: Create a new challenge with start date greater than end date
@@ -27,7 +40,7 @@ Feature: Challenges Controller
     And I fill "Start Date" with "2023-10-30"
     And I fill "End Date" with "2023-10-20"
     And I fill in the task name field with "Task 2"
-    And I press Create Challenge
+    And I press "Create Challenge"
     Then I should see "start date is greater than end date"
 
   Scenario: Attempt to create a challenge with an existing name
@@ -36,7 +49,7 @@ Feature: Challenges Controller
     When I fill "Name" with "Existing Challenge"
     And I fill "Start Date" with "2023-10-10"
     And I fill "End Date" with "2023-10-20"
-    And I press Create Challenge
+    And I press "Create Challenge"
     Then I should see "A challenge with the same name already exists."
 
   Scenario: Attempt to create a challenge without being an instructor
