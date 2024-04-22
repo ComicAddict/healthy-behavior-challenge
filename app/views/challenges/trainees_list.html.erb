@@ -1,5 +1,5 @@
 <%= render 'main/navbar' %>
-<%= javascript_include_tag 'application' %>
+
 <style>
   .btn-group .btn {
     margin-right: 10px; 
@@ -30,7 +30,7 @@
     <div class="col-12">
         <div class="row">
           <% @trainees.each do |trainee| %>
-            <div class="card" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); border: 1px solid #000;">
+            <div class="card" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); border: 1px solid #000; margin-bottom: 20px;">
               <div class="card-body" style="padding: 10px; display: flex; justify-content: space-between; align-items: center;">
                 <h3 class="card-title"><%= trainee.user.id %>. <%= trainee.full_name %></h3>
                 <div class="btn-group ml-auto" style="padding: 3px">
