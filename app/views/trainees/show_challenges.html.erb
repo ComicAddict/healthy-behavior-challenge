@@ -7,7 +7,14 @@
     opacity: 0.8;
   }
   .challenge-content {
-    padding: 0 1% 1% 0
+    padding: 0 1% 1% 0;
+    padding: 2px 12px 15px 18px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    @media (max-width: 425px) {
+      flex-direction: column;
+    }
   }
   .indiChallenge:hover {
     background-color: rgba(255, 255, 255, 0.7);
@@ -21,6 +28,28 @@
     background-position: center 30px;
     background-repeat: no-repeat;
     background-attachment: fixed;
+  }
+
+  .nav-btns{
+    @media (max-width: 1023px) {
+      padding: 2rem 5rem 2rem 5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    @media (min-width: 1024px) {
+      position: fixed; 
+      bottom: 30px; 
+      right: 20px;
+    }
+  }
+
+  .back-btn{
+    width: 8rem; 
+    height: 4rem; 
+    padding: 0.8% 0.3%; 
+    margin-right: 2rem; 
+    line-height: 3.5rem;
   }
 </style>
 
@@ -39,7 +68,7 @@
       <%else%>
         <% @curr_challenges.each do |challenge| %>
           <div class="card indiChallenge">
-            <div class="card-body challenge-content" style="padding: 2px 12px 15px 18px; display: flex; justify-content: space-between; align-items: center;">
+            <div class="card-body challenge-content" >
               <div class="row">
                 <h4 class="card-title" style="font-size: 24px; font-weight: 500"><%= challenge.name %></h4>
                 <p style="display: inline; margin-right: 3em">Start Date: <%= challenge.startDate %></p>
@@ -84,11 +113,11 @@
   </div>
 </div>
 
-<div style="position: fixed; bottom: 30px; right: 20px;">
+<div class="nav-btns">
   <% if current_page?(controller: 'trainees', action: 'show_challenges') %>
-    <a href="<%= todo_list_path %>" class="btn btn-primary back-btn" style="width: 8rem; height: 4rem; padding: 0.8% 0.3%; margin-right: 2rem; line-height: 3.5rem;">Back</a>
+    <a href="<%= todo_list_path %>" class="btn btn-primary back-btn">Back</a>
   <% else %>
-    <a href="<%= url_for(:back) %>" class="btn btn-primary back-btn" style="width: 8rem; height: 4rem; padding: 0.8% 0.3%; margin-right: 2rem; line-height: 3.5rem;">Back</a>
+    <a href="<%= url_for(:back) %>" class="btn btn-primary back-btn">Back</a>
   <% end %>
   <a href="<%= todo_list_path %>" class="btn btn-primary show-challenges-btn" style="width: 10rem; height: 4rem; padding: 0.8% 0.3%; line-height: 3.5rem;">Todo List</a>
 <div>

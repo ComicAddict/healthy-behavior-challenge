@@ -6,7 +6,7 @@
     <div class="splash-image">
       <%= image_tag asset_path("login.jpeg"), alt: "Splash Image", class: "img-fluid" %>
     </div>
-    <div class="splash-text">
+    <div class="splash-text logo-container">
       <%= image_tag "logo-dark.png"%>
       <h2 class="splash-title">Unlock Your Potential with Healthy Behaviors Challenge</h2>
       <p class="splash-description">Achieve your fitness goals and lead a healthier life with our App – your ultimate companion for tracking challenges, nutrition, and progress.</p>
@@ -41,12 +41,21 @@
   .splash-image {
     max-width: 100%;
     margin-bottom: 20px;
+    @media (max-width: 1023px) {
+      display: none;
+    }
   }
 
   .splash-text {
     max-width: 100%;
     text-align: center;
-    align-items: center;
+    @media (max-width: 1024px) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      max-width: 100%;
+    }
   }
 
   .close-icon {
@@ -84,12 +93,6 @@
       max-width: 50%;
       margin-right: 50px;
       margin-bottom: 0;
-    }
-
-    .splash-text {
-      flex: 1;
-      max-width: 50%;
-      text-align: center;
     }
 
     .splash-title {

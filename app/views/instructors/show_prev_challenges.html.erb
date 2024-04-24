@@ -3,9 +3,18 @@
     color: black;
   }
   .create-challenge-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
+
+    @media (max-width: 1023px) {
+      padding: 2rem 5rem 2rem 5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    @media (min-width: 1024px) {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+    }
   }
   .indiChallenge {
     overflow: hidden;
@@ -45,17 +54,17 @@
   <% end %>
 
   <div class="container">
-    <div class="row" style="height: 80px;">
+    <div class="row" >
       <div class="col-md-6">
         <h1 style="font-weight: 500">Past Challenges</h1>
       </div>
-      <div class="col-md-3" style="display: flex; align-items: center; height: 80px">
+      <div class="col-md-3" style="padding: 25px 5px 15px 5px">
         <button type="button" id="ongoing-challenge-btn" class="btn btn-primary btn-block" style="padding: 0;">
           Show Ongoing Challenges
           <span style="font-size: 20px">&#8674;</span>
         </button>
       </div>
-      <div class="col-md-3"style="display: flex; align-items: center;height: 80px">
+      <div class="col-md-3" style="padding: 25px 5px 15px 5px">
         <button type="button" id="upcoming-challenge-btn" class="btn btn-primary btn-block" style="padding: 0;">
           Show Upcoming Challenges
           <span style="font-size: 20px">&#8608;</span>
@@ -79,8 +88,9 @@
   </div>
 
   <%= will_paginate @challenges %>
-  <a href="<%= new_challenge_path %>" class="btn btn-primary create-challenge-btn">Create Challenge</a>
-
+  <div class="create-challenge-btn">
+    <a href="<%= new_challenge_path %>" class="btn btn-primary" style="width: 16rem; padding: 5% 2%">Create Challenge</a>
+  </div>
 </div>
 
 
