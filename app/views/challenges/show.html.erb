@@ -56,8 +56,8 @@
     </div>
 
     <div class="text-center row" style="margin-bottom: 1%">
-        <div class="col-md-6" style="padding: 5px;">
-            <button type="button" id="show-participants" class="btn btn-primary btn-block" >Show Participants</button>
+        <div class="col-md-6">
+            <%= link_to "Show Participants", challenge_list_trainees_path(@challenge), class: "btn btn-primary btn-block" %>
         </div>
         <div class="col-md-6" style="padding: 5px;">
             <%= link_to "Add Trainees", add_trainees_challenge_path(@challenge), class: "btn btn-primary btn-block" %>
@@ -69,9 +69,9 @@
 <div class="nav-btns" >
   <a href="<%= root_path %>" class="btn btn-primary back-btn" style="width: 8rem; height: 4rem; padding: 0.8% 0.3%; margin-right: 2rem; line-height: 3.5rem;">Back</a>
   <% if @challenge.endDate < Date.today %>
-    <button type="button" id="edit-challenge" class="btn btn-primary show-challenges-btn" style="width: 12rem; height: 4rem; padding: 0.8% 0.3%; line-height: 3.5rem;" disabled>Edit Challenge</button>
+    <a href="<%= edit_challenge_path(@challenge) %>" class="btn btn-primary" style="width: 12rem; height: 4rem; padding: 0.8% 0.3%; line-height: 3.5rem;" disabled>Edit Challenge</a>
   <% else %>
-    <button type="button" id="edit-challenge" class="btn btn-primary show-challenges-btn" style="width: 12rem; height: 4rem; padding: 0.8% 0.3%; line-height: 3.5rem;">Edit Challenge</button>
+    <a href="<%= edit_challenge_path(@challenge) %>" class="btn btn-primary" style="width: 12rem; height: 4rem; padding: 0.8% 0.3%; line-height: 3.5rem;">Edit Challenge</a>
   <% end %>
 </div>
 

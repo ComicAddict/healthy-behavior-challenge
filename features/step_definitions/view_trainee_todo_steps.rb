@@ -77,28 +77,11 @@ Given('I am an instructor with a trainee {string} and a Future Challenge {string
 end
 
 Then('I should see Current Date') do
-  date_picker_input = find('#datePicker')
-
+  date_picker_input = find('#user_selected_date')
   actual_date = date_picker_input.value
-
-  expect(actual_date).to eq(Date.today)
+  expect(actual_date).to eq(Date.today.strftime('%Y-%m-%d'))
 end
 
-Then('I should see {string} date') do |date|
-  date_picker_input = find('#datePicker')
-
-  date_picker_input.value
-
-  expect(page).to have_content(date)
-end
-
-Then('I should see tomorrows date') do
-  date_picker_input = find('#datePicker')
-
-  actual_date = date_picker_input.value
-
-  expect(actual_date).to eq(Date.today + 1)
-end
 
 Given('I follow View TodoList for {string}') do |_string|
   trainee = Trainee.find_by(full_name: 'TestTrainee')

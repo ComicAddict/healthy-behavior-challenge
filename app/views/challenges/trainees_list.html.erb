@@ -1,7 +1,7 @@
 <div class="row" style="height: 80px">
   <%= render 'main/navbar' %>
 </div>
-<%= javascript_include_tag 'application' %>
+
 <style>
   .btn-group .btn {
     margin-right: 10px; 
@@ -56,7 +56,7 @@
         <div class="row">
           <% @trainees.each do |trainee| %>
             <div class="card" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); border-radius: 5px">
-              <div class="card-body trainee-row" >
+              <div class="card-body trainee-row" style="margin-bottom: 20px;">
                 <h3 class="card-title"><%= trainee.user.id %>. <%= trainee.full_name %></h3>
                 <div class="btn-group ml-auto" style="padding: 3px">
                   <%= link_to 'View Progress', graph_challenge_path(@challenge, trainee_id: trainee.id), class: 'btn btn-primary' %>

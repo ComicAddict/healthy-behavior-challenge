@@ -8,11 +8,3 @@ Then('I should be redirected to view task table page for {string}') do |challeng
   challenge = Challenge.find_by(name: challenge_name)
   expect(current_path).to eq(view_challenge_tasks_detail_path(challenge.id))
 end
-
-When('I log {string} for {string}') do |_value, _entry|
-  pending
-end
-
-Then('I should see {string} logged for {string}') do |_value, _entry|
-  pending
-end

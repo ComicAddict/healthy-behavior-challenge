@@ -41,7 +41,7 @@
             <label for="challenge_tasks_attributes_0_taskName">Additional Task Details</label>
             <br>
             <label for="challenge_tasks_attributes_0_task_id">Select Task</label>
-            <%= form.select :task_name, Task.where(saved_status: 1).pluck(:taskName, :taskName), { prompt: 'Select a task' }, { class: 'form-control', id: 'task-dropdown-0' } %>
+            <%= form.select :task_name, Task.where(saved_status: 1).pluck(:taskName, :taskName), { prompt: 'Select a task' }, { class: 'form-control', id: 'task-dropdown-0' } %> 
             <input type="hidden" name="challenge[task_id]" id="challenge_task_id">
             <button type="button" class="manual-entry-button btn btn-primary" style="margin-top: 10px;" data-task-index="0">Manual Entry</button>
             <div id="manual-entry-0" style="display: none;">

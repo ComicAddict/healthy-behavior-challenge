@@ -1,0 +1,1179 @@
+Using the default profile...
+Feature: Add Trainees
+
+  Scenario: Add Trainees to a Challenge
+967
+    Given I am an instructor trying to add trainees to a challenge
+    And I am on the Add Trainees page for "Sample Challenge"
+    And I should see all trainees who are not in the challenge
+    Then I select a trainee and add it to "Sample Challenge"
+    And I click on "Add Trainees"
+    Then I should see "Trainees were successfully added to the challenge."
+
+  Scenario: Add No Trainees to a Challenge
+971
+    Given I am an instructor trying to add trainees to a challenge
+    And I am on the Add Trainees page for "Sample Challenge"
+    And I should see all trainees who are not in the challenge
+    And I click on "Add Trainees"
+    Then I should see "No trainee selected. Please select at least one trainee."
+
+Feature: View Total Best Days count
+
+  Scenario: View Total Best Days for a previous challenge
+975
+    Given I am logged in as trainee
+    When I visit the Daily Todo List page
+    And I select one of the dates from previous challenge
+    And I click "Show Tasks" button
+    Then I should see the Best Days for the whole challenge
+
+  Scenario: View Total Best Days for ongoing challenge
+977
+    Given I am logged in as trainee
+    When I visit the Daily Todo List page
+    And I select today's date
+    And I click "Show Tasks" button
+    Then I should see the Best Days for the ongoing challenge
+
+Feature: Challenges Controller
+
+  Scenario: Create a new challenge with same tasks
+979
+    Given I am an instructor
+    And I am on the new challenge page
+    When I fill "Name" with "Sample Challenge"
+    And I fill "Start Date" with "2023-10-10"
+    And I fill "End Date" with "2023-10-20"
+    And I fill in the task name field with "Task 1"
+      Unable to find visible css "input[type=\"text\"][name^=\"challenge[tasks_attributes]\"]" (Capybara::ElementNotFound)
+      ./features/step_definitions/challenge_steps.rb:65:in `"I fill in the task name field with {string}"'
+      features/challenge.feature:9:in `I fill in the task name field with "Task 1"'
+    And I press Create Challenge
+    Then I should see "Challenge successfully created."
+
+  Scenario: Create a new challenge
+980
+    Given I am an instructor
+    And I am on the new challenge page
+    When I fill "Name" with "Sample Challenge"
+    And I fill "Start Date" with "2023-10-10"
+    And I fill "End Date" with "2023-10-20"
+    And I fill in the task name field with "Task 2"
+      Unable to find visible css "input[type=\"text\"][name^=\"challenge[tasks_attributes]\"]" (Capybara::ElementNotFound)
+      ./features/step_definitions/challenge_steps.rb:65:in `"I fill in the task name field with {string}"'
+      features/challenge.feature:19:in `I fill in the task name field with "Task 2"'
+    And I press Create Challenge
+    Then I should see "Challenge successfully created."
+
+  Scenario: Create a new challenge with start date greater than end date
+981
+    Given I am an instructor
+    And I am on the new challenge page
+    When I fill "Name" with "Sample Challenge"
+    And I fill "Start Date" with "2023-10-30"
+    And I fill "End Date" with "2023-10-20"
+    And I fill in the task name field with "Task 2"
+      Unable to find visible css "input[type=\"text\"][name^=\"challenge[tasks_attributes]\"]" (Capybara::ElementNotFound)
+      ./features/step_definitions/challenge_steps.rb:65:in `"I fill in the task name field with {string}"'
+      features/challenge.feature:29:in `I fill in the task name field with "Task 2"'
+    And I press Create Challenge
+    Then I should see "start date is greater than end date"
+
+  Scenario: Attempt to create a challenge with an existing name
+982
+    Given I am an instructor and There exists a challenge "Existing Challenge"
+    And I am on the new challenge page
+    When I fill "Name" with "Existing Challenge"
+    And I fill "Start Date" with "2023-10-10"
+    And I fill "End Date" with "2023-10-20"
+    And I press Create Challenge
+    Then I should see "A challenge with the same name already exists."
+
+  Scenario: Attempt to create a challenge without being an instructor
+983
+    Given I am not an instructor
+983
+    When I visit the new challenge page
+    Then I should see "Select Date"
+
+  Scenario: View trainees of a challenge
+984
+    Given I am an instructor and There exists a challenge "New Challenge"
+    And there are trainees in the challenge "New Challenge"
+#<Trainee:0x00007f353dc1db98>
+#<Trainee:0x00007f353dc1dad0>
+#<Trainee:0x00007f353dc1da08>
+    When I visit the list trainees page
+    Then I should see list of trainees of that challenge
+
+  Scenario: Delete trainee from a challenge
+988
+    Given I am an instructor and There exists a challenge "New Challenge"
+391
+    And there is trainee "trainee1" in the challenge "New Challenge"
+#<Trainee:0x00007f3530230430>
+#<Trainee:0x00007f3530230368>
+#<Trainee:0x00007f35302302a0>
+    When I visit the list trainees page
+#391_trainee1_delete_link
+#<Trainee:0x00007f35301aec50>
+#<Trainee:0x00007f35301aeb88>
+    And I delete "trainee1"
+    Then I should not see "trainee1"
+
+  Scenario: View challenge details
+992
+    Given I am an instructor
+    When I click on the challenge "ex chall"
+    Then I should see the heading "ex chall"
+    And I should see the "Duration: 16 days"
+    And I should see the "Participants: 0"
+    And I should see the "Start Date: October 15, 2023"
+    And I should see the "End Date: October 30, 2023"
+    And I should see the "No of Tasks: 2"
+    And I should see the "Show Participants" button
+
+  Scenario: Display task progress for a trainee
+993
+    Given I am an instructor
+    And a trainee is present in a challenge "ex chall"
+    When I visit the task progress page
+    Then I should see the task progress chart
+
+Feature: Edit Challenge
+    As an Instructor
+    I want to edit a challenge
+    So that I can update it as needed
+
+  Scenario: View edit challenge page
+    Given there is a challenge "Temp Challenge 1" with a trainee "tempTrainee1" and following details:
+      | name             | startDate   | endDate     | tasks                   |
+      | Temp Challenge 1 | 2023-10-02  | 2023-10-31  | Task 1, Task 2, Task 3  |
+995
+    And I am logged in as an Instructor
+    When I visit the edit page for challenge "Temp Challenge 1"
+    Then I should see the title "Edit Challenge: Temp Challenge 1"
+
+  Scenario: View edit challenge page for Future challenge
+    Given there is a challenge "Temp Challenge 1" with a trainee "tempTrainee1" and following details:
+      | name             | startDate   | endDate     | tasks                   |
+      | Temp Challenge 1 | 2024-10-02  | 2024-10-31  | Task 1, Task 2, Task 3  |
+997
+    And I am logged in as an Instructor
+    When I visit the edit page for challenge "Temp Challenge 1"
+    Then I should see the title "Edit Challenge: Temp Challenge 1"
+    And I should see the Challenge Start Date as "2024-10-02"
+    And I should see the Challenge End Date as "2024-10-31"
+
+  Scenario: Unauthorized access redirects
+    Given there is a challenge "Temp Challenge 1" with a trainee "tempTrainee1" and following details:
+      | name             | startDate   | endDate     | tasks                   |
+      | Temp Challenge 1 | 2024-10-02  | 2024-10-31  | Task 1, Task 2, Task 3  |
+1000
+    And I am logged in as a trainee
+1000
+    When I visit the edit page for challenge "Temp Challenge 1"
+    And I should be at the home page and see "You are not an instructor."
+
+Feature: Login
+  As a user,
+  I want to check my profile
+  And edit my profile
+
+  Scenario: go to edit my profile
+traineetest@example.com
+1002
+1002
+    Given I am logged in
+    And I click on "My Profile"
+    Then I should see 'My Profile'
+    And I click on "Edit Profile"
+    Then I should be on edit profile path
+    Then I should see 'Edit Trainee Profile'
+
+  Scenario: edit my profile
+traineetest@example.com
+1004
+1004
+    Given I am logged in
+    And I click on "My Profile"
+    Then I should see 'My Profile'
+    And I click on "Edit Profile"
+    Then I should be on edit profile path
+    Then I should see 'Edit Trainee Profile'
+    When I fill in 'Full name' with 'New Trainee'
+    When I fill in 'height_feet' with '5'
+    When I fill in 'height_inches' with '4'
+    When I fill in 'Weight' with '100'
+    And I click on "Update Profile"
+    Then I should see 'Profile updated successfully'
+    Then I should see 'New Trainee'
+    Then I should see '100'
+
+  Scenario: cancel
+traineetest@example.com
+1006
+1006
+    Given I am logged in
+    And I click on "My Profile"
+    Then I should see 'My Profile'
+    And I click on "Edit Profile"
+    Then I should be on edit profile path
+    And I click on "Cancel"
+    Then I should be on trainee profile path
+
+Feature: Edit Trainee To-Do list
+    As an Instructor
+    I want to edit a trainee's to-do list
+    So that I can customize it as needed
+
+  Scenario: View edit to-do list page
+    Given there is a challenge "Temp Challenge 1" with a trainee "tempTrainee1" and following details:
+      | name             | startDate   | endDate     | tasks                   |
+      | Temp Challenge 1 | 2023-10-02  | 2023-10-31  | Task 1, Task 2, Task 3  |
+1007
+    And I am logged in as an Instructor
+    When I visit the edit page for "tempTrainee1" and "Temp Challenge 1"
+    Then I should see the title "Current Todo List: tempTrainee1"
+
+  Scenario: View edit to-do list page for Future challenge
+    Given there is a challenge "Temp Challenge 1" with a trainee "tempTrainee1" and following details:
+      | name             | startDate   | endDate     | tasks                   |
+      | Temp Challenge 1 | 2024-10-02  | 2024-10-31  | Task 1, Task 2, Task 3  |
+1009
+    And I am logged in as an Instructor
+    When I visit the edit page for "tempTrainee1" and "Temp Challenge 1"
+    Then I should see the title "Current Todo List: tempTrainee1"
+    And I should see the Start Date as "2024-10-02"
+
+  Scenario: Unauthorized access redirects
+    Given there is a challenge "Temp Challenge 1" with a trainee "tempTrainee1" and following details:
+      | name             | startDate   | endDate     | tasks                   |
+      | Temp Challenge 1 | 2024-10-02  | 2024-10-31  | Task 1, Task 2, Task 3  |
+1012
+    And I am logged in as a trainee
+1012
+    When I visit the edit page for "tempTrainee1" and "Temp Challenge 1"
+    And I should be at the home page and see "You are not an instructor."
+
+Feature: Forgot Password
+  As a user
+  I want to reset my password
+  So that I can regain access to my account
+
+  Scenario: Request a password reset email
+    Given there is a registered user with the email "userexists3@example.com"
+    And I am on the login page
+    When I click on the "Forgot Password" link
+    And I fill in my email address with "userexists3@example.com"
+    And I click the "Reset Password" button
+      Missing host to link to! Please provide the :host parameter, set default_url_options[:host], or set :only_path to true (ActionView::Template::Error)
+      ./app/views/passsword_mailer/reset.html.erb:8:in `_app_views_passsword_mailer_reset_html_erb___897368525569371830_51680'
+      ./app/mailers/passsword_mailer.rb:12:in `reset'
+      <internal:kernel>:90:in `tap'
+      ./app/controllers/password_resets_controller.rb:16:in `create'
+      ./features/step_definitions/logout_steps.rb:33:in `"I click the {string} button"'
+      features/forgot_password.feature:12:in `I click the "Reset Password" button'
+    Then I should see a message "If an account with email was found, we have sent a link to reset your password."
+
+  Scenario: Request a password reset email for a non-existing email
+    Given I am on the login page
+    When I click on the "Forgot Password" link
+    And I fill in my email address with "nonexistent@example.com"
+    And I click the "Reset Password" button
+    Then I should see an error message "If an account with email was found, we have sent a link to reset your password."
+
+  Scenario: Request a password reset email with an invalid email format
+    Given I am on the login page
+    When I click on the "Forgot Password" link
+    And I fill in my email address with "invalid-email"
+    And I click the "Reset Password" button
+    Then I should see an error message "Invalid email format. Please enter a valid email address."
+
+  Scenario: Request a password reset email with an empty email field
+    Given I am on the login page
+    When I click on the "Forgot Password" link
+    And I click the "Reset Password" button
+    Then I should see an error message "Email can't be blank."
+
+  Scenario: Editing a Password Reset
+    Given a valid password reset token
+    When I visit the password reset edit page with the token
+    Then I should see the password reset form
+    And I should see a field labeled "Password"
+    And I should see a field labeled "Password confirmation"
+    And I should see a button labeled "Reset Password"
+
+  Scenario: Expired Token
+    Given an expired password reset token
+    When I visit the password reset edit page with the token
+    Then I should be redirected to the root page with an error message
+
+  Scenario: Updating the Password
+    Given a valid password reset token
+    When I visit the password reset edit page with the token
+    And I fill in password with "new_password"
+    And I fill in password_confirmation with "new_password"
+    And I click the "Reset Password" button
+    Then I should be redirected to the root page with a success message
+
+  Scenario: Invalid Password Confirmation
+    Given a valid password reset token
+    When I visit the password reset edit page with the token
+    And I fill in password with "new_password"
+    And I fill in password_confirmation with "new_password12"
+    And I click the "Reset Password" button
+    Then I should see an error message on the edit page
+
+Feature: Instructor Referral
+  As an Instructor,
+  I want to send a referral mail with a unique link
+  So that new specified user can access the signup page
+
+  Background: 
+
+instructor@example.com
+    Given there is a instructor registered with the email "instructor@example.com" and password "abcdef"
+
+  Scenario: Sending a referral email with a unique link
+1017
+    Given I am logged in as an instructor with email "instructor@example.com" and password "abcdef"
+    When I navigate to the referral page
+    And I fill in the recipient's email with "newuser@example.com"
+[]
+    And Instructor Referral: I click the "Refer" button
+      Missing host to link to! Please provide the :host parameter, set default_url_options[:host], or set :only_path to true (ActionView::Template::Error)
+      ./app/views/instructor_referral_mailer/refer.html.erb:9:in `_app_views_instructor_referral_mailer_refer_html_erb___2706518454892176378_52620'
+      ./app/mailers/instructor_referral_mailer.rb:6:in `refer'
+      <internal:kernel>:90:in `tap'
+      ./app/controllers/instructor_referral_controller.rb:22:in `create'
+      ./features/step_definitions/instructor_referral_steps.rb:34:in `"Instructor Referral: I click the {string} button"'
+      features/instructor_referral.feature:13:in `Instructor Referral: I click the "Refer" button'
+    Then a unique referral link should be generated and displayed
+
+  Scenario: Showing error when an invalid email is given
+
+instructor@example.com
+1018
+    Given I am logged in as an instructor with email "instructor@example.com" and password "abcdef"
+    When I navigate to the referral page
+    And I fill in the recipient's email with " "
+["Email can't be blank", "Email is invalid"]
+    And Instructor Referral: I click the "Refer" button
+    Then Instructor Referral: Errors are displayed
+
+  Scenario: New user accessing the signup page through the referral link
+
+instructor@example.com
+    Given I receive a referral link from "instructor@example.com"
+1905987a-7a69-482c-bda1-4bd4e9984802
+    When I click the referral link
+    Then I should be redirected to the signup page
+
+  Scenario: New user accessing the signup page through an invalid referral link
+
+instructor@example.com
+    Given I have an invalid link
+20b08691-54ae-49b4-a6b0-62f11a94246a
+    When I click the referral link
+    Then I should see invalid error
+
+  Scenario: New user accessing the signup page through a expired referral link
+
+instructor@example.com
+    Given I have an expired link from "instructor@example.com"
+81718b25-aa88-4bc6-9d63-404951f31323
+    When I click the referral link
+    Then I should see invalid error
+
+Feature: Instructor SignUp
+  As an Instructor,
+  I want to send a referral mail with a unique link
+  So that new specified user can access the signup page
+
+  Background: 
+instructor@example.com
+1022
+[]
+    Given I received email with referral link
+      Missing host to link to! Please provide the :host parameter, set default_url_options[:host], or set :only_path to true (ActionView::Template::Error)
+      ./app/views/instructor_referral_mailer/refer.html.erb:9:in `_app_views_instructor_referral_mailer_refer_html_erb___2706518454892176378_52620'
+      ./app/mailers/instructor_referral_mailer.rb:6:in `refer'
+      <internal:kernel>:90:in `tap'
+      ./app/controllers/instructor_referral_controller.rb:22:in `create'
+      ./features/step_definitions/instructorsignup_steps.rb:24:in `"I received email with referral link"'
+      features/instructorsignup.feature:8:in `I received email with referral link'
+
+  Scenario: Instructor can signup successfully with valid information
+    Given I click the sent referral link and redirected to signup page
+    When I fill in email with instructorsignup3@gmail.com
+    And I fill in password with signup111
+    And I fill in confirm_password with signup111
+    And I fill in first_name with Peter
+    And I fill in last_name with John
+    And I click on signup
+    Then I should see 'Welcome, Peter' message
+
+  Scenario: Instructor cannot signup with empty email
+instructor@example.com
+1023
+[]
+    Given I click the sent referral link and redirected to signup page
+    When I fill in email with ''
+    And I fill in password with signup111
+    And I fill in confirm_password with signup111
+    And I fill in first_name with Peter
+    And I fill in last_name with John
+    And I click on signup
+    Then I should see 'Sign up' page
+
+  Scenario: Instructor cannot signup with empty password
+instructor@example.com
+1024
+[]
+    Given I click the sent referral link and redirected to signup page
+    When I fill in email with instructorsignup4@gmail.com
+    And I fill in password with ''
+    And I fill in confirm_password with signup111
+    And I fill in first_name with Peter
+    And I fill in last_name with John
+    And I click on signup
+    Then I should see 'Sign up' page
+
+  Scenario: Instructor cannot signup with invalid email
+instructor@example.com
+1025
+[]
+    Given I click the sent referral link and redirected to signup page
+    When I fill in email with instructorsignup
+    And I fill in password with signup111
+    And I fill in confirm_password with signup111
+    And I fill in first_name with Peter
+    And I fill in last_name with John
+    And I click on signup
+    Then I should see 'Sign up' page
+
+  Scenario: Instructor cannot signup with password mismatch
+instructor@example.com
+1026
+[]
+    Given I click the sent referral link and redirected to signup page
+    When I fill in email with instructorsignup
+    And I fill in password with signup111
+    And I fill in confirm_password with signup123
+    And I fill in first_name with Peter
+    And I fill in last_name with John
+    And I click on signup
+    Then I should see 'Sign up' page
+
+Feature: Instructor ListChallenges
+  As an instructor,
+  I want to see a list of challenges with name, start, and end date. 
+  To keep track of the challenges.
+
+  Scenario: Instructor can see Ongoing challenges
+    Given I am an instructor with following challenges:
+      | name       | startDate   | endDate     | tasks                   |
+      | Challenge1 | 2023-10-02  | 2024-10-31  | Task 1, Task 2, Task 3  |
+      | Challenge2 | 2023-09-11  | 2024-10-22  | Task 1, Task 2, Task 3  |
+      | Challenge3 | 2023-09-15  | 2023-10-06  | Task 1, Task 2, Task 3  |
+1027
+    Given I am Logged in with username 'testInstructor@gmail.com' and password 'abcdef'
+    Then I should see 'Ongoing Challenges'
+    And I should see 'Challenge1' and 'Challenge2'
+    And I should not see 'Challenge3'
+    And 'Challenge2' should be before 'Challenge1'
+
+  Scenario: Instructor can see Past challenges
+    Given I am an instructor with following challenges:
+      | name       | startDate   | endDate     | tasks                   |
+      | Challenge1 | 2000-10-02  | 2020-10-20  | Task 1, Task 2, Task 3  |
+      | Challenge4 | 2000-10-02  | 2021-10-20  | Task 1, Task 2, Task 3  |
+      | Challenge2 | 2023-09-11  | 2026-10-22  | Task 1, Task 2, Task 3  |
+      | Challenge3 | 2090-09-15  | 2090-10-06  | Task 1, Task 2, Task 3  |
+1028
+    Given I am Logged in with username 'testInstructor@gmail.com' and password 'abcdef'
+    And I am in Past Challenges Page
+    Then I should see 'Past Challenges'
+    And I should see 'Challenge1' and 'Challenge4'
+    And I should not see 'Challenge2'
+    And 'Challenge1' should be before 'Challenge4'
+
+  Scenario: Instructor can see upcoming challenges
+    Given I am an instructor with following challenges:
+      | name       | startDate   | endDate     | tasks                   |
+      | Challenge1 | 2000-10-02  | 2020-10-20  | Task 1, Task 2, Task 3  |
+      | Challenge4 | 2000-10-02  | 2021-10-20  | Task 1, Task 2, Task 3  |
+      | Challenge2 | 2029-09-11  | 2029-10-22  | Task 1, Task 2, Task 3  |
+      | Challenge3 | 2090-09-15  | 2090-10-06  | Task 1, Task 2, Task 3  |
+1029
+    Given I am Logged in with username 'testInstructor@gmail.com' and password 'abcdef'
+    And I am in Upcoming Challenges Page
+    Then I should see 'Upcoming Challenges'
+    And I should see 'Challenge2' and 'Challenge3'
+    And I should not see 'Challenge1'
+    And 'Challenge2' should be before 'Challenge3'
+
+Feature: Login
+  As a user,
+  I want to login to my account
+  To access my data
+
+  Background: 
+    Given A user is registered with the email "Admin@gmail.com" and password "Admin@123"
+
+  Scenario: Login using correct email and password
+    Given I am not currently Logged in
+    And I am on the Login page
+    When I enter Admin@gmail.com as email
+    And I enter Admin@123 as password
+1030
+    And I click on submit
+    Then I should see 'You have successfully signed in'
+
+  Scenario: Login using incorrect email or password
+    Given I am not currently Logged in
+    And I am on the Login page
+    When I enter Admin@gmail.com as email
+    And I enter abcd@123 as password
+    And I click on submit
+    Then I should see 'Incorrect email or password. Please try again.'
+
+  Scenario: Login using empty email
+    Given I am not currently Logged in
+    And I am on the Login page
+    When I enter '' as email
+    And I enter abcd@123 as password
+    And I click on submit
+    Then I should see 'Incorrect email or password. Please try again.'
+
+  Scenario: Login using empty password
+    Given I am not currently Logged in
+    And I am on the Login page
+    When I enter Admin@gmail.com as email
+    And I enter '' as password
+    And I click on submit
+    Then I should see 'Incorrect email or password. Please try again.'
+
+  Scenario: Login as trainee
+    Given I am not currently Logged in
+    And A trainee is registered with the email "trainee@gmail.com" and password "trainee@123"
+    And I am on the Login page
+    When I enter 'trainee@gmail.com' as email
+    And I enter 'trainee@123' as password
+1035
+    And I click on submit
+    Then I should see 'Sign Out'
+
+Feature: User Logout
+  As a logged-in user
+  I want to be able to sign out
+  So that I can end my session and protect my account
+
+  Scenario: User logs out successfully
+1036
+    Given I am a logged-in user
+    When I should see a "Sign Out" button
+    Then I click the "Sign Out" button
+    Then I should be redirected to the home page
+    And I should see a message "You have been signed out"
+    And I should not see a "Sign Out" button
+
+  Scenario: User tries to log out when not logged in
+    Given I am not logged in
+    When I visit the signout page
+    Then I should be redirected to the home page
+
+Feature: Manage Instructor Profile
+
+  Background: 
+1037
+    Given I am logged in as an instructor
+
+  Scenario: View My Profile Button
+    Then I should see the "My Profile" profile button in the top right corner of the navigation bar
+
+  Scenario: View Instructor Profile
+1038
+    When I visit the instructor profile page
+    Then I should see my email, first name, and last name
+    And I should be able to see 'Edit Profile' button
+
+  Scenario: Edit Instructor Profile
+1039
+    When I visit the instructor profile page
+    When I click on the displayed "Edit Profile" button
+    And I fill in the new first name and last name
+    And I click on the displayed "Update Profile" button
+    Then I should see a success message
+    And I should see my updated first name and last name on the profile page
+
+# features/todo_list.feature
+Feature: Manage Daily To-Do List
+  As a user
+  I want to manage my daily to-do list
+  So that I can keep track of my tasks
+
+  Scenario: Viewing the To-Do List
+traineetest@example.com
+1041
+1041
+    Given I am logged in
+    Then I should be on the todo list page
+    And I should be able to see "Daily Todo List"
+    And I should be able to see "Date:"
+
+  Scenario: Updating the To-Do List
+traineetest@example.com
+1043
+1043
+    Given I am logged in
+Task ID: 980
+    And I check the "exercise" checkbox for a task
+    And I click button "Mark as Completed"
+    Then I should be able to see a notice "Tasks have been updated"
+
+  Scenario: Viewing the To-Do List with a Date Selector
+traineetest@example.com
+1045
+1045
+    Given I am logged in
+    Then I should be on the todo list page
+    And I should be able to see "Daily Todo List"
+    And I should see "Date:"
+    And I should see a date selector
+
+  Scenario: Trainee selects a previous date and views tasks
+traineetest@example.com
+1047
+1047
+    Given I am logged in
+    When I visit the Daily Todo List page
+    And I select a previous date from the date selector
+    And I click "Show Tasks" button
+    Then I should see the Daily Todo List for the selected date
+
+  Scenario: Updating the To-Do List without checking tasks
+1048
+    Given I am logged in as different user
+    And I click button "Mark as Completed"
+    Then I should be able to see a notice "No Tasks"
+    Then I click the "Sign Out" button
+    Then I should be redirected to the home page
+
+  Scenario: Trying to access To-Do List page without signing in
+    Given I am not logged in
+    And I try to visit Daily To-Do List page
+    Then I should be able to see a notice "You must be signed in to access this page."
+
+  Scenario: If logged in as Instructor
+1050
+    Given I am logged in as instructor
+    And I try to visit Daily To-Do List page
+    Then I should be able to see "Ongoing Challenges"
+
+  Scenario: Viewing my progress for a challenge
+traineetest@example.com
+1052
+1052
+    Given I am logged in
+    And I click on link "View Progress"
+    Then I should be redirected to view progress page for "challenge"
+
+Feature: Instructor ListChallenges
+  As a trainee,
+  I want to see a list of challenges with name, start, and end date I was a part of. 
+  To keep track of the challenges.
+
+  Scenario: Trainee can see Ongoing challenges
+    Given I am a trainee with following challenges:
+      | name       | startDate   | endDate     | tasks                   |
+      | Challenge1 | 2023-10-02  | 2024-10-31  | Task 1, Task 2, Task 3  |
+      | Challenge2 | 2023-09-11  | 2024-10-22  | Task 1, Task 2, Task 3  |
+      | Challenge3 | 2023-09-15  | 2023-10-06  | Task 1, Task 2, Task 3  |
+1053
+    Given I am Logged in with username 'testTrainee@gmail.com' and password 'abcdef'
+    And I visit 'My Challenges'
+    Then I should see 'Ongoing Challenges'
+    And I should see 'Challenge1' and 'Challenge2'
+    And 'Challenge2' should be before 'Challenge1'
+
+  Scenario: Trainee can see Past challenges
+    Given I am a trainee with following challenges:
+      | name       | startDate   | endDate     | tasks                   |
+      | Challenge1 | 2000-10-02  | 2020-10-20  | Task 1, Task 2, Task 3  |
+      | Challenge4 | 2000-10-02  | 2021-10-20  | Task 1, Task 2, Task 3  |
+      | Challenge2 | 2023-09-11  | 2026-10-22  | Task 1, Task 2, Task 3  |
+      | Challenge3 | 2090-09-15  | 2090-10-06  | Task 1, Task 2, Task 3  |
+1055
+    Given I am Logged in with username 'testTrainee@gmail.com' and password 'abcdef'
+    And I visit 'My Challenges'
+    Then I should see 'Past Challenges'
+    And I should see 'Challenge1' and 'Challenge4'
+    And 'Challenge1' should be before 'Challenge4'
+
+  Scenario: Trainee cannot list challenges when not logged in
+    Given I am a trainee with following challenges:
+      | name       | startDate   | endDate     | tasks                   |
+      | Challenge1 | 2000-10-02  | 2020-10-20  | Task 1, Task 2, Task 3  |
+      | Challenge4 | 2000-10-02  | 2021-10-20  | Task 1, Task 2, Task 3  |
+    And I visit 'My Challenges'
+    Then I should not see 'Past Challenges'
+    And I should not see 'Ongoing Challenges'
+    And I should see 'You must be signed in to access this page.'
+
+  Scenario: Viewing my progress for a challenge
+    Given I am a trainee with following challenges:
+      | name       | startDate   | endDate     | tasks                   |
+      | Challenge1 | 2023-10-02  | 2024-10-31  | Task 1, Task 2, Task 3  |
+1059
+    Given I am Logged in with username 'testTrainee@gmail.com' and password 'abcdef'
+    And I visit 'My Challenges'
+    Then I should see 'Ongoing Challenges'
+    And I should see 'Challenge1'
+    And I click on link "View Progress"
+    Then I should be redirected to view progress page for 'Challenge1'
+
+Feature: Trainee Log tasks
+ As a trainee,
+  So that I can log my daily workout
+	I want to log and view workout history I have completed
+
+  Scenario: Trainee can see view task button
+    Given I am a trainee with following challenges:
+      | name       | startDate   | endDate     | tasks                   |
+      | Challenge1 | 2023-10-02  | 2024-10-31  | Task 1, Task 2, Task 3  |
+      | Challenge2 | 2023-09-11  | 2024-10-22  | Task 1, Task 2, Task 3  |
+      | Challenge3 | 2023-09-15  | 2023-10-06  | Task 1, Task 2, Task 3  |
+1061
+    Given I am Logged in with username 'testTrainee@gmail.com' and password 'abcdef'
+    And I visit 'My Challenges'
+    Then I should see 'View Task Table'
+
+  Scenario: View Task Table directs to the task log screen
+    Given I am a trainee with following challenges:
+      | name       | startDate   | endDate     | tasks                   |
+      | Challenge1 | 2023-10-02  | 2024-10-31  | Task 1, Task 2, Task 3  |
+      | Challenge2 | 2023-09-11  | 2024-10-22  | Task 1, Task 2, Task 3  |
+      | Challenge3 | 2023-09-15  | 2023-10-06  | Task 1, Task 2, Task 3  |
+1063
+    Given I am Logged in with username 'testTrainee@gmail.com' and password 'abcdef'
+    And I visit 'My Challenges'
+    And I click on link "View Task Table" of "Challenge1"
+    Then I should be redirected to view task table page for "Challenge1"
+
+  Scenario: View Task Table directs to the task log screen
+    Given I am a trainee with following challenges:
+      | name       | startDate   | endDate     | tasks                   |
+      | Challenge1 | 2023-10-02  | 2024-10-31  | Task 1, Task 2, Task 3  |
+      | Challenge2 | 2023-09-11  | 2024-10-22  | Task 1, Task 2, Task 3  |
+      | Challenge3 | 2023-09-15  | 2023-10-06  | Task 1, Task 2, Task 3  |
+1065
+    Given I am Logged in with username 'testTrainee@gmail.com' and password 'abcdef'
+    And I visit 'My Challenges'
+    And I click on link "View Task Table" of "Challenge1"
+    And I log "120" for "Task 1"
+      TODO (Cucumber::Pending)
+      ./features/step_definitions/trainee_log_tasks.rb:13:in `"I log {string} for {string}"'
+      features/trainee_log_tasks.feature:37:in `I log "120" for "Task 1"'
+    And I click on "Log Tasks"
+    Then I should see "120" logged for "Task 1"
+
+Feature: Login
+  As a user,
+  I want to check my profile
+
+  Scenario: check my profile
+traineetest@example.com
+1068
+1068
+    Given I am logged in
+    And I click on "My Profile"
+    Then I should see 'My Profile'
+
+  Scenario: check my profile
+    Given I am on the trainee profile
+    Then I should be on root path
+
+  Scenario: check my profile
+traineetest@example.com
+1070
+1070
+    Given I am logged in
+    And I click on "My Profile"
+    Then I should see 'My Profile'
+    And I click on "Edit Profile"
+    Then I should be on edit profile path
+
+Feature: Trainee Signup
+    As a trainee
+    I want to sign up
+    To access the website
+
+  Scenario: Signs up with valid information
+    Given I am on the signup page
+    When I fill in "full_name" with "new user"
+    And I fill in "email" with "user@example.com"
+    And I fill in "password" with "password123"
+    And I fill in "password_confirmation" with "password123"
+    And I fill in "height_feet" with "6"
+    And I fill in "height_inches" with "9"
+    And I fill in "weight" with "70"
+    And I click the "Sign Up" button
+    Then I should be on login page
+
+  Scenario: Signs up with with empty name
+    Given I am on the signup page
+    When I fill in "full_name" with ""
+    And I fill in "email" with "user@example.com"
+    And I fill in "password" with "password123"
+    And I fill in "password_confirmation" with "password123"
+    And I fill in "height_feet" with "6"
+    And I fill in "height_inches" with "9"
+    And I fill in "weight" with "70"
+    And I click the "Sign Up" button
+    Then I should stay on the signup page
+
+  Scenario: Signs up with password and confirmation mismatch
+    Given I am on the signup page
+    When I fill in "full_name" with "new user"
+    And I fill in "email" with "user@example.com"
+    And I fill in "password" with "password123"
+    And I fill in "password_confirmation" with "different_password"
+    And I fill in "height_feet" with "6"
+    And I fill in "height_inches" with "9"
+    And I fill in "weight" with "70"
+    And I click the "Sign Up" button
+    Then I should stay on the signup page
+    And I should see an error message indicating that the password confirmation does not match the password
+
+Feature: Updating Challenge
+
+  Scenario: Successful challenge update for future challenge
+    Given there is a challenge "Temp Challenge 2" with the trainee "tempTrainee2" with the following details:
+      | name             | startDate   | endDate     | tasks           |
+      | Temp Challenge 2 | 2024-10-02  | 2024-10-31  | Task 2, Task 3  |
+1073
+    And I am logged in as an Instructor
+    When I visit the edit page for challenge "Temp Challenge 2"
+    And I update the challenge task list with the following tasks:
+      | tasks        |
+      | New Task 1   |
+      | New Task 2   |
+      | New Task 3   |
+    Then I should be redirected to the edit page for "Temp Challenge 2"
+    Then I should see a flash notice with the message "Challenge was successfully updated"
+
+  Scenario: Successful challenge update for ongoing challenge
+    Given there is a challenge "Temp Challenge 3" with the trainee "tempTrainee3" with the following details:
+      | name             | startDate   | endDate     | tasks           |
+      | Temp Challenge 3 | 2023-10-02  | 2024-10-31  | Task 6, Task 7  |
+1075
+    And I am logged in as an Instructor
+    When I visit the edit page for challenge "Temp Challenge 3"
+    And I update the challenge task list with the following tasks:
+      | tasks        |
+      | New Task 1   |
+      | New Task 2   |
+      | New Task 3   |
+    Then I should be redirected to the edit page for "Temp Challenge 3"
+    Then I should see a flash notice with the message "Challenge was successfully updated"
+
+  Scenario: Successful challenge update with new tasks
+    Given there is a challenge "Temp Challenge 2" with the trainee "tempTrainee4" with the following details:
+      | name             | startDate   | endDate     | tasks           |
+      | Temp Challenge 2 | 2024-10-02  | 2024-10-31  | Task 2, Task 3  |
+1077
+    And I am logged in as an Instructor
+    When I visit the edit page for challenge "Temp Challenge 2"
+    And I click on "Add Task"
+    And I update the challenge task list with the following tasks:
+      | tasks        |
+      | New Task 5   |
+      | New Task 6   |
+      | New Task 7   |
+    Then I should be redirected to the edit page for "Temp Challenge 2"
+    Then I should see a flash notice with the message "Challenge was successfully updated"
+
+  Scenario: Unsuccessful challenge update for previous challenge
+    Given there is a challenge "Temp Challenge 1" with the trainee "tempTrainee1" with the following details:
+      | name             | startDate   | endDate     | tasks           |
+      | Temp Challenge 1 | 2023-10-02  | 2023-10-25  | Task 1, Task 2  |
+1079
+    And I am logged in as an Instructor
+    When I visit the edit page for challenge "Temp Challenge 1"
+    And I update the challenge task list with the following tasks:
+      | tasks        |
+      | New Task 1   |
+      | New Task 2   |
+      | New Task 3   |
+    Then I should be redirected to the details page for "Temp Challenge 1"
+    Then I should see a flash notice with the message "Challenge has already ended. You cannot edit it"
+
+  Scenario: Unsuccessful challenge update with start date greater than end date
+    Given there is a challenge "Temp Challenge 1" with the trainee "tempTrainee1" with the following details:
+      | name             | startDate   | endDate     | tasks           |
+      | Temp Challenge 1 | 2024-10-02  | 2024-10-31  | Task 1, Task 2  |
+1081
+    And I am logged in as Instructor
+    When I visit the edit page for challenge "Temp Challenge 1"
+    And I select the end date as "2024-10-01"
+    And I update the challenge task list with the following tasks:
+      | tasks        |
+      | New Task 1   |
+      | New Task 2   |
+    Then I should be redirected to the edit page for "Temp Challenge 1"
+    Then I should see a flash notice with the message "Start date cannot exceed end date"
+
+  Scenario: Unsuccessful challenge update with new start date greater than end date
+    Given today is "2024-10-31"
+    And there is a challenge "Temp Challenge 1" with the trainee "tempTrainee1" with the following details:
+      | name             | startDate   | endDate     | tasks           |
+      | Temp Challenge 1 | 2024-10-02  | 2024-10-31  | Task 1, Task 2  |
+1083
+    And I am logged in as Instructor
+    When I visit the edit page for challenge "Temp Challenge 1"
+    And I select the start date as "2024-10-31"
+    And I update the challenge task list with the following tasks:
+      | tasks        |
+      | New Task 1   |
+      | New Task 2   |
+    Then I should be redirected to the edit page for "Temp Challenge 1"
+    Then I should see a flash notice with the message "Challenge has already started. List will be updated from tomorrow and the start date exceeds the end date"
+
+Feature: Updating Tasks
+
+  Scenario: Successful trainee todo list tasks update
+    Given there is a challenge "Temp Challenge 1" with the trainee "tempTrainee1" with the following details:
+      | name             | startDate   | endDate     | tasks           |
+      | Temp Challenge 1 | 2024-10-02  | 2024-10-31  | Task 1, Task 2  |
+1085
+    And I am logged in as Instructor
+    When I visit the edit page for trainee "tempTrainee1" and challenge "Temp Challenge 1"
+    And I update the task list with the following tasks:
+      | tasks        |
+      | New Task 1   |
+      | New Task 2   |
+    Then I should be redirected to the edit page for "tempTrainee1" and "Temp Challenge 1"
+    And I should see a flash notice with the message "Tasks successfully updated."
+
+  Scenario: Unsuccessful trainee todo list tasks update with start date as today
+    Given there is a challenge "Temp Challenge 1" with the trainee "tempTrainee1" with the following details:
+      | name             | startDate   | endDate     | tasks           |
+      | Temp Challenge 1 | 2023-10-02  | 2023-10-31  | Task 1, Task 2  |
+1087
+    And I am logged in as Instructor
+    When I visit the edit page for trainee "tempTrainee1" and challenge "Temp Challenge 1"
+    And I update the task list with the following tasks:
+      | tasks        |
+      | New Task 1   |
+      | New Task 2   |
+    Then I should be redirected to the edit page for "tempTrainee1" and "Temp Challenge 1"
+    And I should see a flash notice with the message "Challenge has already started! Choose a start date from tomorrow onwards."
+
+  Scenario: Unsuccessful trainee todo list tasks update with end date out of actual challenge end date
+    Given there is a challenge "Temp Challenge 1" with the trainee "tempTrainee1" with the following details:
+      | name             | startDate   | endDate     | tasks           |
+      | Temp Challenge 1 | 2023-10-02  | 2023-10-31  | Task 1, Task 2  |
+1089
+    And I am logged in as Instructor
+    When I visit the edit page for trainee "tempTrainee1" and challenge "Temp Challenge 1"
+    And I select the end date as "2023-11-3"
+    And I update the task list with the following tasks:
+      | tasks        |
+      | New Task 1   |
+      | New Task 2   |
+    Then I should be redirected to the edit page for "tempTrainee1" and "Temp Challenge 1"
+    And I should see a flash notice with the message "Date range must be within the challenge's start and end dates."
+
+  Scenario: Successful trainee todo list tasks update with new tasks
+    Given there is a challenge "Temp Challenge 2" with the trainee "tempTrainee1" with the following details:
+      | name             | startDate   | endDate     | tasks           |
+      | Temp Challenge 2 | 2024-10-02  | 2024-10-31  | Task 2, Task 3  |
+1091
+    And I am logged in as an Instructor
+    When I visit the edit page for trainee "tempTrainee1" and challenge "Temp Challenge 2"
+    And I click on "Add Task"
+    And I update the task list with the following tasks:
+      | tasks        |
+      | New Task 5   |
+      | New Task 6   |
+    Then I should be redirected to the edit page for "tempTrainee1" and "Temp Challenge 2"
+    And I should see a flash notice with the message "Tasks successfully updated."
+
+Feature: View Trainees Navigation
+  As an instructor
+  I want to click on the 'View Trainees' link
+  So that I can see all my trainees
+
+  Scenario: Instructor clicks on 'View Trainees' link
+1093
+    Given I have instructor access
+1093
+    Given I am on the homepage
+    When I click on the 'View Trainees' link
+    Then I should be on the 'View Trainees' page
+
+  Scenario: Instructor views a trainee's profile details
+1094
+    Given I have instructor access
+    And I am on the "View Trainees" page with at least one trainee
+    When I click on the "View Profile" button for the first trainee
+    Then I should be on that trainee's profile details page
+
+  Scenario: Instructor returns to the 'View Trainees' page from a trainee's profile
+1097
+    Given I am on a trainee's profile details page
+    When I click on the "Back to All Trainees" button
+    Then I should be back on the "View Trainees" page
+
+  Scenario: Instructor tries to view a non-existent trainee's profile
+1099
+    Given I have instructor access
+    And I am on the "View Trainees" page
+    When I attempt to view a profile for a non-existent trainee
+    Then I should see an error message indicating the trainee does not exist
+
+  Scenario: No active trainees are available to view
+1100
+    Given I have instructor access
+    And I am on the "View Trainees" page
+    And no active trainees exist
+    Then I should see a message indicating there are no active trainees to display
+
+  Scenario: No deactive trainees are available to view
+1101
+    Given I have instructor access
+    And I am on the "View Trainees" page
+    And no deactive trainees exist
+    Then I should see a message indicating there are no deactive trainees to display
+
+  Scenario: Instructor views a trainee's challenges
+1102
+    Given I have instructor access
+    And I am on the "View Trainees" page with at least one trainee
+    When I click on the "Challenges" button for the first trainee
+    Then I should be on that trainee's challenges page
+
+  Scenario: Instructor views a trainee's challenge progress
+1105
+    Given I have instructor access
+    And I am on the "View Trainees" page with at least one trainee
+    When I click on the "Challenges" button for the first trainee
+    And I click on the "Progress" button for the first challenge
+    Then I should be on that challenge's progress page for the trainee
+
+  Scenario: Instructor views a trainee's challenges with no challenges available
+1108
+    Given I have instructor access
+    And I am on the "View Trainees" page with at least one trainee but no challenges
+    When I click on the "Challenges" button for the first trainee
+    Then I should see messages indicating there are no current or past challenges
+
+  Scenario: Instructor navigates back from a trainee's progress view to the challenge page
+1110
+    Given I have instructor access
+    And I am on the "View Trainees" page with at least one trainee
+    When I click on the "Challenges" button for the first trainee
+    And I click on the "Progress" button for the first challenge
+    And I click on the "Back" button
+    Then I should be back on that trainee's challenges page
+
+  Scenario: Instructor views a deactivated trainee's profile details
+1113
+    Given I have instructor access
+    And I am on the "View Trainees" page with at least one deactivated trainee
+    When I click on the "View Profile" button for the first deactivated trainee
+    Then I should be on that deactivated trainee's profile details page
+
+  Scenario: Instructor deletes a deactivated trainee
+1115
+    Given I have instructor access
+    And I am on the "View Trainees" page with at least one deactivated trainee
+    When I click on the "Delete" button for the first deactivated trainee
+    Then I should see a notice saying "Trainee has been permanently deleted."
+    And the deactivated trainee should no longer appear on the list
+
+  Scenario: Instructor activates a deactivated trainee
+1117
+    Given I have instructor access
+    And I am on the "View Trainees" page with at least one deactivated trainee
+    When I click on the "Activate" button for the first deactivated trainee
+    Then I should see a notice saying "Trainee has been activated."
+    And the trainee should appear in the active trainees list
+    And the trainee should no longer appear in the deactivated trainees list
+
+  Scenario: Instructor deactivates an active trainee
+1119
+    Given I have instructor access
+    And I am on the "View Trainees" page with at least one trainee
+    When I click on the "Deactivate" button for the first active trainee
+    Then the trainee should no longer appear in the active trainees list
+    And the trainee should appear in the deactivated trainees list
+
+Feature: Instructor ViewTraineeTodo
+    As an instructor
+    I want to see the todo list for a trainee for  a particular challenge and day
+    To enable me to track progress and make changes
+
+  Scenario: Instructor can see Trainee Todolist
+    Given I am an instructor with a trainee 'TestTrainee' and following challenges:
+      | name       | startDate   | endDate     | tasks                   |
+      | Challenge1 | 2023-10-02  | 2023-10-31  | Task 1, Task 2, Task 3  |
+      | Challenge2 | 2023-09-11  | 2023-10-22  | Task 1, Task 2, Task 3  |
+      | Challenge3 | 2023-09-15  | 2023-10-06  | Task 1, Task 2, Task 3  |
+1122
+    And I am Logged in with username 'testInstructor@gmail.com' and password 'abcdef'
+    And I click on the challenge "Challenge1"
+#<Trainee:0x00007f353da96f40>
+    And I click on 'Show Participants'
+    And I follow View TodoList for 'TestTrainee'
+    Then I should see 'TestTrainee'
+    And I should see 'Challenge1'
+    And I should see 'Select a Date:'
+
+  Scenario: Instructor can see Trainee Todolist for current day for Ongoing challenge
+440
+    Given I am an instructor with a trainee 'TestTrainee' and an Ongoing Challenge 'Challenge1'
+1124
+    And I am Logged in with username 'testInstructor@gmail.com' and password 'abcdef'
+    And I click on the challenge "Challenge1"
+#<Trainee:0x00007f35301500b0>
+    And I click on 'Show Participants'
+    And I follow View TodoList for 'TestTrainee'
+    Then I should see 'TestTrainee'
+    And I should see 'Challenge1'
+    And I should see 'Select a Date:'
+
+  Scenario: Instructor can see Trainee Todolist for 'start date' for Future challenge
+441
+    Given I am an instructor with a trainee 'TestTrainee' and a Future Challenge 'Challenge1' with start date of tomorrow
+1126
+    And I am Logged in with username 'testInstructor@gmail.com' and password 'abcdef'
+    And I click on the challenge "Challenge1"
+#<Trainee:0x00007f350bee19d8>
+    And I click on 'Show Participants'
+    And I follow View TodoList for 'TestTrainee'
+    Then I should see 'TestTrainee'
+    And I should see 'Challenge1'
+    And I should see 'Select a Date:'
+
+Failing Scenarios:
+cucumber features/challenge.feature:3
+cucumber features/challenge.feature:13
+cucumber features/challenge.feature:23
+cucumber features/forgot_password.feature:7
+cucumber features/instructor_referral.feature:9
+cucumber features/instructorsignup.feature:10
+cucumber features/instructorsignup.feature:20
+cucumber features/instructorsignup.feature:30
+cucumber features/instructorsignup.feature:40
+cucumber features/instructorsignup.feature:50
+Pending Scenarios:
+cucumber features/trainee_log_tasks.feature:28
+
+101 scenarios (10 failed, 1 pending, 90 passed)
+584 steps (10 failed, 50 skipped, 1 pending, 523 passed)
+0m13.001s
+Coverage report generated for Cucumber Features to /app/coverage/cucumber. 1376 / 1579 LOC (87.14%) covered.
