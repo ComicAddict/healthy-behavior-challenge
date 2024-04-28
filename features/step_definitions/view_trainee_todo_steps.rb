@@ -82,7 +82,6 @@ Then('I should see Current Date') do
   expect(actual_date).to eq(Date.today.strftime('%Y-%m-%d'))
 end
 
-
 Given('I follow View TodoList for {string}') do |_string|
   trainee = Trainee.find_by(full_name: 'TestTrainee')
   challenge = Challenge.find_by(name: 'Challenge1')

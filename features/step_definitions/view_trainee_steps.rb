@@ -151,7 +151,7 @@ end
 
 Given('I am on the "View Trainees" page with at least one deactivated trainee') do
   user = User.create!(email: 'deactivated@example.com', password: 'password', user_type: 'Trainee')
-  DeactivatedTrainee.create!(full_name: 'Deactivated Trainee', height_feet: 5, height_inches: 8, weight: 150, user: user)
+  DeactivatedTrainee.create!(full_name: 'Deactivated Trainee', height_feet: 5, height_inches: 8, weight: 150, user:)
 
   visit view_trainees_path
 end

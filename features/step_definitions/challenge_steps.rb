@@ -53,13 +53,13 @@ When('I fill {string} with {string}') do |field, value|
 end
 
 When('I press {string}') do |string|
-  #button = find_button("Manual Entry")
-  #click_button(string)
+  # button = find_button("Manual Entry")
+  # click_button(string)
 
   click_button string
 
-  #btn = page.find("manual-entry-button")
-  #click_button btn
+  # btn = page.find("manual-entry-button")
+  # click_button btn
 end
 
 When('I visit the new challenge page') do
@@ -68,12 +68,11 @@ end
 
 # Implement additional step definitions as needed
 
-When('I select option {string} from element {string}') do |option, selector|
-    find('#task-dropdown-0', visible: true).find(:option, 'Drink 8 Cups of Water').select_option
+When('I select option {string} from element {string}') do |_option, _selector|
+  find('#task-dropdown-0', visible: true).find(:option, 'Drink 8 Cups of Water').select_option
 end
 
-
-Given("the predefined task is available") do
+Given('the predefined task is available') do
   tasks_data = [
     { taskName: 'Drink 8 Cups of Water', saved_status: 1 }
   ]
@@ -85,15 +84,13 @@ Given("the predefined task is available") do
   end
 end
 
-
-
 # filling in manual entry --> part of fixing old tests that are not passing
 And('I fill in the task name field with {string}') do |task_name|
-  #task_field = find('input[type="text"][name^="challenge[tasks_attributes]"]') ORIGINALLY THIS
+  # task_field = find('input[type="text"][name^="challenge[tasks_attributes]"]') ORIGINALLY THIS
 
-  #task_field = find('input[type="text"][name^="challenge[tasks_attributes][0][taskName]"]')
-  #task_field = find_by_id('challenge_tasks_attributes_0_taskName')
-  task_field = page.find('#challenge_tasks_attributes_0_taskName', :visible => false) # works if :visible => false
+  # task_field = find('input[type="text"][name^="challenge[tasks_attributes][0][taskName]"]')
+  # task_field = find_by_id('challenge_tasks_attributes_0_taskName')
+  task_field = page.find('#challenge_tasks_attributes_0_taskName', visible: false) # works if :visible => false
   task_field.set(task_name)
 end
 
