@@ -199,7 +199,6 @@ class TodoListController < ApplicationController
       current_date = Date.today
       task_params = params[:tasks] || {}
       nums = params[:numbers]
-      puts params
       task_params.each do |task_id, status|
         TodolistTask.find_by(id: task_id, date: @date).update(status:, numbers: nums)
       end
