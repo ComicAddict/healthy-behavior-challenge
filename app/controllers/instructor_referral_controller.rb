@@ -14,7 +14,6 @@ class InstructorReferralController < ApplicationController
     @token = SecureRandom.uuid
     @referral = @user.instructor_referrals.create(email: params[:email], token: @token, expires: Date.today + 7.days)
     errors = @referral.errors.full_messages
-    p errors
     if !errors.empty?
       flash.now[:error] = "Error: #{errors.join(', ')}"
     else
