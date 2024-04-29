@@ -236,7 +236,6 @@ class ChallengesController < ApplicationController
   def edit
     @user = User.find(session[:user_id])
     @instructor = Instructor.find_by(user_id: session[:user_id])
-    Rails.logger.debug(@instructor)
     unless @instructor
       flash[:notice] = 'You are not an instructor.'
       redirect_to root_path
