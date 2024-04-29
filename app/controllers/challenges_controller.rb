@@ -84,7 +84,6 @@ class ChallengesController < ApplicationController
     params[:page].presence || 1
     @trainees_ct = trainees.size
     @trainees = trainees.paginate(page: params[:page], per_page: 10)
-    puts @trainees
   end
 
   def add_trainees
@@ -212,7 +211,6 @@ class ChallengesController < ApplicationController
                                   date: selected_date).pluck(:task_id)
     @todo_list = Task.where(id: task_ids)
     @filtered_data = @todo_list
-    puts @todo_list
     render json: @filtered_data
   end
 

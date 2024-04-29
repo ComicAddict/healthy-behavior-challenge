@@ -166,7 +166,6 @@ RSpec.describe TodoListController, type: :controller do
       end
 
       streak_counters = controller.calculate_streak(trainee_id, challenge_id, Date.today + 4.days)
-      puts "hello #{streak_counters}}"
       expect(streak_counters.values).to all(eq(4)) # Assuming 5 days in the streak
     end
 
