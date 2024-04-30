@@ -10,6 +10,17 @@
     bottom: 20px;
     right: 150px;
   }
+
+  .table-wrapper {
+    display: block;
+    overflow-x: auto;
+  }
+
+  th, td {
+    border: solid 1px white;
+    padding: 5px;
+  }
+  
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
@@ -42,84 +53,106 @@ $(document).ready(function(){
             <%= flash[:alert] %>
           </div>
         <% end %>
-				<%@date = Date.today%>
-				<%params[:challenge_id] = @challenge.id%>
-        <h2 style="margin: 1rem 0 2rem 0; font-weight: 500; text-align: center">  <%= @challenge.name %> </h2>
-        <h2 style="margin: 1rem 0 2rem 0; font-weight: 500; text-align: center">Challenge Tracker </h2>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Tasks</th>
-              <% @challenge_to_do_lists.each do |ch_todo| %>
-                <th>  <%= ch_todo[:date].strftime("%B %d, %Y") %>  </th>
+        <h2 style="margin: 1rem 0 2rem 0; font-weight: 500; text-align: center"> Challenge: <%= @challenge.name %> </h2>
+        <h3 style="margin: 1rem 0 2rem 0; font-weight: 500; text-align: center">Challenge Tracker  </h2>
+        <div class="table-wrapper">
+          <table >
+            <thead>
+              <tr>
+                <th>Tasks</th>
+                <% @challenge_to_do_lists.each do |ch_todo| %>
+                  <th>  <%= ch_todo[:date].strftime("%b %d") %>  </th>
 
-              <% end %>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <% @challenge.task_ids.each do |t_id| %>
-                <tr>
-                  <td>
-                  <b>
-										<%task = Task.find(t_id) %> 
-										<%= task.taskName %> 
-                  </b>
-                  </td>
-                  <% @challenge_to_do_lists.each do |ch_todo| %>
-                    <% ch_todo[:todo_list].each do |task_id, status, date, old_nums| %>
-										
-                      <% if task_id === t_id %>
-												<% if date === Date.today%>
-													<td style="background-color:#8af788">
-													<% @t = TodolistTask.find(task_id)%>
-													<div class="col-xs-6">
-														<%= form_with model: @user, url: todo_list_update_path, method: :patch do |f|%>	
-																<%= f.hidden_field "tasks[#{task_id}][task_id]", value: task_id %>
-																<%= f.hidden_field "tasks[#{task_id}][challenge_id]", value: @challenge.id %>
-																<%= f.hidden_field "tasks[#{task_id}][date]", value: date %>
-																<% task.numbers.each_with_index do |num, i|%>
-																
-																	<%if old_nums[i]%>
-																		<%= f.number_field :numbers, multiple: true, value: old_nums[i]%>
-																	<%else%>
-																		<%= f.number_field :numbers, multiple: true%>
-																	<%end%>
-																<% end %>
-																	
-													
-																<%= f.submit 'Update', class: "btn btn-primary" %>
-															<% end %>
-															</div>		
-															</div>
-												<% elsif date > Date.today%>
-													<td style="background-color:#faf591">
-													<% task.numbers.each_with_index do |num, i|%>
-														<div class="col-xs-6">
-															<input type="number" id="typeNumber" class="form-control" placeholder="<%=num%>" readonly/>
-														</div>
-													<% end %>
-												<% elsif date < Date.today %>
-													<td style="background-color:#f2786f">
-													<% task.numbers.each_with_index do |num, i|%>
-														<div class="col-xs-6">
-															<input type="number" id="typeNumber" class="form-control" value="<%=old_nums[i]%>" readonly/>
-														</div>
-													<% end %>
-												<% end %>
-													
-												</td>
-                    <% end %>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <% @challenge.task_ids.each do |t_id| %>
+                  <tr style="padding-bottom: 10px">
+                    <td>
+                    <b>
+                      <%task = Task.find(t_id) %> 
+                      <%= task.taskName %> 
+                    </b>
+                    </td>
+                    
+                    <% @challenge_to_do_lists.each do |ch_todo| %>
+                      <% ch_todo[:todo_list].each do |task_id, status, date, old_nums| %>                      
+
+                        <% if task_id === t_id %>
+                          <% if date === @today%>
+                            <td style="background-color:#8af788">
+                              <div class="col-xs-6">
+                                <%= form_with model: @user, url: todo_list_update_path, method: :patch do |f|%>	
+                                    <%= f.hidden_field "tasks[#{task_id}][task_id]", value: task_id %>
+                                    <%= f.hidden_field "tasks[#{task_id}][challenge_id]", value: @challenge.id %>
+                                    <%= f.hidden_field "tasks[#{task_id}][date]", value: date %>
+                                    
+                                    <%if task.numbers.empty?%>
+                                        <%= f.check_box "tasks[#{task_id}][completed]", checked: status==="completed" %>
+                                        
+                                        <%= f.submit 'Update', class: "btn btn-primary" %>
+                                        
+                                    <%else%>
+                                      <% task.numbers.each_with_index do |num, i|%>
+                                      
+                                        <%if old_nums[i]%>
+                                          <%= f.number_field :numbers, multiple: true, value: old_nums[i]%>
+                                        <%else%>
+                                          <%= f.number_field :numbers, multiple: true%>
+                                        <%end%>
+                                      <% end %>
+                                      <%= f.submit 'Update', class: "btn btn-primary" %>
+                                    <% end %>
+                                  <% end %>
+
+                                  </div>		
+                                  </div>
+                          </td>
+
+                          <% elsif date > @today%>
+                            <td style="background-color: #faf591">
+                              <%if task.numbers.empty?%>                       
+                                <input type="checkbox" id="status" name="status" value="status" disabled>
+                              <%else%>
+                                <% task.numbers.each_with_index do |num, i|%>
+                                  <div class="form-control">
+                                    <div id="typeNumber"><%=num%></div>
+                                  </div>
+                                <% end %>
+                              <% end %>
+                            </td>
+
+                          <% elsif date < @today %>
+                            <td style="background-color: #f2786f">
+                              <%if task.numbers.empty?%>
+                                <%if (status=="completed")%>
+                                  <input type="checkbox" id="status" name="status" value=status checked disabled>
+                                <%else%>
+                                  <input type="checkbox" id="status" name="status" value=status disabled>
+                                <%end%>
+                              <%else%>
+                                <% task.numbers.each_with_index do |num, i|%>
+                                  <div>                               
+                                      <p class="form-control"><%=(old_nums[i].present?)? old_nums[i] : '0'%></p>
+                                  </div>
+                                <% end %>
+                               <% end %>
+                            </td>
+                          <% end %>
+                            
+                      <% end %>
+                      <%end%>
                     <%end%>
-                  <%end%>
-                </tr>
-              <% end %>               
-            </tr>
-          </tbody>
-        </table>
-       
+                  </tr>
+                <% end %>               
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div>
-          <a href="<%= url_for(:back) %>" class="btn btn-primary back-btn" style="width: 8rem; padding: 0.5% 0.3%; margin-right: 5rem;">Back</a>
+          <a href="<%= show_challenges_path %>" class="btn btn-primary back-btn" style="width: 8rem; padding: 0.5% 0.3%; margin-right: 5rem;">Back</a>
           <a href="<%= show_challenges_path %>" class="btn btn-primary show-challenges-btn" style="width: 16rem; padding: 0.5% 0.3%">My Challenges</a>
         <div>
       </div>

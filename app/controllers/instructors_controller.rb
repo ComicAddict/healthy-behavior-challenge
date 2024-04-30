@@ -4,7 +4,6 @@ require 'will_paginate/array'
 
 class InstructorsController < ApplicationController
   def new
-    puts params[:token]
     token = InstructorReferral.find_by(token: params[:token])
     unless token.present? &&
            token.expires > DateTime.now &&
@@ -32,7 +31,6 @@ class InstructorsController < ApplicationController
     @user = User.new(specific_user_params)
 
     if valid_inputs?
-      puts 'Valid email'
       if @user.save
 
         specific_instructor_params = {

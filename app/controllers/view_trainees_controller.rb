@@ -21,8 +21,6 @@ class ViewTraineesController < ApplicationController
     render 'profile_details'
   end
 
-
-
   def deactivate
     active_trainee = Trainee.find(params[:id])
 
@@ -30,11 +28,10 @@ class ViewTraineesController < ApplicationController
     TodolistTask.where(trainee: active_trainee).destroy_all
 
     DeactivatedTrainee.transaction do
-      DeactivatedTrainee.create!(active_trainee.attributes.except("id", "created_at", "updated_at"))
+      DeactivatedTrainee.create!(active_trainee.attributes.except('id', 'created_at', 'updated_at'))
       active_trainee.destroy!
     end
-
-  rescue => e
+  rescue StandardError => e
     flash[:alert] = "Failed to deactivate trainee: #{e.message}"
   ensure
     redirect_to view_trainees_path
@@ -44,12 +41,12 @@ class ViewTraineesController < ApplicationController
     deactivated_trainee = DeactivatedTrainee.find(params[:id])
 
     Trainee.transaction do
-      Trainee.create!(deactivated_trainee.attributes.except("id", "created_at", "updated_at", "original_trainee_id"))
+      Trainee.create!(deactivated_trainee.attributes.except('id', 'created_at', 'updated_at', 'original_trainee_id'))
       deactivated_trainee.destroy!
     end
 
     flash[:notice] = 'Trainee has been activated.'
-  rescue => e
+  rescue StandardError => e
     flash[:alert] = "Failed to activate trainee: #{e.message}"
   ensure
     redirect_to view_trainees_path

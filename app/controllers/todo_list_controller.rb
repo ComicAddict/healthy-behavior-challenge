@@ -87,18 +87,16 @@ class TodoListController < ApplicationController
 
   def todo_list_update
     @user = User.find(session[:user_id])
-    trainee = Trainee.find_by(user_id: @user.id)
-    trainee_id = trainee.id
+    trainee_id = Trainee.find_by(user_id: @user.id)
 
     current_date = Date.today
     user_tasks = params[:user][:tasks]
-
     user_tasks.each do |task_id, task_data|
       task_id = task_data[:task_id]
       challenge_id = task_data[:challenge_id]
       completed = task_data[:completed]
       current_date = task_data[:date]
-      completed == '1' ? 'completed' : 'not_completed'
+      completed = (completed == '1') ? 'completed' : 'not_completed'
 
       @date = current_date
       task = TodolistTask.find_by(
@@ -108,14 +106,18 @@ class TodoListController < ApplicationController
         date: current_date
       )
       if task.nil?
-        redirect_to view_challenge_tasks_detail_path, notice: 'Tasks not found'
+        redirect_to view_challenge_tasks_detail_path(id: params[:id]), notice: 'Could not find task'
         return
       end
-      new_data = params[:user][:numbers].map(&:to_f)
-      task.update(numbers: new_data)
+      if params[:user][:numbers].present?
+        new_data = params[:user][:numbers].map(&:to_f)
+        task.update(numbers: new_data)
+      else
+        task.update(status: completed) 
+      end
     end
 
-    redirect_to view_challenge_tasks_detail_path, notice: 'Tasks have been updated.'
+    redirect_to view_challenge_tasks_detail_path(id: params[:id]), notice: 'Tasks have been updated.'
   end
 
   def update
@@ -199,7 +201,6 @@ class TodoListController < ApplicationController
       current_date = Date.today
       task_params = params[:tasks] || {}
       nums = params[:numbers]
-      puts params
       task_params.each do |task_id, status|
         TodolistTask.find_by(id: task_id, date: @date).update(status:, numbers: nums)
       end

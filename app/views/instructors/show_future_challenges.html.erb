@@ -3,9 +3,17 @@
     color: black;
   }
   .create-challenge-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
+    @media (max-width: 1023px) {
+      padding: 2rem 5rem 2rem 5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    @media (min-width: 1024px) {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+    }
   }
   .indiChallenge {
     overflow: hidden;
@@ -45,21 +53,23 @@
   <% end %>
 
   <div class="container">
-    <div class="row" style="height: 80px">
+    <div class="row" >
       <div class="col-md-6">
         <h1 style="font-weight: 500">Upcoming Challenges</h1>
       </div>
-      <div class="col-md-3"style="display: flex; align-items: center; height: 80px">
-        <button type="button" id="prev-challenge-btn" class="btn btn-primary btn-block" style="padding: 0;">
-          <span style="font-size: 20px">&#8606;</span>
-          Show Past Challenges
-        </button>
+      <div class="col-md-3 d-flex align-items-center" style="height: 80px">
+        <div class="w-100" style="margin-top: 25px;">
+          <a href="<%= past_challenges_instructor_path(@instructor) %>" class="btn btn-primary back-btn btn-block" style="padding: 0;">
+            <span style="font-size: 20px;">&#8606;</span> Show Past Challenges
+          </a>
+        </div>
       </div>
-      <div class="col-md-3" style="display: flex; align-items: center; height: 80px">
-        <button type="button" id="ongoing-challenge-btn" class="btn btn-primary btn-block" style="padding: 0;">
-          <span style="font-size: 20px">&#8672;</span>
-          Show Ongoing Challenges
-        </button>
+      <div class="col-md-3 d-flex align-items-center" style="height: 80px">
+        <div class="w-100" style="margin-top: 25px;">
+          <a href="<%= instructor_path(@instructor) %>" class="btn btn-primary back-btn btn-block" style="padding: 0;">
+            <span style="font-size: 20px;">&#8672;</span> Show Ongoing Challenges
+          </a>
+        </div>
       </div>
     </div>
 
@@ -79,8 +89,9 @@
   </div>
 
   <%= will_paginate @challenges %>
-  <a href="<%= new_challenge_path %>" class="btn btn-primary create-challenge-btn">Create Challenge</a>
-
+  <div class="create-challenge-btn">
+    <a href="<%= new_challenge_path %>" class="btn btn-primary ">Create Challenge</a>
+  </div>
 </div>
 
 

@@ -12,11 +12,6 @@
     text-decoration: line-through;
   }
 
-  .show-challenges-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-  }
   .indiChallenge {
     overflow: hidden;
     margin: 1% 0;
@@ -37,6 +32,20 @@
     background-position: center 30px;
     background-repeat: no-repeat;
     background-attachment: fixed;
+  }
+
+  .nav-btn{
+    @media (min-width: 1024px) {
+      position: fixed; 
+      bottom: 30px; 
+      right: 20px;
+    }
+    @media (max-width: 1023px) {
+      padding: 2rem 5rem 2rem 5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
   }
 </style>
 
@@ -125,8 +134,8 @@
           </div>
         <% end %>
 
-        <div style="position: fixed; bottom: 2rem; right: 2rem;">
-          <a href="<%= show_challenges_path %>" class="btn btn-primary show-challenges-btn" style="width: 16rem; padding: 0.5% 0.3%">My Challenges</a>
+        <div class="nav-btn">
+          <a href="<%= show_challenges_path %>" class="btn btn-primary" style="width: 16rem; padding: 0.5% 0.3%">My Challenges</a>
         <div>
       </div>
     </div>

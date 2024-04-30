@@ -17,8 +17,7 @@
       - Command to clone :
         ```
         git clone https://github.com/shweta-sharma-tamu/healthy-behavior-challenge
-        ```
-
+        ``` 
 4. Know how to get started with Development
      - We have our project executed using docker containerization. So one has to follow below steps to install and get started with docker for development of our project.
      - Please refer to this link to install docker based on your system specifications: ``` https://docs.docker.com/desktop/install/mac-install/ ```
@@ -73,7 +72,8 @@
          - Rubycritic will analyze your codebase and generate an HTML report containing a summary of the code quality metrics. The report is usually saved in the tmp/rubycritic directory.
 
 
-7. Know how to deploy our project
+7. Know how to deploy our project both locally and online:
+    - Check [DEPLOYMENT.md](https://github.com/ComicAddict/healthy-behavior-challenge/blob/main/DEPLOYMENT.md)
     - ``` cd healthy-behavior-challenge ```
     - Login to heroku through CLI
       ```
@@ -102,7 +102,7 @@
     - You can find our deployed app here:
       https://hbc-f855dfc7b6d2.herokuapp.com/
       
-8. Know How to Use the Web application
+9. Know How to Use the Web application
     - We have Two Modules :
        - Instructor(Gym Instructor)
          - Can Create/Edit Challenge
@@ -134,7 +134,7 @@
         - They can see the streak and also the report which tracks their weekly report.
 
    
-9. Contact Us for any queries: Please reach out to any one of us if you have any queries
+10. Contact Us for any queries: Please reach out to any one of us if you have any queries
     - Tolga Yildiz (tolgayildiz@tamu.edu)
     - Mackenzie Hamlett (mackenziehamlett@tamu.edu)
     - Jakob Kirby (kirbyj3684@tamu.edu)

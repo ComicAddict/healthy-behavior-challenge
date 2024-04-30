@@ -1,5 +1,37 @@
-<%= render 'main/navbar' %>
+<div class="row" style="height: 80px">
+  <%= render 'main/navbar' %>
+</div>
 
+<style>
+  .profile-box {
+    @media (max-width: 767px) {
+      overflow: hidden;
+      max-width: 90%;
+      padding: 10px;
+    }
+    @media (min-width: 768px) {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+      border-radius: 10px; 
+    }
+  }
+  .profile-attribute {
+    color: #0080ff; 
+    display: inline-block; 
+    text-align: left;
+    font-size: 16px;
+    @media (min-width: 768px) {
+      width: 150px; 
+      font-size: 24px;
+    }
+  }
+
+  .profile-text {
+    display: inline-block;
+    @media (max-width: 768px) {
+      font-size: 16px;
+    }
+  }
+</style>
 <% if flash[:notice] %>
   <div class="alert alert-success text-center">
     <%= flash[:notice] %>
@@ -10,24 +42,24 @@
   </div>
 <% end %>
 
-<div class="container mt-4" style="margin-top: 5%;">
-  <div class="card" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); border-radius: 10px; padding: 2%;">
-    <h1 class="card-header text-center mb-0" style="padding: 1%;">Instructor Profile
+<div class="container" >
+  <div class="card profile-box">
+    <h1 class="card-header text-center mb-0" ">Instructor Profile
     <%= image_tag "instructor.png", style: 'width: 75px'%></h1>
 
     <div class="card-body" style="padding: 2%;">
       <div class="row" >        
-          <div class="col-6">
-            <h3 style="color: #0080ff; display: inline-block; width: 150px; text-align: left;">Email:</h3>
-            <h3 style="display: inline-block;"><%= @user.email %></h3>
+          <div >
+            <h3 class="profile-attribute" >Email:</h3>
+            <h3 class="profile-text" ><%= @user.email %></h3>
           </div>
-          <div class="col-6">
-            <h3 style="color: #0080ff; display: inline-block; width: 150px; text-align: left;">First Name:</h3>
-            <h3 style="display: inline-block;"><%= @instructor.first_name %></h3>
+          <div >
+            <h3 class="profile-attribute">First Name:</h3>
+            <h3 class="profile-text" ><%= @instructor.first_name %></h3>
           </div>
-          <div class="col-6">
-            <h3 style="display: inline-block; width: 150px; color: #0080ff; text-align: left;">Last Name:</h3>
-            <h3 style="display: inline-block;"><%= @instructor.last_name %></h3>
+          <div >
+            <h3 class="profile-attribute">Last Name:</h3>
+            <h3 class="profile-text" ><%= @instructor.last_name %></h3>
           </div>
       </div>
     </div>

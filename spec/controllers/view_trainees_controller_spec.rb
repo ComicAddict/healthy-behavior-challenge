@@ -7,7 +7,7 @@ RSpec.describe ViewTraineesController, type: :controller do
     user = User.create!(email: 'john@example.com', password: 'password')
     @trainee = Trainee.create!(full_name: 'John Someone', height_feet: 5, height_inches: 4, weight: 85, user:)
     @deactivated_trainee = DeactivatedTrainee.create!(full_name: 'Mary Jane', height_feet: 5, height_inches: 5, weight: 130, user:)
-    #@trainee_to_deactivate = Trainee.create!(full_name: 'James Smith', height_feet: 5, height_inches: 4, weight: 85, user:)
+    # @trainee_to_deactivate = Trainee.create!(full_name: 'James Smith', height_feet: 5, height_inches: 4, weight: 85, user:)
     instructor_user = User.create!(email: 'instructor@example.com', password: 'securepassword', user_type: 'instructor')
     instructor = Instructor.create!(user: instructor_user, first_name: 'Jane', last_name: 'Doe')
 
@@ -18,11 +18,7 @@ RSpec.describe ViewTraineesController, type: :controller do
     ChallengeTrainee.create!(trainee: @trainee, challenge: @challenge)
   end
 
-
-
-
   after do
-
     ChallengeTrainee.destroy_all
     TodolistTask.destroy_all
     Challenge.destroy_all
@@ -34,7 +30,6 @@ RSpec.describe ViewTraineesController, type: :controller do
     DeactivatedTrainee.destroy_all
 
     User.destroy_all
-
   end
 
   describe 'GET #index' do
@@ -74,7 +69,6 @@ RSpec.describe ViewTraineesController, type: :controller do
   end
 
   describe 'GET #deactivated_profile_details' do
-
     it 'assigns the requested deactivated trainee to @trainee' do
       get :deactivated_profile_details, params: { id: @deactivated_trainee.id }
       expect(assigns(:trainee)).to eq(@deactivated_trainee)
@@ -120,7 +114,6 @@ RSpec.describe ViewTraineesController, type: :controller do
     end
   end
 
-
   describe 'POST #deactivate' do
     it 'successfully deactivates an active trainee' do
       post :deactivate, params: { id: @trainee.id }
@@ -128,7 +121,7 @@ RSpec.describe ViewTraineesController, type: :controller do
     end
 
     it 'handles failure to deactivate a trainee' do
-      allow_any_instance_of(Trainee).to receive(:destroy!).and_raise(StandardError.new("Custom error"))
+      allow_any_instance_of(Trainee).to receive(:destroy!).and_raise(StandardError.new('Custom error'))
       post :deactivate, params: { id: @trainee.id }
       expect(response).to redirect_to(view_trainees_path)
       expect(flash[:alert]).to match('Failed to deactivate trainee: Custom error')
@@ -146,7 +139,7 @@ RSpec.describe ViewTraineesController, type: :controller do
     end
 
     it 'handles failure to activate a trainee' do
-      allow_any_instance_of(DeactivatedTrainee).to receive(:destroy!).and_raise(StandardError.new("Custom error"))
+      allow_any_instance_of(DeactivatedTrainee).to receive(:destroy!).and_raise(StandardError.new('Custom error'))
 
       post :activate, params: { id: @deactivated_trainee.id }
 

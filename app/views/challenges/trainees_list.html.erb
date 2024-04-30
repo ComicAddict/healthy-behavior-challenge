@@ -1,5 +1,7 @@
-<%= render 'main/navbar' %>
-<%= javascript_include_tag 'application' %>
+<div class="row" style="height: 80px">
+  <%= render 'main/navbar' %>
+</div>
+
 <style>
   .btn-group .btn {
     margin-right: 10px; 
@@ -7,31 +9,54 @@
   .btn-group .btn:last-child {
     margin-right: 0;
   }
+
+  .trainee-row {
+    padding: 10px; 
+    @media (min-width: 1024px) {
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+    }
+  }
+
+  .nav-btn {
+    @media (min-width: 1024px) {
+      position: fixed; 
+      bottom: 30px; 
+      right: 20px;
+    }
+    @media (max-width: 1023px) {
+      padding: 2rem 5rem 2rem 5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  }
 </style>
 
 <%= render 'main/navbar' %>
 
 <div class="container mt-4" style="margin-top: 5%;">
   <div class="row">
-    <div class="col-xs-4" style="padding: 0">
+    <div class="col-md-4" >
       <h2 style="font-weight: 500">Trainee List</h2>
     </div>
-    <div class="col-xs-4">
+    <div class="col-md-4">
         <h2>Challange: <%= @challenge.name %> </h1>
     </div>
-    <div class="col-xs-4">
+    <div class="col-md-4">
         <h2>Total Count: <%= @trainees_ct %></h1>
     </div>
     </div>
     <div>
    
     </div>
-     <div class="row">
+    <div class="row">
     <div class="col-12">
         <div class="row">
           <% @trainees.each do |trainee| %>
-            <div class="card" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); border: 1px solid #000;">
-              <div class="card-body" style="padding: 10px; display: flex; justify-content: space-between; align-items: center;">
+            <div class="card" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); border-radius: 5px">
+              <div class="card-body trainee-row" style="margin-bottom: 20px;">
                 <h3 class="card-title"><%= trainee.user.id %>. <%= trainee.full_name %></h3>
                 <div class="btn-group ml-auto" style="padding: 3px">
                   <%= link_to 'View Progress', graph_challenge_path(@challenge, trainee_id: trainee.id), class: 'btn btn-primary' %>
@@ -51,6 +76,6 @@
   </div>
 <div>
 
-<div style="position: fixed; bottom: 30px; right: 20px;">
+<div class="nav-btn" >
   <a href="<%= challenge_path(@challenge) %>" class="btn btn-primary back-btn" style="width: 8rem; height: 4rem; padding: 0.8% 0.3%; margin-right: 2rem; line-height: 3.5rem;">Back</a>
 </div>
