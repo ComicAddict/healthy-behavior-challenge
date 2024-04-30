@@ -19,7 +19,7 @@ class ViewChallengeTasksController < ApplicationController
     else
       @trainee_id = Trainee.where(user_id: @user.id)
     end
-
+    @today = Date.today
     @challenge_to_do_lists = []
     
     (@challenge.startDate..@challenge.endDate).each do |ch_date|
