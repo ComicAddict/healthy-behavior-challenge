@@ -32,6 +32,7 @@
           docker exec -it 82db16d3c448 /bin/bash  (provide ID of your docker container in place of 82db16d3c448)
           ```
         - Now you will be on rails container
+     - Run ``` rails simple_discussion:install:migrations ``` from rails container
      - Run ``` rails db:migrate ``` from rails container
      - Run ``` rails db:seed ``` from rails container ( for default instructor credentials )
          - Credentials :
