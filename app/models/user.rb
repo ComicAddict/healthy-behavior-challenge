@@ -6,4 +6,5 @@ class User < ActiveRecord::Base
   def name
     "#{email}"
   end
+  has_many :instructor_referrals
 end
