@@ -48,6 +48,9 @@ Password : asdf
 6. Add a configuration variable ```PROJECT_EMAIL``` and add value as your email
 7. Add a configuration variable ```PROJECT_PASSWORD``` and add value as your gmail app password
 8. Run migrations
-```heroku run rake db:migrate```
+```
+heroku run rails simple_discussion:install:migrations
+heroku run rake db:migrate
+```
 10. App is deployed. One can open the app through this cmd
 ```heroku open```

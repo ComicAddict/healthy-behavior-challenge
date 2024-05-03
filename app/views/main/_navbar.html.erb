@@ -29,6 +29,7 @@
             <% elsif current_user.present? %>
               <li><%= link_to 'My Profile', trainee_profile_path, style: 'color: white' %></li>
             <% end %>
+            <li><%= link_to "Forum", simple_discussion_path, style: 'color: white' %></li>
             <li><%= link_to "Sign Out", signout_path,style: 'color: white', method: :get %></li>
         </ul>
       </div>

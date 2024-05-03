@@ -21,7 +21,7 @@ services:
     ports:
       - "5432:5432"
     volumes: 
-      - ./tmp/postgres_dev_data:/var/lib/postgresql/data
+      - ./tmp/postgres_dev_data:/var/lib/postgresql/data:Z
   postgres_test:
     image: postgres:16-alpine
     restart: always
@@ -33,4 +33,4 @@ services:
     ports:
       - "5433:5432"
     volumes: 
-      - ./tmp/postgres_test_data:/var/lib/postgresql/data
+      - ./tmp/postgres_test_data:/var/lib/postgresql/data:Z

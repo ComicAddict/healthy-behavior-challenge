@@ -44,6 +44,7 @@ gem 'faker'
 gem 'rails-controller-testing'
 
 gem 'byebug'
+gem 'simple_discussion'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
