@@ -12,11 +12,11 @@
       - [Link to rubocop report](https://drive.google.com/file/d/1NIKxQ7L5d2Z-Bvtc3XkgI9SvOUgWsEpp/view?usp=sharing)
       - [Link to RSPEC coverage report](https://drive.google.com/drive/folders/1-cmpYC1cz5VsGO3EU0Q846kFAJdKuQLM?usp=drive_link)
 3. Cloning the Repository
-      - Please visit https://github.com/shweta-sharma-tamu/healthy-behavior-challenge to clone our project. 
+      - Please visit https://github.com/ComicAddict/healthy-behavior-challenge to clone our project. 
       - You will be able to find all these instructions in the google document attached at last. 
       - Command to clone :
         ```
-        git clone https://github.com/shweta-sharma-tamu/healthy-behavior-challenge
+        git clone https://github.com/ComicAddict/healthy-behavior-challenge
         ``` 
 4. Know how to get started with Development
      - We have our project executed using docker containerization. So one has to follow below steps to install and get started with docker for development of our project.
