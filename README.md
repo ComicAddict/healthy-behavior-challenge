@@ -94,6 +94,7 @@
     - Add a configuration variable PROJECT_PASSWORD and add value as your gmail app password
     - Run migrations
       ```
+      heroku run rails simple_discussion:install:migrations
       heroku run rake db:migrate
       ```
     - App is deployed. One can open the app through this cmd
