@@ -34,7 +34,7 @@
         - Now you will be on rails container
      - Run ``` rails simple_discussion:install:migrations ``` from rails container
      - Run ``` rails db:migrate ``` from rails container
-     - Run ``` rails db:seed ``` from rails container ( for default instructor credentials )
+     - Run ``` rails db:seed ``` from rails container (note: you may see a duplicate seed error, this is ok, the app is not affected) ( for default instructor credentials )
          - Credentials :
            ```
            Email :  healthybehaviorchallenge@gmail.com
