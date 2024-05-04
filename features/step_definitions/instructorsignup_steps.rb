@@ -59,7 +59,7 @@ When('I fill in email with instructorsignup') do
   fill_in 'Email', with: 'instructorsignup'
 end
 
-When('I fill in email with '' ') do
+When('I fill in email with ', ' ') do
   fill_in 'Email', with: ''
 end
 
@@ -71,7 +71,7 @@ When('I fill in password with {string}') do |password|
   fill_in 'Password', with: password
 end
 
-When('I fill in password with ''') do
+When('I fill in password with ', '') do
   fill_in 'Password', with: ''
 end
 

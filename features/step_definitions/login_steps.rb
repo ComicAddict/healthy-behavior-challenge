@@ -27,7 +27,7 @@ When('I enter {string} as email') do |string|
   fill_in 'email', with: string
 end
 
-When('I enter '' as email') do
+When('I enter ', ' as email') do
   fill_in 'email', with: ''
 end
 
@@ -35,7 +35,7 @@ When('I enter Admin@123 as password') do
   fill_in 'password', with: 'Admin@123'
 end
 
-When('I enter '' as password') do
+When('I enter ', ' as password') do
   fill_in 'password', with: ''
 end
 

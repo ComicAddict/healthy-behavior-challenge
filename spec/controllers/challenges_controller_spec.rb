@@ -181,8 +181,8 @@ RSpec.describe ChallengesController, type: :controller do
       @task = Task.create(taskName: 'Task 1')
       @task.save
 
-      @challengeGenList = ChallengeGenericlist.create(task: @task, challenge: @challenge)
-      @challengeGenList.save
+      @challenge_gen_list = ChallengeGenericlist.create(task: @task, challenge: @challenge)
+      @challenge_gen_list.save
 
       get :edit, params: { id: @challenge.id }
 
@@ -219,8 +219,8 @@ RSpec.describe ChallengesController, type: :controller do
       @task = Task.create(taskName: 'Task 1')
       @task.save
 
-      @challengeGenList = ChallengeGenericlist.create(task: @task, challenge: @challenge)
-      @challengeGenList.save
+      @challenge_gen_list = ChallengeGenericlist.create(task: @task, challenge: @challenge)
+      @challenge_gen_list.save
 
       post :update, params: { id: @challenge.id }
 
@@ -238,8 +238,8 @@ RSpec.describe ChallengesController, type: :controller do
       @task = Task.create(taskName: 'Task 1')
       @task.save
 
-      @challengeGenList = ChallengeGenericlist.create(task: @task, challenge: @challenge)
-      @challengeGenList.save
+      @challenge_gen_list = ChallengeGenericlist.create(task: @task, challenge: @challenge)
+      @challenge_gen_list.save
 
       @chall_trainee = ChallengeTrainee.create(challenge: @challenge, trainee: @trainee)
       @chall_trainee.save
@@ -271,8 +271,8 @@ RSpec.describe ChallengesController, type: :controller do
       @task = Task.create(taskName: 'Task 1')
       @task.save
 
-      @challengeGenList = ChallengeGenericlist.create(task: @task, challenge: @challenge)
-      @challengeGenList.save
+      @challenge_gen_list = ChallengeGenericlist.create(task: @task, challenge: @challenge)
+      @challenge_gen_list.save
 
       @chall_trainee = ChallengeTrainee.create(challenge: @challenge, trainee: @trainee)
       @chall_trainee.save
