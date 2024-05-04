@@ -1,19 +1,23 @@
-class SimpleDiscussion::NotificationsController < SimpleDiscussion::ApplicationController
-  # before_action :authenticate_user!
-  before_action :set_forum_thread
+# frozen_string_literal: true
 
-  def create
-    @forum_thread.toggle_subscription(current_user)
-    redirect_to simple_discussion.forum_thread_path(@forum_thread)
-  end
+module SimpleDiscussion
+  class NotificationsController < SimpleDiscussion::ApplicationController
+    # before_action :authenticate_user!
+    before_action :set_forum_thread
 
-  def show
-    redirect_to simple_discussion.forum_thread_path(@forum_thread)
-  end
+    def create
+      @forum_thread.toggle_subscription(current_user)
+      redirect_to simple_discussion.forum_thread_path(@forum_thread)
+    end
 
-  private
+    def show
+      redirect_to simple_discussion.forum_thread_path(@forum_thread)
+    end
 
-  def set_forum_thread
-    @forum_thread = ForumThread.friendly.find(params[:forum_thread_id])
+    private
+
+    def set_forum_thread
+      @forum_thread = ForumThread.friendly.find(params[:forum_thread_id])
+    end
   end
 end

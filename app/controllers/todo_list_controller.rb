@@ -96,7 +96,7 @@ class TodoListController < ApplicationController
       challenge_id = task_data[:challenge_id]
       completed = task_data[:completed]
       current_date = task_data[:date]
-      completed = (completed == '1') ? 'completed' : 'not_completed'
+      completed = completed == '1' ? 'completed' : 'not_completed'
 
       @date = current_date
       task = TodolistTask.find_by(
@@ -113,7 +113,7 @@ class TodoListController < ApplicationController
         new_data = params[:user][:numbers].map(&:to_f)
         task.update(numbers: new_data)
       else
-        task.update(status: completed) 
+        task.update(status: completed)
       end
     end
 

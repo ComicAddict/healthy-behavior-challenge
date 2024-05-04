@@ -21,11 +21,11 @@ class ViewChallengeTasksController < ApplicationController
     end
     @today = Date.today
     @challenge_to_do_lists = []
-    
+
     (@challenge.startDate..@challenge.endDate).each do |ch_date|
       @todo_list = TodolistTask.where(trainee_id: @trainee_id, challenge_id: params[:id], date: ch_date).pluck(:task_id,
-                                                                                                   :status, :date, :numbers)  
-                                                                                                                                                             
+                                                                                                               :status, :date, :numbers)
+
       @challenge_to_do_lists << { challenge: @challenge, todo_list: @todo_list, date: ch_date }
     end
   end

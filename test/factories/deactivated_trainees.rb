@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :deactivated_trainee do
     full_name { 'MyString' }

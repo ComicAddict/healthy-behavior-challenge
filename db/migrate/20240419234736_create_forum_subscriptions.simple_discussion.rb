@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This migration comes from simple_discussion (originally 20170417012933)
 class CreateForumSubscriptions < ActiveRecord::Migration[4.2]
   def change
